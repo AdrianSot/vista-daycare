@@ -1,135 +1,165 @@
--- MySQL dump 10.17  Distrib 10.3.13-MariaDB, for debian-linux-gnu (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: VISTA
--- ------------------------------------------------------
--- Server version	10.3.13-MariaDB-1:10.3.13+maria~bionic
+-- Servidor: localhost
+-- Tiempo de generación: 23-04-2019 a las 10:36:54
+-- Versión del servidor: 10.1.38-MariaDB
+-- Versión de PHP: 7.3.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Administradores`
+-- Base de datos: `VISTA`
 --
 
-DROP TABLE IF EXISTS `Administradores`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Administradores`
+--
+
 CREATE TABLE `Administradores` (
   `Usuario` varchar(20) NOT NULL,
   `Contrasena` varchar(20) DEFAULT NULL,
   `Nombre` varchar(20) DEFAULT NULL,
-  `Apellido` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`Usuario`)
+  `Apellido` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Administradores`
+-- Volcado de datos para la tabla `Administradores`
 --
 
-LOCK TABLES `Administradores` WRITE;
-/*!40000 ALTER TABLE `Administradores` DISABLE KEYS */;
-INSERT INTO `Administradores` VALUES ('Admin02','2jH91228dbz,.-k,0P+','Quentin','Tarantino'),('Admin_Master','s{*+-1QlsHvH76Gf029?','Alfonso','Cuaron');
-/*!40000 ALTER TABLE `Administradores` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `Administradores` (`Usuario`, `Contrasena`, `Nombre`, `Apellido`) VALUES
+('Admin02', '2jH91228dbz,.-k,0P+', 'Quentin', 'Tarantino'),
+('Admin_Master', 's{*+-1QlsHvH76Gf029?', 'Alfonso', 'Cuaron');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `Ninos`
+-- Estructura de tabla para la tabla `Ninos`
 --
 
-DROP TABLE IF EXISTS `Ninos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Ninos` (
-  `ID` varchar(5) NOT NULL,
-  `Nombre` varchar(30) DEFAULT NULL,
-  `Apellido` varchar(30) DEFAULT NULL,
-  `Foto` varchar(100) DEFAULT NULL,
-  `Tutor` varchar(12) DEFAULT NULL,
-  `Autorizados` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+  `ID` int(11) NOT NULL,
+  `Nombres` varchar(50) NOT NULL,
+  `Apellido_paterno` varchar(30) NOT NULL,
+  `Apellido_materno` varchar(30) NOT NULL,
+  `Foto` varchar(100) NOT NULL,
+  `Tutor` varchar(100) NOT NULL,
+  `Autorizados` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Ninos`
+-- Volcado de datos para la tabla `Ninos`
 --
 
-LOCK TABLES `Ninos` WRITE;
-/*!40000 ALTER TABLE `Ninos` DISABLE KEYS */;
-INSERT INTO `Ninos` VALUES ('17392','Fernando','Moreno','/home/blabla/Carpeta-Caras-Ninos/17392.jpg','6612345335','/home/blablabla/Autorizados-17392.txt'),('73648','Nahomi Adriana','Soto','/home/blabla/Carpeta-Caras-Ninos/73648.jpg','6623547586','/home/blabla/Autorizados-73648.txt'),('74633','Agustin','De Iturbide','/home/blabla/Carpeta-Caras-Ninos/74633.jpg','6221052333','/home/blabla/Autorizados-74633.txt'),('84726','Ivan JR','Moreno','/home/blabla/Carpeta-Caras-Ninos/84726.jpg','6612345335','/home/blablabla/Autorizados-84726.txt');
-/*!40000 ALTER TABLE `Ninos` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `Ninos` (`ID`, `Nombres`, `Apellido_paterno`, `Apellido_materno`, `Foto`, `Tutor`, `Autorizados`) VALUES
+(55, 'pedro', 'hernandez', 'amador', '/home/pedrohdez/NetBeansProjects/Prueba/Niños/niño1.jpg', 'telcarmen', '/home/pedrohdez/NetBeansProjects/Prueba/Autorizados/Autorizados55.txt'),
+(60, 'israel', 'hernandez', 'amador', '/home/pedrohdez/NetBeansProjects/Prueba/Niños/niño11.jpg', 'telpedro', '/home/pedrohdez/NetBeansProjects/Prueba/Autorizados/Autorizados60.txt');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `Recepcionistas`
+-- Estructura de tabla para la tabla `Recepcionistas`
 --
 
-DROP TABLE IF EXISTS `Recepcionistas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Recepcionistas` (
   `Usuario` varchar(10) NOT NULL,
-  `Contrasena` varchar(20) DEFAULT NULL,
-  `Nombre` varchar(20) DEFAULT NULL,
-  `Apellido` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`Usuario`)
+  `Contrasena` varchar(20) NOT NULL,
+  `Nombre` varchar(20) NOT NULL,
+  `Apellido` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Recepcionistas`
+-- Volcado de datos para la tabla `Recepcionistas`
 --
 
-LOCK TABLES `Recepcionistas` WRITE;
-/*!40000 ALTER TABLE `Recepcionistas` DISABLE KEYS */;
-INSERT INTO `Recepcionistas` VALUES ('Recep01','J9237189sL,.','Pablo','Escobar'),('Recep02','jsdsj8H','Joaquin','Guzman'),('Recep03','277465281-.*','Quentin','Tarantino');
-/*!40000 ALTER TABLE `Recepcionistas` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `Recepcionistas` (`Usuario`, `Contrasena`, `Nombre`, `Apellido`) VALUES
+('Recep01', 'u23b 3 3', 'Pedro', 'Hernández'),
+('Recep02', 'nui23rhfnuie2', 'Rocio', 'Ramón'),
+('Recep03', 'hf48jr3no9ueji', 'Olivia', 'Arana'),
+('Recep07', '232WED', 'Adrián', 'Soto'),
+('Recep08', '348nr', 'Carmen', 'Amador'),
+('Recep09', '8hb8Js', 'Bill', 'Puertas');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `Tutores`
+-- Estructura de tabla para la tabla `Tutores`
 --
 
-DROP TABLE IF EXISTS `Tutores`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tutores` (
   `Telefono` varchar(12) NOT NULL,
-  `Nombre` varchar(12) DEFAULT NULL,
-  `Apellido` varchar(20) DEFAULT NULL,
+  `Nombres` varchar(50) DEFAULT NULL,
+  `Apellido_paterno` varchar(30) DEFAULT NULL,
+  `Apellido_materno` varchar(30) NOT NULL,
   `Foto` varchar(100) NOT NULL,
   `Ninos` varchar(100) DEFAULT NULL,
-  `Estatus` enum('Tutor','Autorizado','Sospechoso') DEFAULT NULL,
-  PRIMARY KEY (`Foto`)
+  `Estatus` enum('Tutor','Autorizado','Sospechoso') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Tutores`
+-- Volcado de datos para la tabla `Tutores`
 --
 
-LOCK TABLES `Tutores` WRITE;
-/*!40000 ALTER TABLE `Tutores` DISABLE KEYS */;
-INSERT INTO `Tutores` VALUES ('6621052333','Pedrito','Hernandez','/home/blabla/Carpeta-Caras-Autorizados/6621052333.jpg','/home/blabla/ID-Ninos-6621052333.txt','Autorizado'),('00000','','','/home/blabla/Carpeta-Caras-Sospechosos/00000.jpg','','Sospechoso'),('6612345335','Fernanda','Dominguez','/home/blabla/Carpeta-Caras-Tutores/6612345335.jpg','/home/blabla/ID-Ninos-6612345335.txt','Tutor');
-/*!40000 ALTER TABLE `Tutores` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+INSERT INTO `Tutores` (`Telefono`, `Nombres`, `Apellido_paterno`, `Apellido_materno`, `Foto`, `Ninos`, `Estatus`) VALUES
+('1', '1', '1', '1', 'No', '/home/pedrohdez/NetBeansProjects/Prueba/Niños(autorizados)/NiñosAutorizados_1.txt', 'Autorizado'),
+('2', '2', '2', '2', 'No', '/home/pedrohdez/NetBeansProjects/Prueba/Niños(autorizados)/NiñosAutorizados_2.txt', 'Autorizado'),
+('telcarmen', 'carmen', 'amador', 'juarez', '/home/pedrohdez/NetBeansProjects/Prueba/Tutores/tutor1.jpg', '/home/pedrohdez/NetBeansProjects/Prueba/Niños(tutores)/NiñosTutor_telcarmen.txt', 'Tutor'),
+('telgaby', 'brenda', 'hernandez', 'amador', 'No', '/home/pedrohdez/NetBeansProjects/Prueba/Niños(autorizados)/NiñosAutorizados_telgaby.txt', 'Autorizado'),
+('telgaby2', 'gaby', 'hernandez', 'amador', '/home/pedrohdez/NetBeansProjects/Prueba/Tutores/tutor2.jpg', '/home/pedrohdez/NetBeansProjects/Prueba/Niños(autorizados)/NiñosAutorizados_telgaby2.txt', 'Autorizado'),
+('telpedro', 'pedro', 'hernandez', 'hernandez', '/home/pedrohdez/NetBeansProjects/Prueba/Tutores/tutor2.jpg', '/home/pedrohdez/NetBeansProjects/Prueba/Niños(tutores)/NiñosTutor_telpedro.txt', 'Tutor'),
+('telrosa', 'rosa', 'hernandez', 'amador', 'No', '/home/pedrohdez/NetBeansProjects/Prueba/Niños(autorizados)/NiñosAutorizados_telrosa.txt', 'Autorizado');
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `Administradores`
+--
+ALTER TABLE `Administradores`
+  ADD PRIMARY KEY (`Usuario`);
+
+--
+-- Indices de la tabla `Ninos`
+--
+ALTER TABLE `Ninos`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `Recepcionistas`
+--
+ALTER TABLE `Recepcionistas`
+  ADD PRIMARY KEY (`Usuario`);
+
+--
+-- Indices de la tabla `Tutores`
+--
+ALTER TABLE `Tutores`
+  ADD PRIMARY KEY (`Telefono`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `Ninos`
+--
+ALTER TABLE `Ninos`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2019-03-15 18:00:16
