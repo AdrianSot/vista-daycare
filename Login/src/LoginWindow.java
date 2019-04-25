@@ -8,21 +8,32 @@ import java.awt.BorderLayout;
 
 public class LoginWindow extends javax.swing.JFrame {
     /* Salir automatico */
-    enum Status {Main, RecepLog, AdminLog, ExpiredLog};
-    Status state;
+   // enum Status {Main, RecepLog, AdminLog, ExpiredLog};
+   // Status state;
     private final LogPanel logPanel;
+    
+    
+    /*************************************************************************/
     
     public LoginWindow() {
         initComponents();
         
-        state = Status.Main;
         logPanel = new LogPanel();
         add(logPanel, BorderLayout.CENTER);
         
 
         
     }
-
+    
+    /*************************************************************************/
+    
+    public int tipoUsuario()
+    {
+        return logPanel.userType();
+    }
+    
+    /*************************************************************************/
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
