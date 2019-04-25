@@ -21,6 +21,22 @@ public class Main {
         login.setLocation(300, 100);
         login.setTitle("VISTA");
         login.setVisible(true);
+        if(login.tipoUsuario() == 1){
+            login.setVisible(false);
+            SesionAdmin sesionAdmin = new SesionAdmin();
+            sesionAdmin.setSize(600,500);
+            sesionAdmin.setLocation(300,100);
+            sesionAdmin.setTitle("VISTA para Administrador");
+            sesionAdmin.setVisible(true);
+        }else if(login.tipoUsuario() == 0){
+            login.setVisible(false);
+            SesionRecepcionista sesionRecep = new SesionRecepcionista();
+            sesionRecep.setSize(600,500);
+            sesionRecep.setLocation(300,100);
+            sesionRecep.setTitle("VISTA para Usuario");
+            sesionRecep.setVisible(true);
+        }
+            
     }
     
 }

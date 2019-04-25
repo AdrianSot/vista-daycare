@@ -221,6 +221,18 @@ public class LogPanel extends javax.swing.JPanel {
             pfPassword.setText("");
         }
     }
+    
+    /*************************************************************************/
+    
+    public int userType(){
+        if(userStatus == UserStat.AdminLogged)
+            return 1;
+        else if(userStatus == UserStat.RecepLogged) 
+            return 0;
+        else
+            return -1;
+    }
+    
     /*************************************************************************/
     
     private void tfUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsernameActionPerformed
