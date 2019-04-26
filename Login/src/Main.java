@@ -15,7 +15,12 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        LoginWindow login = new LoginWindow();
+        
+        SesionRecepcionista sesionR = new SesionRecepcionista();
+        sesionR.setSize(600,500);
+        sesionR.setLocation(300, 100);
+        sesionR.setVisible(true);
+        /*LoginWindow login = new LoginWindow();
         
         login.setSize(600,500);
         login.setLocation(300, 100);
@@ -29,6 +34,7 @@ public class Main {
             sesionAdmin.setTitle("VISTA para Administrador");
             sesionAdmin.setVisible(true);
         }else if(login.tipoUsuario() == 0){
+            System.out.println("aaaaaa");
             login.setVisible(false);
             SesionRecepcionista sesionRecep = new SesionRecepcionista();
             sesionRecep.setSize(600,500);
@@ -37,6 +43,6 @@ public class Main {
             sesionRecep.setVisible(true);
         }
             
-    }
+    }*/
     
 }

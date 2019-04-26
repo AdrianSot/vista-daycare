@@ -24,7 +24,7 @@ public class LogPanel extends javax.swing.JPanel {
     Connection con;
     public String username;
     public String password;
-    public enum UserStat {FailUser, AdminFailPass, RecepFailPass, RecepLogged, AdminLogged};
+    public enum UserStat {AdminFailPass, RecepFailPass, RecepLogged, AdminLogged};
     public UserStat userStatus;
     /**
      * Creates new form LogPanel
@@ -167,7 +167,7 @@ public class LogPanel extends javax.swing.JPanel {
         }else if(password.equals("")){
             JOptionPane.showMessageDialog(this, "Por favor introduzca una contraseña.", 
                     "ERROR", JOptionPane.PLAIN_MESSAGE);
-        }else if(!password.matches("[^\\s]")){
+        }else if(password.matches("\\s+")){
             JOptionPane.showMessageDialog(this, "La contraseña que ingresaste es incorrecta."
                     + "\nVuelve a intentarlo", "ERROR", JOptionPane.PLAIN_MESSAGE);
             pfPassword.setText("");
@@ -176,34 +176,33 @@ public class LogPanel extends javax.swing.JPanel {
         /* Consulta */
         
         try{
-            con = DriverManager.getConnection("jdbc:mysql//localhost:8080/VISTA", "root", "");
+            System.out.println("esta haciendo algo");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:8080/VISTA", "root", "");
             Statement s = con.createStatement();
-            
-            /* Para tratar de encontrar si coincide el usuario con uno en la BD */
-            ResultSet UserSet = s.executeQuery("SELECT Usuario FROM Recepcionistas WHERE Usuario = '" + username + "';");
-            userStatus = UserStat.RecepFailPass;
-            if(!UserSet.first()){
-                UserSet = s.executeQuery("SELECT Usuario FROM Administradores WHERE Usuario = '" + username + "';");
-                userStatus = UserStat.AdminFailPass;
-                if(!UserSet.first()){
-                    userStatus = UserStat.FailUser;
+            System.out.println("se pudo conectar");
+         
+            ResultSet UserSet = s.executeQuery("SELECT Usuario FROM Recepcionistas WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");
+            System.out.println("u : " + UserSet.toString());
+            if(!UserSet.isBeforeFirst()){
+                 userStatus = UserStat.RecepFailPass;
+                UserSet = s.executeQuery("SELECT Usuario FROM Administradores WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");
+                 System.out.println("u : " + UserSet.toString());
+                if(!UserSet.isBeforeFirst()){
+                    userStatus = UserStat.AdminFailPass;
                     WarningWindow();
                     return;
-                } 
-            }
-            
-            /* Para tratar de encontrar si coincide contraseña con la BD */
-            String p;
-            ResultSet passSet;
-            if(userStatus == UserStat.RecepFailPass){
-                passSet = s.executeQuery("SELECT Contrasena FROM Recepcionistas WHERE Usuario = '" + username + "';");
+                }else{
+                    userStatus = UserStat.AdminLogged;
+                }
             }else
+                userStatus = UserStat.RecepLogged;
+            
            
         }catch(SQLException e){
             Logger.getLogger(LogPanel.class.getName()).log(Level.SEVERE,null, e);
             JOptionPane.showMessageDialog(this, "Por favor intente de nuevo.", "ERROR", JOptionPane.PLAIN_MESSAGE);
         }
-        
+        System.out.println("stat" + userStatus);
     }
     
     /*************************************************************************/
@@ -212,12 +211,7 @@ public class LogPanel extends javax.swing.JPanel {
     {
         if(userStatus == UserStat.AdminFailPass || userStatus == UserStat.RecepFailPass){
             JOptionPane.showMessageDialog(this, "La contraseña que ingresaste es incorrecta."
-                    + "\nVuelve a intentarlo", "ERROR", JOptionPane.PLAIN_MESSAGE);
-            pfPassword.setText("");
-        }else if(userStatus == UserStat.FailUser){
-            JOptionPane.showMessageDialog(this, "El nombre de usuario no coincide con ninguna cuenta."
-                    + "\nContacte a su administrador", "ERROR", JOptionPane.PLAIN_MESSAGE);
-            tfUsername.setText("");
+                    + "\nVuelve a intentarlo000o", "ERROR", JOptionPane.PLAIN_MESSAGE);
             pfPassword.setText("");
         }
     }
