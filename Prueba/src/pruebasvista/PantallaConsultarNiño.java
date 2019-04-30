@@ -152,6 +152,11 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         getContentPane().add(lblApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, -1, 30));
 
         bBuscar.setText("Buscar");
+        bBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(bBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(361, 143, -1, -1));
 
         lblID.setText("ID:");
@@ -167,7 +172,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         
         
         tbTabla.setDefaultRenderer(Object.class, new TablaImagen());
-        
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("ID");
         tabla.addColumn("Foto");
@@ -250,7 +254,113 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
             tfApellidoMaterno.setText("");
             bBuscar.setVisible(true);
         }
+        else{
+            IniciarVentana();
+            buscar = 3;
+            
+        }
     }//GEN-LAST:event_cbBuscarActionPerformed
+
+    private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
+        
+        
+        if(buscar == 1){
+            if(tfNombres.getText().equals("") ){
+            JOptionPane.showMessageDialog(null, "Error. Datos incompletos\nInténtelo de nuevo.");
+            }
+            else{
+                borrarTabla();
+                tbTabla.setDefaultRenderer(Object.class, new TablaImagen());
+                DefaultTableModel tabla = new DefaultTableModel();
+                tabla.addColumn("ID");
+                tabla.addColumn("Foto");
+                tabla.addColumn("Nombres");
+                tabla.addColumn("Apellido Paterno");
+                tabla.addColumn("Apellido Materno");
+                try {    
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    Statement stmt = con.createStatement();
+                    ResultSet rs;
+                    rs = stmt.executeQuery("SELECT * FROM Ninos WHERE ID = "+tfNombres.getText()); 
+                    rs.first();
+
+                    Object[] fila = new Object[5];
+
+                    fila[0] = rs.getObject(1);
+                    foto = getToolkit().getImage(rs.getObject(5).toString());
+                    foto = foto.getScaledInstance(260, 260, 260);
+                    ImageIcon icono = new ImageIcon(foto);
+                    conversion = icono.getImage();
+                    tamaño = conversion.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                    fin = new ImageIcon(tamaño);
+
+
+                    fila[1] = new JLabel(fin);
+                    fila[2] = rs.getObject(2);
+                    fila[3] = rs.getObject(3);
+                    fila[4] = rs.getObject(4);
+
+                    tabla.addRow(fila);
+
+                    tbTabla.setModel(tabla);
+                    tbTabla.setRowHeight(100);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "El niño con ID: "+tfNombres.getText()+" no existe");
+                }
+
+            }
+        }
+        else if(buscar == 2){
+            if(tfNombres.getText().equals("") || tfApellidoPaterno.getText().equals("") || tfApellidoMaterno.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Error. Datos incompletos\nInténtelo de nuevo.");
+            }
+            else{
+                borrarTabla();
+                tbTabla.setDefaultRenderer(Object.class, new TablaImagen());
+                DefaultTableModel tabla = new DefaultTableModel();
+                tabla.addColumn("ID");
+                tabla.addColumn("Foto");
+                tabla.addColumn("Nombres");
+                tabla.addColumn("Apellido Paterno");
+                tabla.addColumn("Apellido Materno");
+                try {    
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    Statement stmt = con.createStatement();
+                    ResultSet rs;
+                    rs = stmt.executeQuery("SELECT * FROM Ninos WHERE Nombres = '"+tfNombres.getText()+"' AND "
+                            + "Apellido_paterno = '"+tfApellidoPaterno.getText()+"' AND Apellido_materno = '"+tfApellidoMaterno.getText()+"'"); 
+                    rs.first();
+
+                    Object[] fila = new Object[5];
+
+                    fila[0] = rs.getObject(1);
+                    foto = getToolkit().getImage(rs.getObject(5).toString());
+                    foto = foto.getScaledInstance(260, 260, 260);
+                    ImageIcon icono = new ImageIcon(foto);
+                    conversion = icono.getImage();
+                    tamaño = conversion.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                    fin = new ImageIcon(tamaño);
+
+
+                    fila[1] = new JLabel(fin);
+                    fila[2] = rs.getObject(2);
+                    fila[3] = rs.getObject(3);
+                    fila[4] = rs.getObject(4);
+
+                    tabla.addRow(fila);
+
+                    tbTabla.setModel(tabla);
+                    tbTabla.setRowHeight(100);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "El niño: "+tfNombres.getText()+" "+tfApellidoPaterno.getText()+" "+tfApellidoMaterno.getText()+
+                            " no existe");
+                }
+                
+            }  
+        }
+    }//GEN-LAST:event_bBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

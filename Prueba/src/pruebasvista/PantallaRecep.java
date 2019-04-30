@@ -16,13 +16,16 @@ public class PantallaRecep extends javax.swing.JFrame {
      */
     PantallaRegistrarNiño pantallaregistrarniño; 
     PantallaConsultarNiño pantallaconsultarniño;
+    PantallaActualizarNiño pantallaactualizarniño;
     public PantallaRecep() {
         initComponents();
         pantallaregistrarniño = new PantallaRegistrarNiño();
         pantallaconsultarniño = new PantallaConsultarNiño();
+        pantallaactualizarniño = new PantallaActualizarNiño();
         
         add(pantallaregistrarniño);
         add(pantallaconsultarniño);
+        add(pantallaactualizarniño);
     }
  
     /**
@@ -71,6 +74,11 @@ public class PantallaRecep extends javax.swing.JFrame {
         jMenu2.add(miConsultarNiño);
 
         miActualizarNiño.setText("Actualizar");
+        miActualizarNiño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miActualizarNiñoActionPerformed(evt);
+            }
+        });
         jMenu2.add(miActualizarNiño);
 
         miEliminarNiño.setText("Eliminar");
@@ -112,6 +120,7 @@ public class PantallaRecep extends javax.swing.JFrame {
 
     private void miRegistrarNIñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegistrarNIñoActionPerformed
         pantallaconsultarniño.setVisible(false);
+        pantallaactualizarniño.setVisible(false);
         pantallaregistrarniño.setVisible(true);
         pantallaregistrarniño.IniciarVentana();
         
@@ -120,9 +129,16 @@ public class PantallaRecep extends javax.swing.JFrame {
 
     private void miConsultarNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarNiñoActionPerformed
         pantallaregistrarniño.setVisible(false);
+        pantallaconsultarniño.setVisible(false);
         pantallaconsultarniño.setVisible(true);
         pantallaconsultarniño.IniciarVentana();
     }//GEN-LAST:event_miConsultarNiñoActionPerformed
+
+    private void miActualizarNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarNiñoActionPerformed
+        pantallaregistrarniño.setVisible(false);
+        pantallaconsultarniño.setVisible(false);
+        pantallaactualizarniño.setVisible(true);
+    }//GEN-LAST:event_miActualizarNiñoActionPerformed
 
     /**
      * @param args the command line arguments

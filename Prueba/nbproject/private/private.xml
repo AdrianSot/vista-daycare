@@ -3,10 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/pedrohdez/NetBeansProjects/Prueba/src/pruebasvista/PantallaRecep.java</file>
-            <file>file:/home/pedrohdez/NetBeansProjects/Prueba/src/pruebasvista/PantallaConsultarRecepcionista.java</file>
-            <file>file:/home/pedrohdez/NetBeansProjects/Prueba/src/pruebasvista/PantallaConsultarNiño.java</file>
-            <file>file:/home/pedrohdez/NetBeansProjects/Prueba/src/pruebasvista/PantallaRegistrarNiño.java</file>
+            <file>file:/home/pedrohdez/VISTA/Prueba/src/pruebasvista/PantallaActualizarNiño.java</file>
+            <file>file:/home/pedrohdez/VISTA/Prueba/src/pruebasvista/PantallaConsultarNiño.java</file>
         </group>
     </open-files>
 </project-private>
