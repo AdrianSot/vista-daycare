@@ -5,6 +5,9 @@
  */
 package pruebasvista;
 
+import java.awt.Component;
+import java.awt.Image;
+import java.io.File;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -12,7 +15,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,15 +32,12 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     /**
      * Creates new form PantallaConsultarNiño
      */
-    String[] id;
-    String[] fotos;
-    String[] nombres;
-    String[] apellidosPaternos;
-    String[] apellidosMaternos;
-    String[] Tutores;
-    String[] Autorizados;
+    
     Connection con;
-    int tamaño;
+    File archivo;
+    Image foto, conversion, tamaño;
+    ImageIcon fin;
+    int buscar;
     
     public PantallaConsultarNiño() {
         initComponents();
@@ -41,6 +46,38 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
+    } 
+    
+    public void borrarTabla(){
+        DefaultTableModel tabla = (DefaultTableModel)tbTabla.getModel();
+        tabla.setRowCount(0);
+    }
+    
+    public void IniciarVentana(){
+        borrarTabla();
+        
+        buscar = 0;
+        archivo = null;
+        foto = conversion = tamaño = null;
+        fin = null;
+        
+        lblNombres.setVisible(false);
+        lblID.setVisible(false);
+        lblApellidoPaterno.setVisible(false);
+        lblApellidoMaterno.setVisible(false);
+        
+        tfNombres.setVisible(false);
+        tfApellidoPaterno.setVisible(false);
+        tfApellidoMaterno.setVisible(false);
+        
+        tfNombres.setText("");
+        tfApellidoPaterno.setText("");
+        tfApellidoMaterno.setText("");
+        cbTodo.setSelected(false);
+        cbBuscar.setSelectedIndex(0);
+        
+        bBuscar.setVisible(false);
+        
     }
 
     /**
@@ -52,86 +89,183 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bConsultarTodo = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbTabla = new javax.swing.JTable();
+        lblTítulo = new javax.swing.JLabel();
+        cbTodo = new javax.swing.JCheckBox();
+        cbBuscar = new javax.swing.JComboBox<>();
+        lblNombres = new javax.swing.JLabel();
+        tfNombres = new javax.swing.JTextField();
+        lblApellidoPaterno = new javax.swing.JLabel();
+        tfApellidoPaterno = new javax.swing.JTextField();
+        tfApellidoMaterno = new javax.swing.JTextField();
+        lblApellidoMaterno = new javax.swing.JLabel();
+        bBuscar = new javax.swing.JButton();
+        lblID = new javax.swing.JLabel();
 
-        bConsultarTodo.setText("Consultar todo");
-        bConsultarTodo.addActionListener(new java.awt.event.ActionListener() {
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tbTabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Foto", "Nombres", "Apellido paterno", "Apellido materno"
+            }
+        ));
+        jScrollPane1.setViewportView(tbTabla);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 179, 736, 221));
+
+        lblTítulo.setText("Consulta de niños");
+        getContentPane().add(lblTítulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 12, -1, -1));
+
+        cbTodo.setText("Mostrar todo");
+        cbTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bConsultarTodoActionPerformed(evt);
+                cbTodoActionPerformed(evt);
             }
         });
+        getContentPane().add(cbTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 50, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(bConsultarTodo)
-                .addContainerGap(267, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(bConsultarTodo)
-                .addContainerGap(235, Short.MAX_VALUE))
-        );
+        cbBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Buscar por:", "ID", "Nombre" }));
+        cbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 48, -1, -1));
+
+        lblNombres.setText("Nombres:");
+        getContentPane().add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, 50));
+        getContentPane().add(tfNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 130, -1));
+
+        lblApellidoPaterno.setText("Apellido Paterno:");
+        getContentPane().add(lblApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 88, -1, 30));
+        getContentPane().add(tfApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, 130, -1));
+        getContentPane().add(tfApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 90, 130, 30));
+
+        lblApellidoMaterno.setText("Apellido Materno:");
+        getContentPane().add(lblApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, -1, 30));
+
+        bBuscar.setText("Buscar");
+        getContentPane().add(bBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(361, 143, -1, -1));
+
+        lblID.setText("ID:");
+        getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 88, -1, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bConsultarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarTodoActionPerformed
+    private void cbTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTodoActionPerformed
+        borrarTabla();
+        IniciarVentana();
+        cbTodo.setSelected(true);
+        
+        
+        tbTabla.setDefaultRenderer(Object.class, new TablaImagen());
+        
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("ID");
         tabla.addColumn("Foto");
         tabla.addColumn("Nombres");
         tabla.addColumn("Apellido Paterno");
         tabla.addColumn("Apellido Materno");
-        tabla.addColumn("Tutor");
-        tabla.addColumn("Autorizados");
         
-        //NÚMERO DE NIÑOS EN LA BASE DE DATOS
+        //SE EXTRAE LA INFORMACIÓN DE LA TABLA DE LOS NIÑOS
          try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");    
             Statement stmt = con.createStatement();
-            ResultSet rs, rs2;
-            rs = stmt.executeQuery("SELECT count(*) FROM Ninos"); //Tamaño de los niños
+            ResultSet rs;
+            rs = stmt.executeQuery("SELECT * FROM Ninos"); 
             rs.first();
-            rs.getString(1);
-            tamaño = Integer.valueOf(rs.getString(1));
             
-            //Arreglo de fotos
-            fotos = new String[tamaño];
-            rs2 = stmt.executeQuery("SELECT Foto FROM Ninos");
-            rs2.first();
-            for(int i = 0; i < tamaño ; i++){
-                fotos[i] = rs2.getString(1);
-                rs2.next();
+            //SE CONSTRUYEN LOS RENGLONES DE LA TABLA A MOSTRAR
+            for(int i = 0 ; i < 5; i++){
+                System.out.println(rs.getObject(i+1).toString());
+            }  
+             
+            do{
+                Object[] fila = new Object[5];
                 
-            }
+                fila[0] = rs.getObject(1);
+                foto = getToolkit().getImage(rs.getObject(5).toString());
+                foto = foto.getScaledInstance(260, 260, 260);
+                ImageIcon icono = new ImageIcon(foto);
+                conversion = icono.getImage();
+                tamaño = conversion.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                fin = new ImageIcon(tamaño);
+                
+                
+                fila[1] = new JLabel(fin);
+                fila[2] = rs.getObject(2);
+                fila[3] = rs.getObject(3);
+                fila[4] = rs.getObject(4);
+                
+                tabla.addRow(fila);
+                
+                tbTabla.setModel(tabla);
+                tbTabla.setRowHeight(100);
+                
+            }while(rs.next());
         } 
         catch (SQLException ex) {
             Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Intente de nuevo.");
         }
-       for(int i = 0 ; i < tamaño ; i++){
-           System.out.println(fotos[i]);
-       }
-       id = new String[tamaño];
-       nombres = new String[tamaño];
-       apellidosPaternos = new String[tamaño];
-       apellidosMaternos = new String[tamaño];
-       Tutores = new String[tamaño];
-       Autorizados = new String[tamaño];
+    }//GEN-LAST:event_cbTodoActionPerformed
+
+    private void cbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBuscarActionPerformed
+        borrarTabla();
         
-         
-        
-        
-    }//GEN-LAST:event_bConsultarTodoActionPerformed
+        if(cbBuscar.getSelectedIndex() == 1){
+            IniciarVentana();
+            cbBuscar.setSelectedIndex(1);
+            buscar = 1;
+            
+            lblNombres.setVisible(false);
+            lblID.setVisible(true);
+            tfNombres.setVisible(true);
+            tfNombres.setText("");
+            bBuscar.setVisible(true);
+            
+        }
+        else if(cbBuscar.getSelectedIndex() == 2){
+            IniciarVentana();
+            buscar = 2;
+            cbBuscar.setSelectedIndex(2);
+            
+            lblNombres.setVisible(true);
+            lblID.setVisible(false);
+            tfNombres.setVisible(true);
+            tfNombres.setText("");
+            lblApellidoPaterno.setVisible(true);
+            tfApellidoPaterno.setVisible(true);
+            tfApellidoPaterno.setText("");
+            lblApellidoMaterno.setVisible(true);
+            tfApellidoMaterno.setVisible(true);
+            tfApellidoMaterno.setText("");
+            bBuscar.setVisible(true);
+        }
+    }//GEN-LAST:event_cbBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bConsultarTodo;
+    private javax.swing.JButton bBuscar;
+    private javax.swing.JComboBox<String> cbBuscar;
+    private javax.swing.JCheckBox cbTodo;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblApellidoMaterno;
+    private javax.swing.JLabel lblApellidoPaterno;
+    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblNombres;
+    private javax.swing.JLabel lblTítulo;
+    private javax.swing.JTable tbTabla;
+    private javax.swing.JTextField tfApellidoMaterno;
+    private javax.swing.JTextField tfApellidoPaterno;
+    private javax.swing.JTextField tfNombres;
     // End of variables declaration//GEN-END:variables
 }

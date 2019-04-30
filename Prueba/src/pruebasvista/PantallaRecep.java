@@ -121,6 +121,7 @@ public class PantallaRecep extends javax.swing.JFrame {
     private void miConsultarNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarNiñoActionPerformed
         pantallaregistrarniño.setVisible(false);
         pantallaconsultarniño.setVisible(true);
+        pantallaconsultarniño.IniciarVentana();
     }//GEN-LAST:event_miConsultarNiñoActionPerformed
 
     /**

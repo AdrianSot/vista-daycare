@@ -54,7 +54,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     int autorizadoSeleccionado;
     Connection con;
     Statement stmt;
-    String directorioRaiz = null;   
+    String directorioRaiz;
     String ruta = null;
     String contenido = null;
     public PantallaRegistrarNiño() {
@@ -65,6 +65,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         catch (ClassNotFoundException ex) {
             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
+        directorioRaiz = System.getProperty("user.dir");
         fotoTutor = null;
         bAnterior.setVisible(false);
         lblTeléfono.setVisible(false);
@@ -111,7 +112,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         fotoNiño = fotoTutor = fotoAutorizado = null;
         fotoNiño2 = fotoTutor2 = fotoAutorizado2 = null;
         file = file2 = file3 = null;
-        directorioRaiz = null;   
+        directorioRaiz = System.getProperty("user.dir");   
         ruta = null;
         contenido = null;
         archivoNiño = archivoTutor = archivoAutorizado1 = archivoAutorizado2 = archivoAutorizado3 = null;
@@ -600,8 +601,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 }
                 
                 if(!errorBaseDatos){
-                    //Se crea el contenido del archivo con las llaves primarias de los autorizados
-                    directorioRaiz = null;   
+                    //Se crea el contenido del archivo con las llaves primarias de los autorizados  
                     ruta = null;
                     contenido = null;
                     file = null;
@@ -622,7 +622,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     //Se crea el archivo que contiene a todos los autorizados
                     if(numAutorizados != 0){
                         try {
-                            directorioRaiz = System.getProperty("user.dir");
                             ruta = directorioRaiz+"/Autorizados/Autorizados"+idNiño+".txt";
                             file = new File(ruta);
                             // Si el archivo no existe es creado
@@ -706,6 +705,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     //Se crea el archivo con los niños del tutor.
                     try {
                         ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+telefonoTutor+".txt";
+                        System.out.println(ruta);
                         contenido = idNiño;
                         file2 = new File(ruta);
                         // Si el archivo no existe es creado
