@@ -177,7 +177,7 @@ public class LogPanel extends javax.swing.JPanel {
         
         try{
             System.out.println("esta haciendo algo");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:8080/VISTA", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
             Statement s = con.createStatement();
             System.out.println("se pudo conectar");
          

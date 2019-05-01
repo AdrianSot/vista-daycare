@@ -15,19 +15,16 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        SesionRecepcionista sesionR = new SesionRecepcionista();
-        sesionR.setSize(600,500);
-        sesionR.setLocation(300, 100);
-        sesionR.setVisible(true);
-        /*LoginWindow login = new LoginWindow();
+
+        LoginWindow login = new LoginWindow();
         
         login.setSize(600,500);
         login.setLocation(300, 100);
         login.setTitle("VISTA");
         login.setVisible(true);
+        
         if(login.tipoUsuario() == 1){
-            login.setVisible(false);
+            login.dispose();
             SesionAdmin sesionAdmin = new SesionAdmin();
             sesionAdmin.setSize(600,500);
             sesionAdmin.setLocation(300,100);
@@ -43,6 +40,6 @@ public class Main {
             sesionRecep.setVisible(true);
         }
             
-    }*/
+    }
     
 }
