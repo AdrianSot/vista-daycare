@@ -496,10 +496,14 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     imagen.setIcon(null);
                 }
             }
+            if(cbAutorizados.getSelectedIndex() == 4){
+                bSiguiente.setEnabled(false);
+            }
             
         }
         else if (donde == Donde.autorizados){
             cbAutorizados.actionPerformed(evt);
+            
             if(cbAutorizados.getSelectedIndex() == 3){
                 
                 if(JOptionPane.showConfirmDialog(null, "¿Está seguro de que no desea agregar ningún autorizado?") == 0){
@@ -574,6 +578,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             //COMIENZA EL REGISTRO EN LA BASE DE DATOS
             if(confirmacion == 0 && !errorFinal){
                 
+                //Se introduce al niño a la base de datos
                 try {
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
                     stmt = con.createStatement();
@@ -585,8 +590,8 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     errorBaseDatos = true;
                 }
                 
-                //Se extrae el ID del niño
                 if(!errorBaseDatos){
+                    //Se extrae el ID del niño
                     try {
                         stmt = con.createStatement();
                         ResultSet rs;
@@ -668,9 +673,9 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     
                 }
                 
-                
-                //Se agrega el tutor a la base de datos
                 if(!errorBaseDatos){
+                    
+                    //Se agrega el tutor a la base de datos
                     try {
                         con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
                         stmt = con.createStatement();
@@ -756,7 +761,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 
                 if(!errorBaseDatos){
                     
-                    //Se crean los archivos de los autorizados
+                    //Se crean los archivos de los niños de los autorizados
                     for(int i = 0 ; i < numAutorizados ; i++){
                     
                         try {
@@ -766,6 +771,8 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             // Si el archivo no existe es creado
                             if (!file3.exists()) {
                                 file3.createNewFile();
+                                
+                                //Se introduce a los autorizados a la bd
                                 try {
                                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
                                     stmt = con.createStatement();
@@ -776,6 +783,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                 } 
                                 catch (SQLException ex) {
                                     Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                                    errorBaseDatos = true;
                                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro de los autorizados. (TELÉFONO REPETIDO)\nIntente de nuevo.");
                                 }
                             }
@@ -883,7 +891,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                   
                 }
                 if(!errorBaseDatos){
-                    JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+                    JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO\n ID DEL NIÑO: "+idNiño);
                     IniciarVentana();
                 }
                 else{
@@ -983,11 +991,18 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             cbAutorizados.setVisible(false);
             lblNumAutorizados.setVisible(false);
             cbNumAutorizados.setVisible(false);
+            bSiguiente.setEnabled(true);
         }
     }//GEN-LAST:event_bAnteriorActionPerformed
 
     private void cbAutorizadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAutorizadosActionPerformed
-    
+        
+        if(cbAutorizados.getSelectedIndex() == 4 && (donde == donde.autorizados)){
+            bSiguiente.setEnabled(false);
+        }
+        else{
+            bSiguiente.setEnabled(true);
+        }
         if(cbAutorizados.getSelectedIndex() == 0){
             
             if(autorizadoSeleccionado == 0){
@@ -1195,7 +1210,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             tfApellidoMaterno.setText("");
             tfTeléfono.setText("");
             imagen.setIcon(null);
-            autorizadoSeleccionado = 4;   
+            autorizadoSeleccionado = 4;
         }
         
     }//GEN-LAST:event_cbAutorizadosActionPerformed

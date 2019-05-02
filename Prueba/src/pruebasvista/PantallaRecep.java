@@ -16,16 +16,13 @@ public class PantallaRecep extends javax.swing.JFrame {
      */
     PantallaRegistrarNiño pantallaregistrarniño; 
     PantallaConsultarNiño pantallaconsultarniño;
-    PantallaActualizarNiño pantallaactualizarniño;
     public PantallaRecep() {
         initComponents();
         pantallaregistrarniño = new PantallaRegistrarNiño();
         pantallaconsultarniño = new PantallaConsultarNiño();
-        pantallaactualizarniño = new PantallaActualizarNiño();
         
         add(pantallaregistrarniño);
         add(pantallaconsultarniño);
-        add(pantallaactualizarniño);
     }
  
     /**
@@ -120,7 +117,6 @@ public class PantallaRecep extends javax.swing.JFrame {
 
     private void miRegistrarNIñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegistrarNIñoActionPerformed
         pantallaconsultarniño.setVisible(false);
-        pantallaactualizarniño.setVisible(false);
         pantallaregistrarniño.setVisible(true);
         pantallaregistrarniño.IniciarVentana();
         
@@ -137,7 +133,6 @@ public class PantallaRecep extends javax.swing.JFrame {
     private void miActualizarNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarNiñoActionPerformed
         pantallaregistrarniño.setVisible(false);
         pantallaconsultarniño.setVisible(false);
-        pantallaactualizarniño.setVisible(true);
     }//GEN-LAST:event_miActualizarNiñoActionPerformed
 
     /**

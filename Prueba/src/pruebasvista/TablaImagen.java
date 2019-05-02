@@ -8,6 +8,7 @@ package pruebasvista;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -19,7 +20,9 @@ public class TablaImagen extends DefaultTableCellRenderer{
     @Override
         public Component getTableCellRendererComponent(JTable table, Object value, 
                 boolean isSelected, boolean hasFocus, int row, int column) {
+            setHorizontalAlignment(SwingConstants.CENTER);
             if(value instanceof JLabel){
+                
                 JLabel lbl = (JLabel)value;
                 return lbl;
             }
