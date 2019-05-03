@@ -24,6 +24,7 @@ public class PantallaRecep extends javax.swing.JFrame {
         add(pantallaregistrarniño);
         add(pantallaconsultarniño);
     }
+    
  
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +37,7 @@ public class PantallaRecep extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        mNiños = new javax.swing.JMenu();
         miRegistrarNIño = new javax.swing.JMenuItem();
         miConsultarNiño = new javax.swing.JMenuItem();
         miActualizarNiño = new javax.swing.JMenuItem();
@@ -52,7 +53,7 @@ public class PantallaRecep extends javax.swing.JFrame {
         jMenu1.setText("Archivo");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Niños");
+        mNiños.setText("Niños");
 
         miRegistrarNIño.setText("Registrar");
         miRegistrarNIño.addActionListener(new java.awt.event.ActionListener() {
@@ -60,7 +61,7 @@ public class PantallaRecep extends javax.swing.JFrame {
                 miRegistrarNIñoActionPerformed(evt);
             }
         });
-        jMenu2.add(miRegistrarNIño);
+        mNiños.add(miRegistrarNIño);
 
         miConsultarNiño.setText("Consultar");
         miConsultarNiño.addActionListener(new java.awt.event.ActionListener() {
@@ -68,20 +69,15 @@ public class PantallaRecep extends javax.swing.JFrame {
                 miConsultarNiñoActionPerformed(evt);
             }
         });
-        jMenu2.add(miConsultarNiño);
+        mNiños.add(miConsultarNiño);
 
         miActualizarNiño.setText("Actualizar");
-        miActualizarNiño.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miActualizarNiñoActionPerformed(evt);
-            }
-        });
-        jMenu2.add(miActualizarNiño);
+        mNiños.add(miActualizarNiño);
 
         miEliminarNiño.setText("Eliminar");
-        jMenu2.add(miEliminarNiño);
+        mNiños.add(miEliminarNiño);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(mNiños);
 
         jMenu3.setText("Tutores");
 
@@ -130,11 +126,6 @@ public class PantallaRecep extends javax.swing.JFrame {
         pantallaconsultarniño.IniciarVentana();
     }//GEN-LAST:event_miConsultarNiñoActionPerformed
 
-    private void miActualizarNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarNiñoActionPerformed
-        pantallaregistrarniño.setVisible(false);
-        pantallaconsultarniño.setVisible(false);
-    }//GEN-LAST:event_miActualizarNiñoActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -172,9 +163,9 @@ public class PantallaRecep extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu mNiños;
     private javax.swing.JMenuItem miActualizarNiño;
     private javax.swing.JMenuItem miActualizarTutor;
     private javax.swing.JMenuItem miConsultarNiño;

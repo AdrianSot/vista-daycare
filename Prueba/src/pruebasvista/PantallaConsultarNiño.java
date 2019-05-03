@@ -35,6 +35,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     Image foto, conversion, tamaño;
     ImageIcon fin, iconoBoton, iconoEquis;
     int buscar;
+    PantallaActualizarNiño pantallaActualizar;
     //Se crean los "botones" de actualizar y eliminar
         JLabel editar = new JLabel();
         JLabel eliminar = new JLabel();
@@ -72,6 +73,8 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         eliminar.setHorizontalAlignment(JLabel.CENTER);
         eliminar.setVerticalAlignment(JLabel.CENTER);
         eliminar.setName("eliminar");
+        pantallaActualizar =  new PantallaActualizarNiño();
+        
     } 
     
     public void borrarTabla(){
@@ -482,7 +485,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         int column = tbTabla.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY()/tbTabla.getRowHeight();
         int ren;
-        String IDNiño;
+        String IDNiño = null;
         
         if(row < tbTabla.getRowCount() && row >= 0 && column < tbTabla.getColumnCount() && column >= 0){
             Object value = tbTabla.getValueAt(row, column);
@@ -490,9 +493,20 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                 JLabel lbl = (JLabel) value;
                 
                 if(lbl.getName().equals("editar")){
-                    System.out.println( tbTabla.getSelectedRow());
+                    
+                    ren = tbTabla.getSelectedRow();
+                    //Se extrae el ID del niño 
+                    IDNiño = tbTabla.getValueAt(ren, 0).toString();
+                    
+                    pantallaActualizar.setLocation(this.getLocationOnScreen());
+                    pantallaActualizar.setVisible(true);
+                    pantallaActualizar.setTitle("EDITAR NIÑO");
+                    pantallaActualizar.RecibirID(IDNiño);
+                    
+                    
                 }
                 else if (lbl.getName().equals("eliminar")){
+                    System.out.println(pantallaActualizar.isActive());
                     if(JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar al niño?") == 0){
                         
                     

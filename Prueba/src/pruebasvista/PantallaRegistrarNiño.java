@@ -46,7 +46,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     ImageIcon[] fotosAutorizados = {null,null,null};
     File archivoNiño, archivoTutor, archivoAutorizado1, archivoAutorizado2, archivoAutorizado3, file, file2, file3;
     String idNiño = null;
-    int confirmacion;
+    int confirmacion, confirmacion2;
     int numAutorizados = 0;
     boolean errorFinal = false, errorBaseDatos = false;
     enum Donde {niños, tutor, autorizados}
@@ -87,10 +87,13 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         cbNumAutorizados.setSelectedIndex(3);
         lblNumAutorizados.setVisible(false);
         cbNumAutorizados.setVisible(false);
+        cbSinTutor.setVisible(false);
+        cbSinTutor.setSelected(false);
     }
     
     public void IniciarVentana(){
         
+        lblInformacion.setText("Información del niño");
         tfNombres.setText("");
         tfApellidoPaterno.setText("");
         tfApellidoMaterno.setText("");
@@ -118,6 +121,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         archivoNiño = archivoTutor = archivoAutorizado1 = archivoAutorizado2 = archivoAutorizado3 = null;
         idNiño = null;
         confirmacion = 999;
+        confirmacion2 = 0;
         numAutorizados = 0;
         errorFinal = errorBaseDatos = false;
         donde = Donde.niños;
@@ -135,6 +139,8 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         cbNumAutorizados.setSelectedIndex(3);
         lblNumAutorizados.setVisible(false);
         cbNumAutorizados.setVisible(false);
+        cbSinTutor.setVisible(false);
+        cbSinTutor.setSelected(false);
     }
 
     /**
@@ -163,6 +169,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         cbAutorizados = new javax.swing.JComboBox<>();
         cbNumAutorizados = new javax.swing.JComboBox<>();
         lblNumAutorizados = new javax.swing.JLabel();
+        cbSinTutor = new javax.swing.JCheckBox();
 
         jLabel1.setText("Registrar niño");
 
@@ -213,6 +220,8 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
 
         lblNumAutorizados.setText("Número de autorizados:");
 
+        cbSinTutor.setText("*Sin tutor");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -257,7 +266,8 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                                 .addGroup(layout.createSequentialGroup()
                                                     .addComponent(lblNombres)
                                                     .addGap(68, 68, 68)
-                                                    .addComponent(tfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                    .addComponent(tfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(cbSinTutor))
                                         .addGap(159, 159, 159)
                                         .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
@@ -306,7 +316,10 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
                                 .addComponent(lblTeléfono))
-                            .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(cbSinTutor)
+                        .addGap(0, 26, Short.MAX_VALUE)))
                 .addGap(12, 12, 12)
                 .addComponent(bTomarFoto)
                 .addGap(35, 35, 35)
@@ -419,14 +432,18 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             lblInformacion.setText("Información del Tutor");
             bAnterior.setVisible(true);
             donde = Donde.tutor;
+            cbSinTutor.setVisible(true);
         }
         else if(donde == Donde.tutor){
-            nombresTutor = tfNombres.getText();
-            apellidoPaternoTutor = tfApellidoPaterno.getText();
-            apellidoMaternoTutor = tfApellidoMaterno.getText();
-            telefonoTutor = tfTeléfono.getText();
+            if(!cbSinTutor.isSelected()){
+                nombresTutor = tfNombres.getText();
+                apellidoPaternoTutor = tfApellidoPaterno.getText();
+                apellidoMaternoTutor = tfApellidoMaterno.getText();
+                telefonoTutor = tfTeléfono.getText();
+            }
+            
             if((nombresTutor.equals("") || apellidoPaternoTutor.equals("") || 
-               apellidoMaternoTutor.equals("") || telefonoTutor.equals("") || archivoTutor == null)){
+               apellidoMaternoTutor.equals("") || telefonoTutor.equals("") || archivoTutor == null)&& !cbSinTutor.isSelected()){
                 
                 if(tfNombres.getText().equals("")){
                     tfNombres.setBackground(Color.red);
@@ -455,6 +472,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Datos incompletos. Por favor, ingrese una \n foto del tutor.");
                     imagen.setForeground(Color.black);
                 }
+                bSiguiente.setEnabled(true);
             }
             else{
                 imagen.setText("SIN FOTO");
@@ -465,6 +483,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 cbAutorizados.setVisible(true);
                 lblNumAutorizados.setVisible(true);
                 cbNumAutorizados.setVisible(true);
+                cbSinTutor.setVisible(false);
                 
                 if(autorizadoSeleccionado == 0){
                     tfNombres.setText(nombresAutorizados[0]);
@@ -496,7 +515,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     imagen.setIcon(null);
                 }
             }
-            if(cbAutorizados.getSelectedIndex() == 4){
+            if(cbAutorizados.getSelectedIndex() == 4 && (donde == donde.autorizados)){
                 bSiguiente.setEnabled(false);
             }
             
@@ -504,12 +523,15 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         else if (donde == Donde.autorizados){
             cbAutorizados.actionPerformed(evt);
             
-            if(cbAutorizados.getSelectedIndex() == 3){
+            if(cbSinTutor.isSelected()){
+                confirmacion2 = JOptionPane.showConfirmDialog(null, "¿Está seguro de que no desea agregar a un tutor?");
+            }
+            if(cbAutorizados.getSelectedIndex() == 3 && confirmacion2 == 0){
                 
                 if(JOptionPane.showConfirmDialog(null, "¿Está seguro de que no desea agregar ningún autorizado?") == 0){
                     numAutorizados = 0;
                      confirmacion = JOptionPane.showConfirmDialog(null, "Niño: "+nombresNiño+" "+apellidoPaternoNiño+" "+apellidoMaternoNiño+"\n"+
-                            "Tutor: "+nombresTutor+" "+apellidoPaternoTutor+" "+apellidoMaternoTutor+" ; Teléfono: "+telefonoTutor,
+                            "Tutor: "+(cbSinTutor.isSelected() ? "SIN TUTOR" : nombresTutor+" "+apellidoPaternoTutor+" "+apellidoMaternoTutor+" ; Teléfono: "+telefonoTutor),
                             "CONFIRME LOS DATOS",1);
                 }
             }
@@ -548,9 +570,9 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 
                 if(!errorFinal){
                 
-                    if(numAutorizados == 3){
+                    if(numAutorizados == 3 && confirmacion2 == 0){
                         confirmacion = JOptionPane.showConfirmDialog(null, "Niño: "+nombresNiño+" "+apellidoPaternoNiño+" "+apellidoMaternoNiño+"\n"+
-                            "Tutor: "+nombresTutor+" "+apellidoPaternoTutor+" "+apellidoMaternoTutor+" ; Teléfono: "+telefonoTutor+"\n"+
+                            "Tutor: "+(cbSinTutor.isSelected() ? "SIN TUTOR" :nombresTutor+" "+apellidoPaternoTutor+" "+apellidoMaternoTutor+" ; Teléfono: "+telefonoTutor)+"\n"+
                             "Autorizado 1: "+nombresAutorizados[0]+" "+apellidosPaternosAutorizados[0]+" "+apellidosMaternosAutorizados[0]+
                             " ; Teléfono: "+teléfonosAutorizados[0]+" ; Foto: "+(fotosAutorizados[0] == null ? "No" : "Sí" )+"\n"+"Autorizado 2: "+
                             nombresAutorizados[1]+" "+apellidosPaternosAutorizados[1]+" "+apellidosMaternosAutorizados[1]+" ; Teléfono: "+
@@ -558,17 +580,17 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             " "+apellidosPaternosAutorizados[2]+" "+apellidosMaternosAutorizados[2]+" ; Teléfono: "+teléfonosAutorizados[2]+" ; Foto: "+
                             (fotosAutorizados[2] == null ? "No" : "Sí" ), "CONFIRME LOS DATOS",0);
                     }
-                    if(numAutorizados == 2){
+                    if(numAutorizados == 2 && confirmacion2 == 0){
                         confirmacion = JOptionPane.showConfirmDialog(null, "Niño: "+nombresNiño+" "+apellidoPaternoNiño+" "+apellidoMaternoNiño+"\n"+
-                            "Tutor: "+nombresTutor+" "+apellidoPaternoTutor+" "+apellidoMaternoTutor+" ; Teléfono: "+telefonoTutor+"\n"+
+                            "Tutor: "+(cbSinTutor.isSelected() ? "SIN TUTOR" :nombresTutor+" "+apellidoPaternoTutor+" "+apellidoMaternoTutor+" ; Teléfono: "+telefonoTutor)+"\n"+
                             "Autorizado 1: "+nombresAutorizados[0]+" "+apellidosPaternosAutorizados[0]+" "+apellidosMaternosAutorizados[0]+" "+
                             "Teléfono: "+teléfonosAutorizados[0]+" ; Foto: "+(fotosAutorizados[0] == null ? "No" : "Sí" )+"\n"+"Autorizado 2: "+
                             nombresAutorizados[1]+" "+apellidosPaternosAutorizados[1]+" "+apellidosMaternosAutorizados[1]+" "+"Teléfono: "+
                             teléfonosAutorizados[1]+" ; Foto: "+(fotosAutorizados[1] == null ? "No" : "Sí" ), "CONFIRME LOS DATOS",0);
                     }
-                    if(numAutorizados == 1){
+                    if(numAutorizados == 1  && confirmacion2 == 0){
                         confirmacion = JOptionPane.showConfirmDialog(null, "Niño: "+nombresNiño+" "+apellidoPaternoNiño+" "+apellidoMaternoNiño+"\n"+
-                            "Tutor: "+nombresTutor+" "+apellidoPaternoTutor+" "+apellidoMaternoTutor+" ; Teléfono: "+telefonoTutor+"\n"+
+                            "Tutor: "+(cbSinTutor.isSelected() ? "SIN TUTOR" :nombresTutor+" "+apellidoPaternoTutor+" "+apellidoMaternoTutor+" ; Teléfono: "+telefonoTutor)+"\n"+
                             "Autorizado 1: "+nombresAutorizados[0]+" "+apellidosPaternosAutorizados[0]+" "+apellidosMaternosAutorizados[0]+" "+
                             "Teléfono: "+teléfonosAutorizados[0]+" ; Foto: "+(fotosAutorizados[0] == null ? "No" : "Sí" ), "CONFIRME LOS DATOS",0);
                     }
@@ -576,13 +598,14 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             }
             
             //COMIENZA EL REGISTRO EN LA BASE DE DATOS
-            if(confirmacion == 0 && !errorFinal){
+            if(confirmacion == 0 && confirmacion2 == 0 && !errorFinal){
                 
                 //Se introduce al niño a la base de datos
                 try {
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
                     stmt = con.createStatement();
-                    stmt.executeUpdate("INSERT INTO Ninos (Nombres,Apellido_paterno,Apellido_materno,Foto,Tutor,Autorizados) VALUES ('"+nombresNiño+"','"+apellidoPaternoNiño+"','"+apellidoMaternoNiño+"','"+archivoNiño.getAbsolutePath()+"','"+telefonoTutor+"','a');");
+                    stmt.executeUpdate("INSERT INTO Ninos (Nombres,Apellido_paterno,Apellido_materno,Foto,Tutor,Autorizados) "+
+                            "VALUES ('"+nombresNiño+"','"+apellidoPaternoNiño+"','"+apellidoMaternoNiño+"','"+archivoNiño.getAbsolutePath()+"','"+(telefonoTutor.equals("") ? "null" : telefonoTutor)+"','a');");
                 } 
                 catch (SQLException ex) {
                     Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -676,84 +699,88 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 if(!errorBaseDatos){
                     
                     //Se agrega el tutor a la base de datos
-                    try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
-                        stmt = con.createStatement();
-                        stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+telefonoTutor+"','"+nombresTutor+"','"+apellidoPaternoTutor+"','"+apellidoMaternoTutor+"','"+archivoTutor+"','a','Tutor')");
-                    } 
-                    catch (SQLException ex) {
-                        Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
-                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del tutor. (TELÉFONO REPETIDO)\nIntente de nuevo.");
-                        try{
-                            file.delete();
-                        }
-                        catch(HeadlessException e){
-                            
-                        }
+                    if(!cbSinTutor.isSelected()){
                         try {
                             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
                             stmt = con.createStatement();
-                            stmt.executeUpdate("DELETE FROM Ninos WHERE ID = "+idNiño);
+                            stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+telefonoTutor+"','"+nombresTutor+"','"+apellidoPaternoTutor+"','"+apellidoMaternoTutor+"','"+archivoTutor+"','a','Tutor')");
                         } 
-                        catch (SQLException ex2) {
+                        catch (SQLException ex) {
                             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
-                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del niño.\nIntente de nuevo.");
-                            errorBaseDatos = true;
+                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del tutor. (TELÉFONO REPETIDO)\nIntente de nuevo.");
+                            try{
+                                file.delete();
+                            }
+                            catch(HeadlessException e){
+
+                            }
+                            try {
+                                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                stmt = con.createStatement();
+                                stmt.executeUpdate("DELETE FROM Ninos WHERE ID = "+idNiño);
+                            } 
+                            catch (SQLException ex2) {
+                                Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                                JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del niño.\nIntente de nuevo.");
+                                errorBaseDatos = true;
+                            }
+                             errorBaseDatos = true;
                         }
-                         errorBaseDatos = true;
-                    }
-                    
+                    }  
                 }
                 
                 
                 if(!errorBaseDatos){
                     //Se crea el archivo con los niños del tutor.
-                    try {
-                        ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+telefonoTutor+".txt";
-                        System.out.println(ruta);
-                        contenido = idNiño;
-                        file2 = new File(ruta);
-                        // Si el archivo no existe es creado
-                        if (!file2.exists()) {
-                            file2.createNewFile();
+                    System.out.println(cbSinTutor.isSelected());
+                    if(!cbSinTutor.isSelected()) {
+                        try {
+                            ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+telefonoTutor+".txt";
+                            System.out.println(ruta);
+                            contenido = idNiño;
+                            file2 = new File(ruta);
+                            // Si el archivo no existe es creado
+                            if (!file2.exists()) {
+                                file2.createNewFile();
+                            }
+                            FileWriter fw = new FileWriter(file2);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(contenido);
+                            bw.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        FileWriter fw = new FileWriter(file2);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        bw.write(contenido);
-                        bw.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
-                    //Se agrega a la info del tutor la ruta del archivo con los niños de éste
-                    try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
-                        stmt = con.createStatement();
-                        stmt.executeUpdate("UPDATE Tutores SET Ninos ='"+ruta+"' WHERE Telefono = '"+telefonoTutor+"'");
-                    } 
-                    catch (SQLException ex) {
-                        Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
-                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del tutor.\nIntente de nuevo.");
-                        
-                        try{
-                            file.delete();
-                            file2.delete();
-                        }
-                        catch(HeadlessException e){
-                            
-                        }
+                        //Se agrega a la info del tutor la ruta del archivo con los niños de éste
                         try {
                             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
                             stmt = con.createStatement();
-                            stmt.executeUpdate("DELETE FROM Ninos WHERE ID = "+idNiño);
+                            stmt.executeUpdate("UPDATE Tutores SET Ninos ='"+ruta+"' WHERE Telefono = '"+telefonoTutor+"'");
                         } 
-                        catch (SQLException ex2) {
+                        catch (SQLException ex) {
                             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
-                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del niño.\nIntente de nuevo.");
+                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del tutor.\nIntente de nuevo.");
+
+                            try{
+                                file.delete();
+                                file2.delete();
+                            }
+                            catch(HeadlessException e){
+
+                            }
+                            try {
+                                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                stmt = con.createStatement();
+                                stmt.executeUpdate("DELETE FROM Ninos WHERE ID = "+idNiño);
+                            } 
+                            catch (SQLException ex2) {
+                                Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                                JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del niño.\nIntente de nuevo.");
+                                errorBaseDatos = true;
+                            }
+
                             errorBaseDatos = true;
                         }
-                        
-                        errorBaseDatos = true;
                     }
                     
                 }
@@ -896,7 +923,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 }
                 else{
                     errorBaseDatos = false;
-                    JOptionPane.showMessageDialog(null, "No fue posible completar el registro.\nRevise la información e inténtelo de nuevo");
+                    JOptionPane.showMessageDialog(null, "Posiblemente el registro no se pudo completar.\nRevise la base de datos.", "ADVERTENCIA", 1);
                 }
                 
             }
@@ -928,6 +955,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             lblInformacion.setText("Información del niño");
             bSiguiente.setText("Siguiente");
             bAnterior.setVisible(false);
+            cbSinTutor.setVisible(false);
             donde = Donde.niños;
         }
         else if(donde == Donde.autorizados){
@@ -992,6 +1020,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             lblNumAutorizados.setVisible(false);
             cbNumAutorizados.setVisible(false);
             bSiguiente.setEnabled(true);
+            cbSinTutor.setVisible(true);
         }
     }//GEN-LAST:event_bAnteriorActionPerformed
 
@@ -1222,6 +1251,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     private javax.swing.JButton bTomarFoto;
     private javax.swing.JComboBox<String> cbAutorizados;
     private javax.swing.JComboBox<String> cbNumAutorizados;
+    private javax.swing.JCheckBox cbSinTutor;
     private javax.swing.JLabel imagen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblApellidoMaterno;
