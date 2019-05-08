@@ -25,12 +25,121 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="lbl1" alignment="1" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lbl2" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                      <Component id="lbl5" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblFotoNiño" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                                      <Component id="lblNiño" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cbEditarNiño" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                      <Component id="tfNombresNiño" min="-2" pref="160" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lblApellidoMaterno" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                          <Component id="tfApellidoMaternoNiño" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lblApellidoPaterno" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                          <Component id="tfApellidoPaternoNiño" min="-2" pref="120" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+                              <Component id="lbl" min="-2" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblFotoTutor" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lblNombreTutor" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                              <Component id="tfNombresTutor" min="-2" pref="160" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lblTeléfonoTutor" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                              <Component id="tfTeléfonoTutor" min="-2" pref="130" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lblApellidoMaternoTutor" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblApellidoPaternoTutor" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="tfApellidoPaternoTutor" max="32767" attributes="0"/>
+                                                  <Component id="tfApellidoMaternoTutor" min="-2" pref="130" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                                      <Component id="lblTutor" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                                      <Component id="cbAsignarTutor" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                      <Component id="cbCambiarTutor" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="264" max="-2" attributes="0"/>
+                              <Component id="bTomarFotoNiño" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="536" max="-2" attributes="0"/>
+                              <Component id="bTomarFotoTutor" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblFotoAut1" min="-2" pref="217" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                      <Component id="bTomarFotoAut1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblFotoAut1" min="-2" pref="217" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="cbEditarAut1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="cbELiminarAut1" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblApellidoPaternoAut1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -45,7 +154,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblNombreAut1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                              <Component id="tfNombreAut1" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="tfNombresAut1" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblTeléfonoAut1" min="-2" max="-2" attributes="0"/>
@@ -54,19 +163,32 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="lbl3" min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblFotoAut2" min="-2" pref="217" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                      <Component id="bTomarFotoAut2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="lblFotoAut2" min="-2" pref="217" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="cbEditarAut2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <Component id="cbEliminarAut2" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblApellidoPaternoAut2" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -81,7 +203,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblNombreAut2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                              <Component id="tfNombreAut2" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="tfNombresAut2" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblTeléfonoAut2" min="-2" max="-2" attributes="0"/>
@@ -90,19 +212,34 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lbl4" min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                      <Component id="bTomarFotoAut3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="lblFotoAut3" min="-2" pref="217" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblFotoAut3" min="-2" pref="217" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="cbEditarAut3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cbEliminarAut3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblApellidoPaternoAut3" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -117,7 +254,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblNombreAut3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                              <Component id="tfNombreAut3" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="tfNombresAut3" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblTeléfonoAut3" min="-2" max="-2" attributes="0"/>
@@ -127,106 +264,17 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lbl2" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblFoto" min="-2" pref="217" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                              <Component id="tfNombresNiño" min="-2" pref="160" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="lblApellidoMaterno" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                                  <Component id="tfApellidoMaternoNiño" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="lblApellidoPaterno" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                                  <Component id="tfApellidoPaternoNiño" min="-2" pref="120" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                                      <Component id="lblNiño" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                      <Component id="lbl" min="-2" pref="10" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblFotoTutor" min="-2" pref="217" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblNombre1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                      <Component id="tfNombreTutor" min="-2" pref="160" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                      <Component id="tfTeléfonoTutor" min="-2" pref="130" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblApellidoMaterno1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblApellidoPaterno1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="tfApellidoPaternoTutor" max="32767" attributes="0"/>
-                                          <Component id="tfApellidoMaternoTutor" min="-2" pref="130" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                              <Component id="lblTutor" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="202" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="lbl5" max="32767" attributes="0"/>
               </Group>
           </Group>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="486" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="717" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="713" max="-2" attributes="0"/>
+                      <Component id="bGuardar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -238,29 +286,33 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      <Component id="lblTutor" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbAsignarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbCambiarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblFotoTutor" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
+                          <Component id="lblFotoTutor" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblNombre1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="tfNombreTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNombreTutor" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="tfNombresTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblApellidoPaterno1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblApellidoPaternoTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="tfApellidoPaternoTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblApellidoMaterno1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblApellidoMaternoTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="tfApellidoMaternoTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTeléfonoTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="tfTeléfonoTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -269,7 +321,10 @@
                   <Component id="lbl" min="-2" pref="235" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblNiño" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblNiño" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbEditarNiño" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -289,9 +344,12 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblFoto" min="-2" pref="184" max="-2" attributes="0"/>
+                              <Component id="lblFotoNiño" min="-2" pref="200" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="bTomarFotoNiño" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bTomarFotoTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -306,9 +364,21 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbEditarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbELiminarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbEditarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbEliminarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbEditarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbEliminarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -316,7 +386,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblNombreAut1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="tfNombreAut1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfNombresAut1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -338,7 +408,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblNombreAut2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="tfNombreAut2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfNombresAut2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -360,7 +430,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblNombreAut3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="tfNombreAut3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfNombresAut3" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -379,21 +449,29 @@
                               </Group>
                           </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="bTomarFotoAut1" min="-2" max="-2" attributes="0"/>
+                              <Component id="bTomarFotoAut2" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="bTomarFotoAut3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Component id="lbl3" alignment="0" min="-2" pref="235" max="-2" attributes="0"/>
                   <Component id="lbl4" alignment="0" min="-2" pref="235" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lbl5" min="-2" pref="10" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="247" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <Component id="bGuardar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="220" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lblFoto">
+    <Component class="javax.swing.JLabel" name="lblFotoNi&#xf1;o">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -401,14 +479,6 @@
           </Border>
         </Property>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="BOTONCITO"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNombre">
       <Properties>
@@ -463,21 +533,21 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblNombre1">
+    <Component class="javax.swing.JLabel" name="lblNombreTutor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombres: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfNombreTutor">
+    <Component class="javax.swing.JTextField" name="tfNombresTutor">
     </Component>
-    <Component class="javax.swing.JLabel" name="lblApellidoPaterno1">
+    <Component class="javax.swing.JLabel" name="lblApellidoPaternoTutor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Apellido paterno:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfApellidoPaternoTutor">
     </Component>
-    <Component class="javax.swing.JLabel" name="lblApellidoMaterno1">
+    <Component class="javax.swing.JLabel" name="lblApellidoMaternoTutor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Apellido materno:"/>
       </Properties>
@@ -497,7 +567,7 @@
         <Property name="text" type="java.lang.String" value="AUTORIZADOS"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="lblTel&#xe9;fonoTutor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tel&#xe9;fono:"/>
       </Properties>
@@ -518,7 +588,7 @@
         <Property name="text" type="java.lang.String" value="Nombres: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfNombreAut1">
+    <Component class="javax.swing.JTextField" name="tfNombresAut1">
     </Component>
     <Component class="javax.swing.JLabel" name="lblApellidoPaternoAut1">
       <Properties>
@@ -566,7 +636,7 @@
         <Property name="text" type="java.lang.String" value="Nombres: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfNombreAut2">
+    <Component class="javax.swing.JTextField" name="tfNombresAut2">
     </Component>
     <Component class="javax.swing.JLabel" name="lblApellidoPaternoAut2">
       <Properties>
@@ -603,7 +673,7 @@
         <Property name="text" type="java.lang.String" value="Nombres: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfNombreAut3">
+    <Component class="javax.swing.JTextField" name="tfNombresAut3">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
       </AuxValues>
@@ -678,10 +748,101 @@
         <Property name="text" type="java.lang.String" value="AUTORIZADO3"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="bTomarFotoNi&#xf1;o">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton2"/>
+        <Property name="text" type="java.lang.String" value="Tomar foto"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="bTomarFotoTutor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="TomarFoto"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="bTomarFotoAut1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tomar foto"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="bTomarFotoAut2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tomar foto"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="bTomarFotoAut3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tomar foto"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbAsignarTutor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Asignar tutor"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbAsignarTutorActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbCambiarTutor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar tutor"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarTutorActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbEditarAut1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEditarAut1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbELiminarAut1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eliminar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbEditarAut2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEditarAut2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbEliminarAut2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eliminar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbEditarAut3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEditarAut3ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbEliminarAut3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eliminar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="bGuardar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guardar cambios"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bGuardarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbEditarNi&#xf1;o">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEditarNi&#xf1;oActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
