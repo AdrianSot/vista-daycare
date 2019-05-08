@@ -57,6 +57,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     String directorioRaiz;
     String ruta = null;
     String contenido = null;
+    
     public PantallaRegistrarNiño() {
         initComponents();
         try {

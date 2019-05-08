@@ -42,11 +42,6 @@ public class PantallaRecep extends javax.swing.JFrame {
         miConsultarNiño = new javax.swing.JMenuItem();
         miActualizarNiño = new javax.swing.JMenuItem();
         miEliminarNiño = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        miRegistrarTutor = new javax.swing.JMenuItem();
-        miConsultarTutor = new javax.swing.JMenuItem();
-        miActualizarTutor = new javax.swing.JMenuItem();
-        miEliminarTutor = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,22 +73,6 @@ public class PantallaRecep extends javax.swing.JFrame {
         mNiños.add(miEliminarNiño);
 
         jMenuBar1.add(mNiños);
-
-        jMenu3.setText("Tutores");
-
-        miRegistrarTutor.setText("Registrar");
-        jMenu3.add(miRegistrarTutor);
-
-        miConsultarTutor.setText("Consultar");
-        jMenu3.add(miConsultarTutor);
-
-        miActualizarTutor.setText("Actualizar");
-        jMenu3.add(miActualizarTutor);
-
-        miEliminarTutor.setText("Eliminar");
-        jMenu3.add(miEliminarTutor);
-
-        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -163,16 +142,11 @@ public class PantallaRecep extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu mNiños;
     private javax.swing.JMenuItem miActualizarNiño;
-    private javax.swing.JMenuItem miActualizarTutor;
     private javax.swing.JMenuItem miConsultarNiño;
-    private javax.swing.JMenuItem miConsultarTutor;
     private javax.swing.JMenuItem miEliminarNiño;
-    private javax.swing.JMenuItem miEliminarTutor;
     private javax.swing.JMenuItem miRegistrarNIño;
-    private javax.swing.JMenuItem miRegistrarTutor;
     // End of variables declaration//GEN-END:variables
 }

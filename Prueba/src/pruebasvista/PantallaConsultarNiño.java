@@ -501,7 +501,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                     pantallaActualizar.setLocation(this.getLocationOnScreen());
                     pantallaActualizar.setVisible(true);
                     pantallaActualizar.setTitle("EDITAR NIÑO");
-                    pantallaActualizar.RecibirID(IDNiño);
+                    pantallaActualizar.MostrarPantalla(IDNiño);
                     
                     
                 }
