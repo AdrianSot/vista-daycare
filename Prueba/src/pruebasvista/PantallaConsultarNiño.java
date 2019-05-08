@@ -147,6 +147,10 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         }
         return vacio;
     }
+    
+    public void Actualizar(){
+        cbTodo.doClick();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -170,7 +174,9 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         lblApellidoMaterno = new javax.swing.JLabel();
         bBuscar = new javax.swing.JButton();
         lblID = new javax.swing.JLabel();
+        bActualizar = new javax.swing.JButton();
 
+        setPreferredSize(new java.awt.Dimension(800, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tbTabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -191,7 +197,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tbTabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 179, 736, 221));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 179, 770, 210));
 
         lblTítulo.setText("Consulta de niños");
         getContentPane().add(lblTítulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 12, -1, -1));
@@ -234,6 +240,14 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
 
         lblID.setText("ID:");
         getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 88, -1, 30));
+
+        bActualizar.setText("jButton1");
+        bActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bActualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -503,7 +517,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                     pantallaActualizar.setTitle("EDITAR NIÑO");
                     pantallaActualizar.MostrarPantalla(IDNiño);
                     
-                    
                 }
                 else if (lbl.getName().equals("eliminar")){
                     System.out.println(pantallaActualizar.isActive());
@@ -651,8 +664,13 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tbTablaMouseClicked
 
+    private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
+        Actualizar();
+    }//GEN-LAST:event_bActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bActualizar;
     private javax.swing.JButton bBuscar;
     private javax.swing.JComboBox<String> cbBuscar;
     private javax.swing.JCheckBox cbTodo;

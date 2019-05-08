@@ -138,7 +138,9 @@
                           <Group type="102" attributes="0">
                               <Component id="cbEditarAut1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cbELiminarAut1" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbEliminarAut1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cbCambiarAut1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -152,7 +154,7 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblNombreAut1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNombresAut1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Component id="tfNombresAut1" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
@@ -188,6 +190,8 @@
                               <Component id="cbEditarAut2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                              <Component id="cbCambiarAut2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -201,7 +205,7 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblNombreAut2" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNombresAut2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Component id="tfNombresAut2" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
@@ -239,6 +243,8 @@
                               <Component id="cbEditarAut3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cbCambiarAut3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -252,7 +258,7 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblNombreAut3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNombresAut3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Component id="tfNombresAut3" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
@@ -367,17 +373,20 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEditarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbELiminarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbEliminarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbCambiarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEditarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbCambiarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEditarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbCambiarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -385,7 +394,7 @@
                           <Component id="lblFotoAut1" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblNombreAut1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="lblNombresAut1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="tfNombresAut1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -407,7 +416,7 @@
                           <Component id="lblFotoAut2" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblNombreAut2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="lblNombresAut2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="tfNombresAut2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -429,7 +438,7 @@
                           <Component id="lblFotoAut3" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblNombreAut3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="lblNombresAut3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="tfNombresAut3" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -583,7 +592,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblNombreAut1">
+    <Component class="javax.swing.JLabel" name="lblNombresAut1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombres: "/>
       </Properties>
@@ -631,7 +640,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblNombreAut2">
+    <Component class="javax.swing.JLabel" name="lblNombresAut2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombres: "/>
       </Properties>
@@ -668,7 +677,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblNombreAut3">
+    <Component class="javax.swing.JLabel" name="lblNombresAut3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombres: "/>
       </Properties>
@@ -752,6 +761,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Tomar foto"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bTomarFotoNi&#xf1;oActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bTomarFotoTutor">
       <Properties>
@@ -797,10 +809,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEditarAut1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="cbELiminarAut1">
+    <Component class="javax.swing.JCheckBox" name="cbEliminarAut1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEliminarAut1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbEditarAut2">
       <Properties>
@@ -814,6 +829,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEliminarAut2ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbEditarAut3">
       <Properties>
@@ -827,6 +845,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEliminarAut3ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bGuardar">
       <Properties>
@@ -842,6 +863,30 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEditarNi&#xf1;oActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbCambiarAut1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarAut1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbCambiarAut2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarAut2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbCambiarAut3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambiar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarAut3ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -20,7 +20,9 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -36,6 +38,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     
     String nombresTutor, apellidoPaternoTutor, apellidoMaternoTutor, teléfonoTutor; //Info del tutor
     
+    String telTutor, telAut1, telAut2, telAut3; //Teléfonos auxiliares
+    
     String nombresAutorizados[] = {"","",""}; //Nombres de los autorizados
     String apellidosPaternosAutorizados[] = {"","",""}; //Apellidos paternos de los autorizados
     String apellidosMaternosAutorizados[] = {"","",""}; // Apellidos maternos de los autorizados
@@ -48,15 +52,25 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     Image fotoNiño, fotoTutor;
     Image fotosAutorizados[] ={null,null,null}; 
     
+    //Direcciones de las imágenes
+    String dirFotoNiño, dirFotoTutor;
+    String dirFotosAutorizados[] = {"No", "No", "No"};
+    
     //Íconos
     ImageIcon iconoNiño, iconoTutor;
     ImageIcon iconosAutorizados[] = {null,null,null};
     
+    //Fotos nuevas
+    File nuevaFotoNiño, nuevaFotoTutor, nuevaFotoAut1, nuevaFotoAut2, nuevaFotoAut3;
     
     Connection con;
     Statement stmt;
     
+    //Teléfonos de tutor y autorizados para corroborar que los celulares no se repitan antes de ejecutar la actualización de la info
     String Teléfonos[];
+    
+    //Bandera para indicar si exite un error; si es así, entonces la actualización de la info no se realiza.
+    boolean error;
     
     public PantallaActualizarNiño() {
         initComponents();
@@ -68,9 +82,38 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         catch (ClassNotFoundException ex) {
             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }
     
     public void IniciarVentana(){
+        //SE EXTRAEN TODOS LOS TELÉFONOS DE LA BD PARA QUE AL MOMENTO DE AJUSTAR LA INFORMACIÓN NO SE REPITAN LOS TUTORES/AUTORIZADOS
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            Statement stmt = con.createStatement();
+            ResultSet rs, rs2;
+            rs = stmt.executeQuery("SELECT COUNT(*) FROM Tutores");
+            rs.first();
+            
+            Teléfonos = new String[Integer.parseInt(rs.getObject(1).toString())];
+            System.out.println("TAMAÑO DEL ARREGLO: "+Teléfonos.length);
+            
+            rs2 = stmt.executeQuery("SELECT Telefono FROM Tutores");
+            rs2.first();
+            
+            for(int i = 0; i < Teléfonos.length ; i++){
+                Teléfonos[i] = rs2.getObject(1).toString();
+                rs2.next();
+            }
+            
+            for(int i = 0 ; i < Teléfonos.length ; i++){
+                System.out.println(Teléfonos[i]);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //DISEÑO DE LAS DIVISIONES
         this.lbl.setBackground(Color.black);
         this.lbl.setOpaque(true);
@@ -139,10 +182,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         tfTeléfonoAut3.setForeground(Color.lightGray);
         
         ID = nombresNiño = apellidoPaternoNiño = apellidoMaternoNiño = ""; //Inicialización de la info del niño
-        fotoNiño = null;
         
         nombresTutor = apellidoPaternoTutor = apellidoMaternoTutor = teléfonoTutor = ""; //Inicialización de la info del tutor
-        fotoTutor = null;
+
+        
+        telTutor = telAut1 = telAut2 = telAut3 = ""; //Se inicializan los teléfonos auxiliares
         
         //Archivos
         archivoNiñosTutor = archivoTutor = archivoAutorizados = "";
@@ -150,8 +194,15 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         //Fotos
         fotoNiño = fotoTutor =null;
         
+        //Dirección a las fotos
+        dirFotoNiño = dirFotoTutor = "No";
+        
+        
         //Iconos
         iconoNiño = iconoTutor = null;
+        
+        //Archivos de fotos nuevas
+        nuevaFotoNiño = nuevaFotoTutor = nuevaFotoAut1 = nuevaFotoAut2 = nuevaFotoAut3 = null;
 
         //Imágenes
         for(int i = 0 ; i < 3 ; i++){
@@ -160,7 +211,91 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             nombresAutorizados[i] = apellidosPaternosAutorizados[i] =
             apellidosMaternosAutorizados[i] = teléfonosAutorizados[i] = "";
         }
-    }    
+    }
+
+    public void DefaultAutorizado1(){
+        tfNombresAut1.setForeground(Color.lightGray);
+        tfApellidoPaternoAut1.setForeground(Color.lightGray);
+        tfApellidoMaternoAut1.setForeground(Color.lightGray);
+        tfTeléfonoAut1.setForeground(Color.lightGray);
+
+        tfNombresAut1.setEditable(false);
+        tfApellidoPaternoAut1.setEditable(false);
+        tfApellidoMaternoAut1.setEditable(false);
+        tfTeléfonoAut1.setEditable(false);
+        
+        tfNombresAut1.setVisible(true);
+        tfApellidoPaternoAut1.setVisible(true);
+        tfApellidoMaternoAut1.setVisible(true);
+        tfTeléfonoAut1.setVisible(true);
+
+        lblNombresAut1.setText("Nombres: ");
+        lblApellidoPaternoAut1.setVisible(true);
+        lblApellidoMaternoAut1.setVisible(true);
+        lblTeléfonoAut1.setVisible(true);
+
+        tfNombresAut1.setText(nombresAutorizados[0]);
+        tfApellidoPaternoAut1.setText(apellidosPaternosAutorizados[0]);
+        tfApellidoMaternoAut1.setText(apellidosMaternosAutorizados[0]);
+        tfTeléfonoAut1.setText(teléfonosAutorizados[0]);
+        bTomarFotoAut1.setEnabled(false);
+    }
+    
+    public void DefaultAutorizado2(){
+        tfNombresAut2.setForeground(Color.lightGray);
+        tfApellidoPaternoAut2.setForeground(Color.lightGray);
+        tfApellidoMaternoAut2.setForeground(Color.lightGray);
+        tfTeléfonoAut2.setForeground(Color.lightGray);
+
+        tfNombresAut2.setEditable(false);
+        tfApellidoPaternoAut2.setEditable(false);
+        tfApellidoMaternoAut2.setEditable(false);
+        tfTeléfonoAut2.setEditable(false);
+        
+        tfNombresAut2.setVisible(true);
+        tfApellidoPaternoAut2.setVisible(true);
+        tfApellidoMaternoAut2.setVisible(true);
+        tfTeléfonoAut2.setVisible(true);
+
+        lblNombresAut2.setText("Nombres: ");
+        lblApellidoPaternoAut2.setVisible(true);
+        lblApellidoMaternoAut2.setVisible(true);
+        lblTeléfonoAut2.setVisible(true);
+
+        tfNombresAut2.setText(nombresAutorizados[1]);
+        tfApellidoPaternoAut2.setText(apellidosPaternosAutorizados[1]);
+        tfApellidoMaternoAut2.setText(apellidosMaternosAutorizados[1]);
+        tfTeléfonoAut2.setText(teléfonosAutorizados[1]);
+        bTomarFotoAut2.setEnabled(false);
+    }
+    
+    public void DefaultAutorizado3(){
+        tfNombresAut3.setForeground(Color.lightGray);
+        tfApellidoPaternoAut3.setForeground(Color.lightGray);
+        tfApellidoMaternoAut3.setForeground(Color.lightGray);
+        tfTeléfonoAut3.setForeground(Color.lightGray);
+
+        tfNombresAut3.setEditable(false);
+        tfApellidoPaternoAut3.setEditable(false);
+        tfApellidoMaternoAut3.setEditable(false);
+        tfTeléfonoAut3.setEditable(false);
+        
+        tfNombresAut3.setVisible(true);
+        tfApellidoPaternoAut3.setVisible(true);
+        tfApellidoMaternoAut3.setVisible(true);
+        tfTeléfonoAut3.setVisible(true);
+
+        lblNombresAut3.setText("Nombres: ");
+        lblApellidoPaternoAut3.setVisible(true);
+        lblApellidoMaternoAut3.setVisible(true);
+        lblTeléfonoAut3.setVisible(true);
+
+        tfNombresAut3.setText(nombresAutorizados[2]);
+        tfApellidoPaternoAut3.setText(apellidosPaternosAutorizados[2]);
+        tfApellidoMaternoAut3.setText(apellidosMaternosAutorizados[2]);
+        tfTeléfonoAut3.setText(teléfonosAutorizados[2]);
+        bTomarFotoAut3.setEnabled(false);
+    }
     
     
     public void MostrarPantalla(String id){
@@ -178,6 +313,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             nombresNiño = rs.getObject(2).toString();
             apellidoPaternoNiño = rs.getObject(3).toString();
             apellidoMaternoNiño = rs.getObject(4).toString();
+            dirFotoNiño = rs.getObject(5).toString();
             fotoNiño = getToolkit().getImage(rs.getObject(5).toString());
             fotoNiño = fotoNiño.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             iconoNiño = new ImageIcon(fotoNiño);
@@ -206,6 +342,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             nombresTutor = rs.getObject(2).toString();
             apellidoPaternoTutor = rs.getObject(3).toString();
             apellidoMaternoTutor = rs.getObject(4).toString();
+            dirFotoTutor = rs.getObject(5).toString();
             fotoTutor = getToolkit().getImage(rs.getObject(5).toString());
             fotoTutor = fotoTutor.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             iconoTutor = new ImageIcon(fotoTutor);
@@ -256,6 +393,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     nombresAutorizados[numAut] = rs.getObject(2).toString();
                     apellidosPaternosAutorizados[numAut] = rs.getObject(3).toString();
                     apellidosMaternosAutorizados[numAut] = rs.getObject(4).toString();
+                    dirFotosAutorizados[numAut] = rs.getObject(5).toString();
                     fotosAutorizados[numAut] = getToolkit().getImage(rs.getObject(5).toString());
                     fotosAutorizados[numAut] = fotosAutorizados[numAut].getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                     iconosAutorizados[numAut] = new ImageIcon(fotosAutorizados[numAut]);
@@ -324,7 +462,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         lblTeléfonoTutor = new javax.swing.JLabel();
         tfTeléfonoTutor = new javax.swing.JTextField();
         lblFotoAut1 = new javax.swing.JLabel();
-        lblNombreAut1 = new javax.swing.JLabel();
+        lblNombresAut1 = new javax.swing.JLabel();
         tfNombresAut1 = new javax.swing.JTextField();
         lblApellidoPaternoAut1 = new javax.swing.JLabel();
         tfApellidoPaternoAut1 = new javax.swing.JTextField();
@@ -334,7 +472,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         tfTeléfonoAut1 = new javax.swing.JTextField();
         lbl2 = new javax.swing.JLabel();
         lblFotoAut2 = new javax.swing.JLabel();
-        lblNombreAut2 = new javax.swing.JLabel();
+        lblNombresAut2 = new javax.swing.JLabel();
         tfNombresAut2 = new javax.swing.JTextField();
         lblApellidoPaternoAut2 = new javax.swing.JLabel();
         tfApellidoPaternoAut2 = new javax.swing.JTextField();
@@ -343,7 +481,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         lblTeléfonoAut2 = new javax.swing.JLabel();
         tfTeléfonoAut2 = new javax.swing.JTextField();
         lblFotoAut3 = new javax.swing.JLabel();
-        lblNombreAut3 = new javax.swing.JLabel();
+        lblNombresAut3 = new javax.swing.JLabel();
         tfNombresAut3 = new javax.swing.JTextField();
         lblApellidoPaternoAut3 = new javax.swing.JLabel();
         tfApellidoPaternoAut3 = new javax.swing.JTextField();
@@ -365,13 +503,16 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbAsignarTutor = new javax.swing.JCheckBox();
         cbCambiarTutor = new javax.swing.JCheckBox();
         cbEditarAut1 = new javax.swing.JCheckBox();
-        cbELiminarAut1 = new javax.swing.JCheckBox();
+        cbEliminarAut1 = new javax.swing.JCheckBox();
         cbEditarAut2 = new javax.swing.JCheckBox();
         cbEliminarAut2 = new javax.swing.JCheckBox();
         cbEditarAut3 = new javax.swing.JCheckBox();
         cbEliminarAut3 = new javax.swing.JCheckBox();
         bGuardar = new javax.swing.JButton();
         cbEditarNiño = new javax.swing.JCheckBox();
+        cbCambiarAut1 = new javax.swing.JCheckBox();
+        cbCambiarAut2 = new javax.swing.JCheckBox();
+        cbCambiarAut3 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -408,7 +549,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
         lblFotoAut1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblNombreAut1.setText("Nombres: ");
+        lblNombresAut1.setText("Nombres: ");
 
         lblApellidoPaternoAut1.setText("Apellido paterno:");
 
@@ -421,7 +562,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
         lblFotoAut2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblNombreAut2.setText("Nombres: ");
+        lblNombresAut2.setText("Nombres: ");
 
         lblApellidoPaternoAut2.setText("Apellido paterno:");
 
@@ -431,7 +572,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
         lblFotoAut3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblNombreAut3.setText("Nombres: ");
+        lblNombresAut3.setText("Nombres: ");
 
         lblApellidoPaternoAut3.setText("Apellido paterno:");
 
@@ -457,6 +598,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         jLabel5.setText("AUTORIZADO3");
 
         bTomarFotoNiño.setText("Tomar foto");
+        bTomarFotoNiño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTomarFotoNiñoActionPerformed(evt);
+            }
+        });
 
         bTomarFotoTutor.setText("TomarFoto");
 
@@ -487,7 +633,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         });
 
-        cbELiminarAut1.setText("Eliminar");
+        cbEliminarAut1.setText("Eliminar");
+        cbEliminarAut1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEliminarAut1ActionPerformed(evt);
+            }
+        });
 
         cbEditarAut2.setText("Editar");
         cbEditarAut2.addActionListener(new java.awt.event.ActionListener() {
@@ -497,6 +648,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         });
 
         cbEliminarAut2.setText("Eliminar");
+        cbEliminarAut2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEliminarAut2ActionPerformed(evt);
+            }
+        });
 
         cbEditarAut3.setText("Editar");
         cbEditarAut3.addActionListener(new java.awt.event.ActionListener() {
@@ -506,6 +662,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         });
 
         cbEliminarAut3.setText("Eliminar");
+        cbEliminarAut3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEliminarAut3ActionPerformed(evt);
+            }
+        });
 
         bGuardar.setText("Guardar cambios");
         bGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -518,6 +679,27 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbEditarNiño.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbEditarNiñoActionPerformed(evt);
+            }
+        });
+
+        cbCambiarAut1.setText("Cambiar");
+        cbCambiarAut1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCambiarAut1ActionPerformed(evt);
+            }
+        });
+
+        cbCambiarAut2.setText("Cambiar");
+        cbCambiarAut2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCambiarAut2ActionPerformed(evt);
+            }
+        });
+
+        cbCambiarAut3.setText("Cambiar");
+        cbCambiarAut3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCambiarAut3ActionPerformed(evt);
             }
         });
 
@@ -613,7 +795,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cbEditarAut1)
                                 .addGap(18, 18, 18)
-                                .addComponent(cbELiminarAut1))
+                                .addComponent(cbEliminarAut1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbCambiarAut1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblApellidoPaternoAut1)
@@ -623,7 +807,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                     .addComponent(tfApellidoPaternoAut1)
                                     .addComponent(tfApellidoMaternoAut1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNombreAut1)
+                                .addComponent(lblNombresAut1)
                                 .addGap(3, 3, 3)
                                 .addComponent(tfNombresAut1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -649,7 +833,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cbEditarAut2)
                                 .addGap(9, 9, 9)
-                                .addComponent(cbEliminarAut2))
+                                .addComponent(cbEliminarAut2)
+                                .addGap(3, 3, 3)
+                                .addComponent(cbCambiarAut2))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblApellidoPaternoAut2)
@@ -659,7 +845,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                     .addComponent(tfApellidoPaternoAut2)
                                     .addComponent(tfApellidoMaternoAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNombreAut2)
+                                .addComponent(lblNombresAut2)
                                 .addGap(3, 3, 3)
                                 .addComponent(tfNombresAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -687,7 +873,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cbEditarAut3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbEliminarAut3))
+                                .addComponent(cbEliminarAut3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbCambiarAut3))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblApellidoPaternoAut3)
@@ -697,7 +885,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                     .addComponent(tfApellidoPaternoAut3)
                                     .addComponent(tfApellidoMaternoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNombreAut3)
+                                .addComponent(lblNombresAut3)
                                 .addGap(3, 3, 3)
                                 .addComponent(tfNombresAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -783,21 +971,24 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel3)
                                 .addComponent(cbEditarAut1)
-                                .addComponent(cbELiminarAut1))
+                                .addComponent(cbEliminarAut1)
+                                .addComponent(cbCambiarAut1))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4)
                                 .addComponent(cbEditarAut2)
-                                .addComponent(cbEliminarAut2))
+                                .addComponent(cbEliminarAut2)
+                                .addComponent(cbCambiarAut2))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel5)
                                 .addComponent(cbEditarAut3)
-                                .addComponent(cbEliminarAut3)))
+                                .addComponent(cbEliminarAut3)
+                                .addComponent(cbCambiarAut3)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblFotoAut1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblNombreAut1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNombresAut1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfNombresAut1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -814,7 +1005,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             .addComponent(lblFotoAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblNombreAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNombresAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfNombresAut2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -831,7 +1022,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             .addComponent(lblFotoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblNombreAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNombresAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfNombresAut3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -880,7 +1071,13 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
            tfNombresNiño.setEditable(false);
            tfApellidoPaternoNiño.setEditable(false);
            tfApellidoMaternoNiño.setEditable(false);
+           
+           tfNombresNiño.setText(nombresNiño);
+           tfApellidoPaternoNiño.setText(apellidoPaternoNiño);
+           tfApellidoMaternoNiño.setText(apellidoMaternoNiño);
            bTomarFotoNiño.setEnabled(false);
+           
+           lblFotoNiño.setIcon(iconoNiño);
         }
     }//GEN-LAST:event_cbEditarNiñoActionPerformed
 
@@ -974,6 +1171,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
     private void cbEditarAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditarAut1ActionPerformed
         if(cbEditarAut1.isSelected()){
+            cbEliminarAut1.setSelected(false);
+            cbCambiarAut1.setSelected(false);
+            DefaultAutorizado1();
             tfNombresAut1.setForeground(Color.black);
             tfApellidoPaternoAut1.setForeground(Color.black);
             tfApellidoMaternoAut1.setForeground(Color.black);
@@ -986,21 +1186,15 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             bTomarFotoAut1.setEnabled(true);
         }
         else{
-            tfNombresAut1.setForeground(Color.lightGray);
-            tfApellidoPaternoAut1.setForeground(Color.lightGray);
-            tfApellidoMaternoAut1.setForeground(Color.lightGray);
-            tfTeléfonoAut1.setForeground(Color.lightGray);
-        
-            tfNombresAut1.setEditable(false);
-            tfApellidoPaternoAut1.setEditable(false);
-            tfApellidoMaternoAut1.setEditable(false);
-            tfTeléfonoAut1.setEditable(false);
-            bTomarFotoAut1.setEnabled(false);
+            DefaultAutorizado1();
         }
     }//GEN-LAST:event_cbEditarAut1ActionPerformed
 
     private void cbEditarAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditarAut2ActionPerformed
         if(cbEditarAut2.isSelected()){
+            cbEliminarAut2.setSelected(false);
+            cbCambiarAut2.setSelected(false);
+            DefaultAutorizado2();
             tfNombresAut2.setForeground(Color.black);
             tfApellidoPaternoAut2.setForeground(Color.black);
             tfApellidoMaternoAut2.setForeground(Color.black);
@@ -1013,21 +1207,15 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             bTomarFotoAut2.setEnabled(true);
         }
         else{
-            tfNombresAut2.setForeground(Color.lightGray);
-            tfApellidoPaternoAut2.setForeground(Color.lightGray);
-            tfApellidoMaternoAut2.setForeground(Color.lightGray);
-            tfTeléfonoAut2.setForeground(Color.lightGray);
-        
-            tfNombresAut2.setEditable(false);
-            tfApellidoPaternoAut2.setEditable(false);
-            tfApellidoMaternoAut2.setEditable(false);
-            tfTeléfonoAut2.setEditable(false);
-            bTomarFotoAut2.setEnabled(false);
+            DefaultAutorizado2();
         }
     }//GEN-LAST:event_cbEditarAut2ActionPerformed
 
     private void cbEditarAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditarAut3ActionPerformed
         if(cbEditarAut3.isSelected()){
+            cbEliminarAut3.setSelected(false);
+            cbCambiarAut3.setSelected(false);
+            DefaultAutorizado3();
             tfNombresAut3.setForeground(Color.black);
             tfApellidoPaternoAut3.setForeground(Color.black);
             tfApellidoMaternoAut3.setForeground(Color.black);
@@ -1040,47 +1228,220 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             bTomarFotoAut3.setEnabled(true);
         }
         else{
-            tfNombresAut3.setForeground(Color.lightGray);
-            tfApellidoPaternoAut3.setForeground(Color.lightGray);
-            tfApellidoMaternoAut3.setForeground(Color.lightGray);
-            tfTeléfonoAut3.setForeground(Color.lightGray);
-        
-            tfNombresAut3.setEditable(false);
-            tfApellidoPaternoAut3.setEditable(false);
-            tfApellidoMaternoAut3.setEditable(false);
-            tfTeléfonoAut3.setEditable(false);
-            bTomarFotoAut3.setEnabled(false);
+            DefaultAutorizado3();
         }
     }//GEN-LAST:event_cbEditarAut3ActionPerformed
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
-            Statement stmt = con.createStatement();
-            ResultSet rs, rs2;
-            rs = stmt.executeQuery("SELECT COUNT(*) FROM Tutores");
-            rs.first();
-            
-            Teléfonos = new String[Integer.parseInt(rs.getObject(1).toString())];
-            System.out.println("TAMAÑO DEL ARREGLO: "+Teléfonos.length);
-            
-            rs2 = stmt.executeQuery("SELECT Telefono FROM Tutores");
-            
-            rs2.first();
-            while(rs2.next()){
-                System.out.println(rs2);
+        //ANTES DE COMENZAR A HACER CAMBIOS SE CHECAN LOS TELÉFONOS
+        /***********************************PENDIENTE************************/
+        for(int i = 0 ; i < Teléfonos.length ; i++){
+            if(cbEditarAut1.isSelected() && tfTeléfonoAut1.getText().equals(Teléfonos[i])){
+                JOptionPane.showMessageDialog(null, "El teléfono del Autorizado 1 se repite. (Ya existe en la base de datos)\nNo se guardarán los cambios", "ERROR", 1);
+                error = true;
+                break;
+            }
+            if(cbEditarAut2.isSelected() && tfTeléfonoAut2.getText().equals(Teléfonos[i])){
+                JOptionPane.showMessageDialog(null, "El teléfono del Autorizado 2 se repite (Ya existe en la base de datos).\nNo se guardarán los cambios", "ERROR", 1);
+                error = true;
+                break;
+            }
+            if(cbEditarAut3.isSelected() && tfTeléfonoAut3.getText().equals(Teléfonos[i])){
+                JOptionPane.showMessageDialog(null, "El teléfono del Autorizado 3 se repite.(Ya existe en la base de datos)\nNo se guardarán los cambios", "ERROR", 1);
+                error = true;
+                break;
             }
             
-            for(int i = 0 ; i < Teléfonos.length ; i++){
-                System.out.println(Teléfonos[i]);
+            if(cbCambiarTutor.isSelected() && tfTeléfonoTutor.getText().equals(Teléfonos[i])){
+                JOptionPane.showMessageDialog(null, "El teléfono del tutor se repite.(Ya existe en la base de datos)\nNo se guardarán los cambios", "ERROR", 1);
+                error = true;
+                break;
             }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-       
+        //SI NO HAY ERROR SE PROCEDE CON LA ACTUALIZACIÓN DE TODA LA INFORMACIÓN
+        if(!error){
+            //Actualización de la información del niño
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate("UPDATE Ninos SET Nombres = '"+tfNombresNiño.getText()+"', Apellido_paterno = '"+
+                     tfApellidoPaternoNiño.getText()+"', Apellido_materno = '"+tfApellidoMaternoNiño.getText()+"', Foto = '"+
+                      (nuevaFotoNiño == null ? dirFotoNiño : nuevaFotoNiño.getAbsolutePath() )+"' WHERE ID = "+ID);
+            } catch (SQLException ex) {
+                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            
+        }
+        
+        
+        
+        
     }//GEN-LAST:event_bGuardarActionPerformed
+
+    private void cbCambiarAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarAut1ActionPerformed
+        if(cbCambiarAut1.isSelected()){
+            cbEditarAut1.setSelected(false);
+            cbEliminarAut1.setSelected(false);
+            DefaultAutorizado1();
+            
+            lblNombresAut1.setText("Teléfono: ");
+            tfNombresAut1.setText("");
+            tfNombresAut1.setForeground(Color.black);
+            tfNombresAut1.setEditable(true);
+            lblApellidoPaternoAut1.setVisible(false);
+            lblApellidoMaternoAut1.setVisible(false);
+            lblTeléfonoAut1.setVisible(false);
+            
+            tfApellidoPaternoAut1.setVisible(false);
+            tfApellidoMaternoAut1.setVisible(false);
+            tfTeléfonoAut1.setVisible(false);
+        }
+        else{
+             DefaultAutorizado1();
+        }
+    }//GEN-LAST:event_cbCambiarAut1ActionPerformed
+
+    private void cbEliminarAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEliminarAut1ActionPerformed
+        if(cbEliminarAut1.isSelected()){
+            if(cbEditarAut1.isSelected())cbEditarAut1.setSelected(false);
+            if(cbCambiarAut1.isSelected())cbCambiarAut1.setSelected(false);
+            DefaultAutorizado1();
+            
+            tfNombresAut1.setForeground(Color.lightGray);
+            tfApellidoPaternoAut1.setForeground(Color.lightGray);
+            tfApellidoMaternoAut1.setForeground(Color.lightGray);
+            tfTeléfonoAut1.setForeground(Color.lightGray);
+            
+            tfNombresAut1.setEditable(false);
+            tfApellidoPaternoAut1.setEditable(false);
+            tfApellidoMaternoAut1.setEditable(false);
+            tfTeléfonoAut1.setEditable(false);
+            
+            tfNombresAut1.setText(nombresAutorizados[0]);
+            tfApellidoPaternoAut1.setText(apellidosPaternosAutorizados[0]);
+            tfApellidoMaternoAut1.setText(apellidosMaternosAutorizados[0]);
+            tfTeléfonoAut1.setText(teléfonosAutorizados[0]);
+            
+        }
+        else{
+             DefaultAutorizado1();
+        }
+    }//GEN-LAST:event_cbEliminarAut1ActionPerformed
+
+    private void cbEliminarAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEliminarAut2ActionPerformed
+        if(cbEliminarAut2.isSelected()){
+            if(cbEditarAut2.isSelected())cbEditarAut2.setSelected(false);
+            if(cbCambiarAut2.isSelected())cbCambiarAut2.setSelected(false);
+            DefaultAutorizado2();
+            
+            tfNombresAut2.setForeground(Color.lightGray);
+            tfApellidoPaternoAut2.setForeground(Color.lightGray);
+            tfApellidoMaternoAut2.setForeground(Color.lightGray);
+            tfTeléfonoAut2.setForeground(Color.lightGray);
+            
+            tfNombresAut2.setEditable(false);
+            tfApellidoPaternoAut2.setEditable(false);
+            tfApellidoMaternoAut2.setEditable(false);
+            tfTeléfonoAut2.setEditable(false);
+            
+            tfNombresAut2.setText(nombresAutorizados[1]);
+            tfApellidoPaternoAut2.setText(apellidosPaternosAutorizados[1]);
+            tfApellidoMaternoAut2.setText(apellidosMaternosAutorizados[1]);
+            tfTeléfonoAut2.setText(teléfonosAutorizados[1]);
+            
+        }
+        else{
+             DefaultAutorizado2();
+        }
+    }//GEN-LAST:event_cbEliminarAut2ActionPerformed
+
+    private void cbCambiarAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarAut2ActionPerformed
+        if(cbCambiarAut2.isSelected()){
+            cbEditarAut2.setSelected(false);
+            cbEliminarAut2.setSelected(false);
+            DefaultAutorizado2();
+            
+            lblNombresAut2.setText("Teléfono: ");
+            tfNombresAut2.setText("");
+            tfNombresAut2.setForeground(Color.black);
+            tfNombresAut2.setEditable(true);
+            lblApellidoPaternoAut2.setVisible(false);
+            lblApellidoMaternoAut2.setVisible(false);
+            lblTeléfonoAut2.setVisible(false);
+            
+            tfApellidoPaternoAut2.setVisible(false);
+            tfApellidoMaternoAut2.setVisible(false);
+            tfTeléfonoAut2.setVisible(false);
+        }
+        else{
+             DefaultAutorizado2();
+        }
+    }//GEN-LAST:event_cbCambiarAut2ActionPerformed
+
+    private void cbEliminarAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEliminarAut3ActionPerformed
+        if(cbEliminarAut3.isSelected()){
+            if(cbEditarAut3.isSelected())cbEditarAut3.setSelected(false);
+            if(cbCambiarAut3.isSelected())cbCambiarAut3.setSelected(false);
+            DefaultAutorizado3();
+            
+            tfNombresAut3.setForeground(Color.lightGray);
+            tfApellidoPaternoAut3.setForeground(Color.lightGray);
+            tfApellidoMaternoAut3.setForeground(Color.lightGray);
+            tfTeléfonoAut3.setForeground(Color.lightGray);
+            
+            tfNombresAut3.setEditable(false);
+            tfApellidoPaternoAut3.setEditable(false);
+            tfApellidoMaternoAut3.setEditable(false);
+            tfTeléfonoAut3.setEditable(false);
+            
+            tfNombresAut3.setText(nombresAutorizados[2]);
+            tfApellidoPaternoAut3.setText(apellidosPaternosAutorizados[2]);
+            tfApellidoMaternoAut3.setText(apellidosMaternosAutorizados[2]);
+            tfTeléfonoAut3.setText(teléfonosAutorizados[2]);
+            
+        }
+        else{
+             DefaultAutorizado3();
+        }
+    }//GEN-LAST:event_cbEliminarAut3ActionPerformed
+
+    private void cbCambiarAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarAut3ActionPerformed
+        if(cbCambiarAut3.isSelected()){
+            cbEditarAut3.setSelected(false);
+            cbEliminarAut3.setSelected(false);
+            DefaultAutorizado3();
+            
+            lblNombresAut3.setText("Teléfono: ");
+            tfNombresAut3.setText("");
+            tfNombresAut3.setForeground(Color.black);
+            tfNombresAut3.setEditable(true);
+            lblApellidoPaternoAut3.setVisible(false);
+            lblApellidoMaternoAut3.setVisible(false);
+            lblTeléfonoAut3.setVisible(false);
+            
+            tfApellidoPaternoAut3.setVisible(false);
+            tfApellidoMaternoAut3.setVisible(false);
+            tfTeléfonoAut3.setVisible(false);
+        }
+        else{
+             DefaultAutorizado3();
+        }
+    }//GEN-LAST:event_cbCambiarAut3ActionPerformed
+
+    private void bTomarFotoNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoNiñoActionPerformed
+        JFileChooser ficAbrirArchivo = new JFileChooser();
+        ficAbrirArchivo.setFileFilter(new FileNameExtensionFilter("archivo de imagen", "jpg", "jpeg"));
+        int respuesta=ficAbrirArchivo.showOpenDialog(this);
+        
+        if(respuesta==JFileChooser.APPROVE_OPTION ){
+            nuevaFotoNiño = ficAbrirArchivo.getSelectedFile();
+            Image foto = getToolkit().getImage(nuevaFotoNiño.getAbsolutePath());
+            foto = foto.getScaledInstance(260, 260, 260);
+            lblFotoNiño.setIcon(new ImageIcon(foto));
+        }
+    }//GEN-LAST:event_bTomarFotoNiñoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1125,12 +1486,15 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private javax.swing.JButton bTomarFotoNiño;
     private javax.swing.JButton bTomarFotoTutor;
     private javax.swing.JCheckBox cbAsignarTutor;
+    private javax.swing.JCheckBox cbCambiarAut1;
+    private javax.swing.JCheckBox cbCambiarAut2;
+    private javax.swing.JCheckBox cbCambiarAut3;
     private javax.swing.JCheckBox cbCambiarTutor;
-    private javax.swing.JCheckBox cbELiminarAut1;
     private javax.swing.JCheckBox cbEditarAut1;
     private javax.swing.JCheckBox cbEditarAut2;
     private javax.swing.JCheckBox cbEditarAut3;
     private javax.swing.JCheckBox cbEditarNiño;
+    private javax.swing.JCheckBox cbEliminarAut1;
     private javax.swing.JCheckBox cbEliminarAut2;
     private javax.swing.JCheckBox cbEliminarAut3;
     private javax.swing.JLabel jLabel1;
@@ -1160,10 +1524,10 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private javax.swing.JLabel lblFotoTutor;
     private javax.swing.JLabel lblNiño;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblNombreAut1;
-    private javax.swing.JLabel lblNombreAut2;
-    private javax.swing.JLabel lblNombreAut3;
     private javax.swing.JLabel lblNombreTutor;
+    private javax.swing.JLabel lblNombresAut1;
+    private javax.swing.JLabel lblNombresAut2;
+    private javax.swing.JLabel lblNombresAut3;
     private javax.swing.JLabel lblTeléfonoAut1;
     private javax.swing.JLabel lblTeléfonoAut2;
     private javax.swing.JLabel lblTeléfonoAut3;
