@@ -33,6 +33,9 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     /**
      * Creates new form PantallaRegistrarNIño
      */
+    //Teléfonos de tutor y autorizados para corroborar que los celulares no se repitan antes de ejecutar la actualización de la info
+    String Teléfonos[];
+    
     String nombresNiño, apellidoPaternoNiño, apellidoMaternoNiño,nombresTutor, 
            apellidoPaternoTutor, apellidoMaternoTutor, telefonoTutor, nombresAutorizado,
            apellidoPaternoAutorizado, apellidoMaternoAutorizado, teléfonoAutorizado;
@@ -93,6 +96,33 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     }
     
     public void IniciarVentana(){
+        //SE EXTRAEN TODOS LOS TELÉFONOS DE LA BD PARA QUE AL MOMENTO DE AJUSTAR LA INFORMACIÓN NO SE REPITAN LOS TUTORES/AUTORIZADOS
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            Statement stmt = con.createStatement();
+            ResultSet rs, rs2;
+            rs = stmt.executeQuery("SELECT COUNT(*) FROM Tutores");
+            rs.first();
+            
+            Teléfonos = new String[Integer.parseInt(rs.getObject(1).toString())];
+            System.out.println("TAMAÑO DEL ARREGLO: "+Teléfonos.length);
+            
+            rs2 = stmt.executeQuery("SELECT Telefono FROM Tutores");
+            rs2.first();
+            
+            for(int i = 0; i < Teléfonos.length ; i++){
+                Teléfonos[i] = rs2.getObject(1).toString();
+                rs2.next();
+            }
+            
+            for(int i = 0 ; i < Teléfonos.length ; i++){
+                System.out.println(Teléfonos[i]);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         lblInformacion.setText("Información del niño");
         tfNombres.setText("");
@@ -222,6 +252,11 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         lblNumAutorizados.setText("Número de autorizados:");
 
         cbSinTutor.setText("*Sin tutor");
+        cbSinTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSinTutorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -595,6 +630,30 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             "Autorizado 1: "+nombresAutorizados[0]+" "+apellidosPaternosAutorizados[0]+" "+apellidosMaternosAutorizados[0]+" "+
                             "Teléfono: "+teléfonosAutorizados[0]+" ; Foto: "+(fotosAutorizados[0] == null ? "No" : "Sí" ), "CONFIRME LOS DATOS",0);
                     }
+                }
+            }
+            
+            for(int i = 0 ; i < Teléfonos.length ; i++){
+                if(telefonoTutor.equals(Teléfonos[i])){
+                    JOptionPane.showMessageDialog(null, "El teléfono del tutor 1 se repite. (Ya existe en la base de datos)\nNo se guardarán los cambios", "ERROR", 1);
+                    errorFinal = true;
+                    break;
+                }
+                if(teléfonosAutorizados[0].equals(Teléfonos[i])){
+                    JOptionPane.showMessageDialog(null, "El teléfono del Autorizado 1 se repite (Ya existe en la base de datos).\nNo se guardarán los cambios", "ERROR", 1);
+                    errorFinal = true;
+                    break;
+                }
+                if(teléfonosAutorizados[1].equals(Teléfonos[i])){
+                    JOptionPane.showMessageDialog(null, "El teléfono del Autorizado 2 se repite (Ya existe en la base de datos).\nNo se guardarán los cambios", "ERROR", 1);
+                    errorFinal = true;
+                    break;
+                }
+
+                if(teléfonosAutorizados[2].equals(Teléfonos[i])){
+                    JOptionPane.showMessageDialog(null, "El teléfono del Autorizado 2 se repite (Ya existe en la base de datos).\nNo se guardarán los cambios", "ERROR", 1);
+                    errorFinal = true;
+                    break;
                 }
             }
             
@@ -1244,6 +1303,10 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_cbAutorizadosActionPerformed
+
+    private void cbSinTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSinTutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbSinTutorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

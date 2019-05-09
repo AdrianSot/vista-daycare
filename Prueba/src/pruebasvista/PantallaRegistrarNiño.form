@@ -273,6 +273,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="*Sin tutor"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbSinTutorActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

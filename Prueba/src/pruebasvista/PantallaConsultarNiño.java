@@ -517,6 +517,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                     pantallaActualizar.setTitle("EDITAR NIÑO");
                     pantallaActualizar.MostrarPantalla(IDNiño);
                     
+                    
                 }
                 else if (lbl.getName().equals("eliminar")){
                     System.out.println(pantallaActualizar.isActive());
@@ -534,7 +535,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                         //Info del niño, archivo de los niños del tutor, foto del tutor
                         ResultSet rs = null, rs2 = null, rs3 = null;
                         String[] infoNiño = new String[3];
-                        String archivoTutor;
+                        String archivoTutor = "";
                         String[] fotos = new String[5];
 
                         try {
@@ -555,7 +556,13 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                             rs2.first();
 
                             //Se guarda el archivo con los niños del tutor.
-                            archivoTutor = rs2.getObject(1).toString();
+                            try{
+                                archivoTutor = rs2.getObject(1).toString();
+                            }
+                            catch(SQLException e){
+                                
+                            }
+                            
 
 
                             //Si el tutor sólo tenía a ese niño asignado, entonces se elimina su información de los registros.
@@ -591,7 +598,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                 }
 
                                 catch(IOException e){
-                                    JOptionPane.showMessageDialog(null, "Error con la lectura del archivo de los autorizados del niño.");
+                                    JOptionPane.showMessageDialog(null, "No existe archivo de autorizados del niño");
                                 }
                                 numAutorizado = 0;
 

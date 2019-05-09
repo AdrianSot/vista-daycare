@@ -9,8 +9,10 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -61,7 +63,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     ImageIcon iconosAutorizados[] = {null,null,null};
     
     //Fotos nuevas
-    File nuevaFotoNiño, nuevaFotoTutor, nuevaFotoAut1, nuevaFotoAut2, nuevaFotoAut3;
+    File nuevaFotoNiño, nuevaFotoTutor, nuevaFotoAut1, nuevaFotoAut2, nuevaFotoAut3, archTutor, archAutorizados, archNiño;
     
     Connection con;
     Statement stmt;
@@ -70,7 +72,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     String Teléfonos[];
     
     //Bandera para indicar si exite un error; si es así, entonces la actualización de la info no se realiza.
-    boolean error;
+    //confirmacion: Confirmacion de que se quieren guardar los cambios.
+    boolean error, confirmacion, datosIncompletos;
+    String Estatus; //Bandera para saber si un tutor es autorizado o tutor.
+    
+    //Rutas
+    String ruta, directorioRaiz;  
     
     public PantallaActualizarNiño() {
         initComponents();
@@ -119,6 +126,48 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         this.lbl.setOpaque(true);
         this.lbl1.setBackground(Color.black);
         this.lbl1.setOpaque(true);
+        
+        //NOMBRES DE LAS ETIQUETAS
+        lblNombreTutor.setText("Nombres: ");
+        lblNombresAut1.setText("Nombres: ");
+        lblNombresAut2.setText("Nombres: ");
+        lblNombresAut3.setText("Nombres: ");
+        
+        //VISUALIZACIÓN DE LAS ETIQUETAS
+        //Tutor
+        lblNombreTutor.setVisible(true);
+        lblApellidoPaternoTutor.setVisible(true);
+        lblApellidoMaternoTutor.setVisible(true);
+        lblTeléfonoTutor.setVisible(true);
+        //Autorizado1
+        lblNombresAut1.setVisible(true);
+        lblApellidoPaternoAut1.setVisible(true);
+        lblApellidoMaternoAut1.setVisible(true);
+        lblTeléfonoAut1.setVisible(true);
+        //Autorizado2
+        lblNombresAut2.setVisible(true);
+        lblApellidoPaternoAut2.setVisible(true);
+        lblApellidoMaternoAut2.setVisible(true);
+        lblTeléfonoAut2.setVisible(true);
+        //Autorizado3
+        lblNombresAut3.setVisible(true);
+        lblApellidoPaternoAut3.setVisible(true);
+        lblApellidoMaternoAut3.setVisible(true);
+        lblTeléfonoAut3.setVisible(true);
+        
+        //DESSELECCIÓN DE LOS CHECKBOXES
+        cbEditarNiño.setSelected(false);
+        cbAsignarTutor.setSelected(false);
+        cbCambiarTutor.setSelected(false);
+        cbEditarAut1.setSelected(false);
+        cbEliminarAut1.setSelected(false);
+        cbCambiarAut1.setSelected(false);
+        cbEditarAut2.setSelected(false);
+        cbEliminarAut2.setSelected(false);
+        cbCambiarAut2.setSelected(false);
+        cbEditarAut3.setSelected(false);
+        cbEliminarAut3.setSelected(false);
+        cbEditarAut3.setSelected(false);
         
         //DESHABILITACIÓN DE LOS BOTONES PARA TOMAR FOTOS
         bTomarFotoNiño.setEnabled(false);
@@ -181,6 +230,34 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         tfApellidoMaternoAut3.setForeground(Color.lightGray);
         tfTeléfonoAut3.setForeground(Color.lightGray);
         
+        //SE HABILITA LA VISUALIZACIÓN DE TODOS LOS CAMPOS DE TEXTO
+        //Niños
+        tfNombresNiño.setVisible(true);
+        tfApellidoPaternoNiño.setVisible(true);
+        tfApellidoMaternoNiño.setVisible(true);
+        //tutor
+        tfNombresTutor.setVisible(true);
+        tfApellidoPaternoTutor.setVisible(true);
+        tfApellidoMaternoTutor.setVisible(true);
+        tfTeléfonoTutor.setVisible(true);
+        //Autorizado1
+        tfNombresAut1.setVisible(true);
+        tfApellidoPaternoAut1.setVisible(true);
+        tfApellidoMaternoAut1.setVisible(true);
+        tfTeléfonoAut1.setVisible(true);
+        //Autorizado2
+        tfNombresAut2.setVisible(true);
+        tfApellidoPaternoAut2.setVisible(true);
+        tfApellidoMaternoAut2.setVisible(true);
+        tfTeléfonoAut2.setVisible(true);
+        //Autorizado3
+        tfNombresAut3.setVisible(true);
+        tfApellidoPaternoAut3.setVisible(true);
+        tfApellidoMaternoAut3.setVisible(true);
+        tfTeléfonoAut3.setVisible(true);
+        
+        
+        
         ID = nombresNiño = apellidoPaternoNiño = apellidoMaternoNiño = ""; //Inicialización de la info del niño
         
         nombresTutor = apellidoPaternoTutor = apellidoMaternoTutor = teléfonoTutor = ""; //Inicialización de la info del tutor
@@ -211,6 +288,13 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             nombresAutorizados[i] = apellidosPaternosAutorizados[i] =
             apellidosMaternosAutorizados[i] = teléfonosAutorizados[i] = "";
         }
+        
+        //Banderas
+        error = confirmacion = datosIncompletos = false;
+        Estatus = "";
+        
+        //Rutas
+        ruta = ""; directorioRaiz = System.getProperty("user.dir");  
     }
 
     public void DefaultAutorizado1(){
@@ -297,6 +381,29 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         bTomarFotoAut3.setEnabled(false);
     }
     
+    public void AgregarIDNiño(String direccion, String ID){
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+        
+        try {
+            fw = new FileWriter(direccion, true);
+            bw = new BufferedWriter(fw);
+            bw.write("\n"+ID);
+        } catch (IOException ex) {
+            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+            try {
+                            //Cierra instancias de FileWriter y BufferedWriter
+                if (bw != null)
+                    bw.close();
+                if (fw != null)
+                    fw.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
     
     public void MostrarPantalla(String id){
         IniciarVentana();
@@ -317,7 +424,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             fotoNiño = getToolkit().getImage(rs.getObject(5).toString());
             fotoNiño = fotoNiño.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             iconoNiño = new ImageIcon(fotoNiño);
-            teléfonoTutor = rs.getObject(6).toString();
+            teléfonoTutor = ( rs.getObject(6).toString().equals("null") ? "" : rs.getObject(6).toString());
             archivoAutorizados = rs.getObject(7).toString();
             
         } catch (SQLException ex) {
@@ -376,7 +483,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         }
 
         catch(IOException e){
-            JOptionPane.showMessageDialog(null, "Error con la lectura del archivo de los autorizados del niño.");
         }
         
         numAut = 0;
@@ -429,6 +535,16 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         tfApellidoPaternoAut3.setText(apellidosPaternosAutorizados[2]);
         tfApellidoMaternoAut3.setText(apellidosMaternosAutorizados[2]);
         tfTeléfonoAut3.setText(teléfonosAutorizados[2]);
+        
+        //SI EL NIÑO YA TIENE UN TUTOR, ENTONCES SE BLOQUEA LA OPCIÓN DE ASIGNARLE UNO
+        if(tfNombresTutor.getText().equals("")){
+            cbAsignarTutor.setEnabled(true);
+            cbCambiarTutor.setEnabled(false);
+        }
+        else{
+            cbAsignarTutor.setEnabled(false);
+            cbCambiarTutor.setEnabled(true);
+        }
     }
     
     /**
@@ -1233,6 +1349,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     }//GEN-LAST:event_cbEditarAut3ActionPerformed
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
+        
+        if(JOptionPane.showConfirmDialog(null, "¿Está seguro que desea guardar los cambios?",
+           "CONFIRME LOS DATOS",1) == 0){
+            confirmacion = true;
+        }
+        
         //ANTES DE COMENZAR A HACER CAMBIOS SE CHECAN LOS TELÉFONOS
         /***********************************PENDIENTE************************/
         for(int i = 0 ; i < Teléfonos.length ; i++){
@@ -1259,24 +1381,73 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         }
         
-        //SI NO HAY ERROR SE PROCEDE CON LA ACTUALIZACIÓN DE TODA LA INFORMACIÓN
-        if(!error){
-            //Actualización de la información del niño
-            try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
-                Statement stmt = con.createStatement();
-                stmt.executeUpdate("UPDATE Ninos SET Nombres = '"+tfNombresNiño.getText()+"', Apellido_paterno = '"+
-                     tfApellidoPaternoNiño.getText()+"', Apellido_materno = '"+tfApellidoMaternoNiño.getText()+"', Foto = '"+
-                      (nuevaFotoNiño == null ? dirFotoNiño : nuevaFotoNiño.getAbsolutePath() )+"' WHERE ID = "+ID);
-            } catch (SQLException ex) {
-                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
-            
+        if((tfNombresNiño.getText().equals("") || tfApellidoPaternoNiño.getText().equals("") || tfApellidoMaternoNiño.getText().equals("")) &&
+            cbEditarNiño.isSelected()){
+            JOptionPane.showMessageDialog(null, "Información del niño incompleta. Revise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
+        
+        if((tfNombresTutor.getText().equals("")) && cbAsignarTutor.isSelected()){
+            JOptionPane.showMessageDialog(null, "El teléfono del tutor está en blanco\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
         }
         
         
         
+        //SI NO HAY ERROR SE PROCEDE CON LA ACTUALIZACIÓN DE TODA LA INFORMACIÓN
+        if(cbEditarNiño.isSelected()){
+            if(!error && !datosIncompletos && confirmacion){
+                //Actualización de la información del niño
+                try {
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    Statement stmt = con.createStatement();
+                    stmt.executeUpdate("UPDATE Ninos SET Nombres = '"+tfNombresNiño.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoNiño.getText()+"', Apellido_materno = '"+tfApellidoMaternoNiño.getText()+"', Foto = '"+
+                          (nuevaFotoNiño == null ? dirFotoNiño : nuevaFotoNiño.getAbsolutePath() )+"' WHERE ID = "+ID);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+            IniciarVentana();
+        }
+        
+        if(cbAsignarTutor.isSelected()){
+            
+            try {
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    Statement stmt = con.createStatement();
+                    ResultSet rs;
+                    rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresTutor.getText()+"'");
+                    rs.first();
+                    Estatus = rs.getObject(1).toString();
+                } catch (SQLException ex) {
+                    Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "El tutor con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
+                    error = true;
+                    
+                }
+            
+            if(!error && !datosIncompletos && confirmacion){
+                //Se introduce el ID del niño al archivo del Tutor asignado
+                if(Estatus.equals("Tutor")) ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+tfNombresTutor.getText()+".txt";
+                if(Estatus.equals("Autorizado")) ruta = directorioRaiz+"/Niños(autorizados)/NiñosAutorizados_"+tfNombresTutor.getText()+".txt";
+                
+                AgregarIDNiño(ruta, ID);
+
+                try {
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    Statement stmt = con.createStatement();
+                    stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfNombresTutor.getText()+"' WHERE ID = "+ID);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+            IniciarVentana();
+            dispose();
+           
+        }
         
     }//GEN-LAST:event_bGuardarActionPerformed
 
