@@ -101,7 +101,7 @@
                                       <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
                                       <Component id="cbAsignarTutor" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                      <Component id="cbCambiarTutor" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cbEditarTutor" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -296,7 +296,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbAsignarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbCambiarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbEditarTutor" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -769,6 +769,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="TomarFoto"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bTomarFotoTutorActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bTomarFotoAut1">
       <Properties>
@@ -793,12 +796,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbAsignarTutorActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="cbCambiarTutor">
+    <Component class="javax.swing.JCheckBox" name="cbEditarTutor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cambiar tutor"/>
+        <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarTutorActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEditarTutorActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbEditarAut1">

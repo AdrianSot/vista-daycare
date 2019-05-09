@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -158,7 +159,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         //DESSELECCIÓN DE LOS CHECKBOXES
         cbEditarNiño.setSelected(false);
         cbAsignarTutor.setSelected(false);
-        cbCambiarTutor.setSelected(false);
+        cbEditarTutor.setSelected(false);
         cbEditarAut1.setSelected(false);
         cbEliminarAut1.setSelected(false);
         cbCambiarAut1.setSelected(false);
@@ -539,11 +540,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         //SI EL NIÑO YA TIENE UN TUTOR, ENTONCES SE BLOQUEA LA OPCIÓN DE ASIGNARLE UNO
         if(tfNombresTutor.getText().equals("")){
             cbAsignarTutor.setEnabled(true);
-            cbCambiarTutor.setEnabled(false);
+            cbEditarTutor.setEnabled(false);
         }
         else{
             cbAsignarTutor.setEnabled(false);
-            cbCambiarTutor.setEnabled(true);
+            cbEditarTutor.setEnabled(true);
         }
     }
     
@@ -617,7 +618,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         bTomarFotoAut2 = new javax.swing.JButton();
         bTomarFotoAut3 = new javax.swing.JButton();
         cbAsignarTutor = new javax.swing.JCheckBox();
-        cbCambiarTutor = new javax.swing.JCheckBox();
+        cbEditarTutor = new javax.swing.JCheckBox();
         cbEditarAut1 = new javax.swing.JCheckBox();
         cbEliminarAut1 = new javax.swing.JCheckBox();
         cbEditarAut2 = new javax.swing.JCheckBox();
@@ -721,6 +722,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         });
 
         bTomarFotoTutor.setText("TomarFoto");
+        bTomarFotoTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTomarFotoTutorActionPerformed(evt);
+            }
+        });
 
         bTomarFotoAut1.setText("Tomar foto");
 
@@ -735,10 +741,10 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         });
 
-        cbCambiarTutor.setText("Cambiar tutor");
-        cbCambiarTutor.addActionListener(new java.awt.event.ActionListener() {
+        cbEditarTutor.setText("Editar");
+        cbEditarTutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCambiarTutorActionPerformed(evt);
+                cbEditarTutorActionPerformed(evt);
             }
         });
 
@@ -886,7 +892,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                         .addGap(104, 104, 104)
                                         .addComponent(cbAsignarTutor)
                                         .addGap(38, 38, 38)
-                                        .addComponent(cbCambiarTutor))))
+                                        .addComponent(cbEditarTutor))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(264, 264, 264)
                                 .addComponent(bTomarFotoNiño)
@@ -1028,7 +1034,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTutor)
                             .addComponent(cbAsignarTutor)
-                            .addComponent(cbCambiarTutor))
+                            .addComponent(cbEditarTutor))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblFotoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1197,8 +1203,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbEditarNiñoActionPerformed
 
-    private void cbCambiarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarTutorActionPerformed
-        if(cbCambiarTutor.isSelected()){
+    private void cbEditarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditarTutorActionPerformed
+        if(cbEditarTutor.isSelected()){
             tfNombresTutor.setForeground(Color.black);
             tfApellidoPaternoTutor.setForeground(Color.black);
             tfApellidoMaternoTutor.setForeground(Color.black);
@@ -1245,11 +1251,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             bTomarFotoTutor.setEnabled(false);
             
         }
-    }//GEN-LAST:event_cbCambiarTutorActionPerformed
+    }//GEN-LAST:event_cbEditarTutorActionPerformed
 
     private void cbAsignarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAsignarTutorActionPerformed
         if(cbAsignarTutor.isSelected()){
-            cbCambiarTutor.setSelected(false);
+            cbEditarTutor.setSelected(false);
             lblNombreTutor.setText("Teléfono: ");
             tfNombresTutor.setText("");
             tfNombresTutor.setForeground(Color.black);
@@ -1374,29 +1380,36 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 break;
             }
             
-            if(cbCambiarTutor.isSelected() && tfTeléfonoTutor.getText().equals(Teléfonos[i])){
+         /*   if(cbCambiarTutor.isSelected() && tfTeléfonoTutor.getText().equals(Teléfonos[i])){
                 JOptionPane.showMessageDialog(null, "El teléfono del tutor se repite.(Ya existe en la base de datos)\nNo se guardarán los cambios", "ERROR", 1);
                 error = true;
                 break;
-            }
+            }*/
         }
         
+        //Si se está editando al niño y se deja un espacio en blanco, entonces se marca como error.
         if((tfNombresNiño.getText().equals("") || tfApellidoPaternoNiño.getText().equals("") || tfApellidoMaternoNiño.getText().equals("")) &&
             cbEditarNiño.isSelected()){
             JOptionPane.showMessageDialog(null, "Información del niño incompleta. Revise e inténtelo de nuevo.", "ERROR", 1);
             datosIncompletos = true;
         }
         
+        //Si se está asociando a un tutor y el espacio queda en blanco, entonces se marca como error.
         if((tfNombresTutor.getText().equals("")) && cbAsignarTutor.isSelected()){
             JOptionPane.showMessageDialog(null, "El teléfono del tutor está en blanco\nRevise e inténtelo de nuevo.", "ERROR", 1);
             datosIncompletos = true;
         }
         
+        //Si se cambia a un tutor y algún campo de texto queda en blanco, entonces se marca como error.
+        if((tfNombresTutor.getText().equals("") || tfApellidoPaternoTutor.getText().equals("") || tfApellidoMaternoTutor.getText().equals("") ||
+            tfTeléfonoTutor.getText().equals("")) && cbEditarTutor.isSelected()){
+            JOptionPane.showMessageDialog(null, "Información del tutor incompleta.\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
         
-        
-        //SI NO HAY ERROR SE PROCEDE CON LA ACTUALIZACIÓN DE TODA LA INFORMACIÓN
+        //SE PROCEDE A CHECAR CADA CHECKBOX PARA SABER QUÉ INFORMACIÓN MODIFICAR
         if(cbEditarNiño.isSelected()){
-            if(!error && !datosIncompletos && confirmacion){
+            if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del niño
                 //Actualización de la información del niño
                 try {
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
@@ -1412,29 +1425,37 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             IniciarVentana();
         }
         
+        //Si la opción de asignar tutor está seleccionada, entonces se procede.
         if(cbAsignarTutor.isSelected()){
-            
+            /*
+                Se obtiene el Estatus del tutor para saber donde buscar la información; además, 
+                este bloque sirve como bandera para saber si el tutor que queremos asociar realmente
+                existe en la base de datos
+            */
             try {
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
                     Statement stmt = con.createStatement();
                     ResultSet rs;
                     rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresTutor.getText()+"'");
                     rs.first();
-                    Estatus = rs.getObject(1).toString();
+                    Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el tutor no exista lanza una excepción
                 } catch (SQLException ex) {
                     Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, "El tutor con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
-                    error = true;
+                    error = true; //Si el tutor no existe se marca como error.
                     
                 }
             
+            //Si no hay error de ningún tipo, entonces se procede a guardar al tutor asociado
             if(!error && !datosIncompletos && confirmacion){
-                //Se introduce el ID del niño al archivo del Tutor asignado
+                
+                //De acuerdo al Estatus, el archivo que contiene el ID del niño se busca en una carpeta diferente
                 if(Estatus.equals("Tutor")) ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+tfNombresTutor.getText()+".txt";
                 if(Estatus.equals("Autorizado")) ruta = directorioRaiz+"/Niños(autorizados)/NiñosAutorizados_"+tfNombresTutor.getText()+".txt";
                 
-                AgregarIDNiño(ruta, ID);
+                AgregarIDNiño(ruta, ID); //Se agrega el ID al archivo de niños.
 
+                //Se inserta el teléfono del tutor en la información del niño en la base de datos.
                 try {
                     con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
                     Statement stmt = con.createStatement();
@@ -1447,6 +1468,103 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             IniciarVentana();
             dispose();
            
+        }
+        
+        //Si la opción de cambiar tutor está seleccionada, entonces se procede.
+        if(cbEditarTutor.isSelected()){
+            if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del tutor
+                //CASO CUANDO EL TELÉFONO NO CAMBIA
+                if(teléfonoTutor.equals(tfTeléfonoTutor.getText())){
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresTutor.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoTutor.getText()+"', Apellido_materno = '"+tfApellidoMaternoTutor.getText()+"', Foto = '"+
+                          (nuevaFotoTutor == null ? dirFotoTutor : nuevaFotoTutor.getAbsolutePath() )+"' WHERE Telefono = '"+teléfonoTutor+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }//CASO CUANDO EL TELÉFONO SÍ CAMBIA
+                
+                else{
+                    //SE LE CAMBIA EL NOMBRE AL ARCHIVO
+                    File f1 = new File(archivoNiñosTutor); //Archivo original
+                    ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+tfTeléfonoTutor.getText()+".txt"; //Nombre del nuevo archivo
+                    
+                    File f2 = new File(ruta); //Archivo nuevo
+                    f1.renameTo(f2); //Se renombra el archivo
+                    
+                    f1.delete(); //Se borra el archivo viejo
+                    
+                    //ACTUALIZO EL TUTOR DE CADA NIÑO
+                    
+                    int numNiños = 0; //Tamaño del arreglo
+                    String cadena;
+                    String[] niños;
+                    FileReader f;
+                    
+                    //Se cuentan los niños
+                    try {
+                        f = new FileReader(f2);
+                        BufferedReader b = new BufferedReader(f);
+                        while((cadena = b.readLine())!=null) {
+                            numNiños++;
+                            System.out.println(cadena);
+                        }
+                        b.close();
+                        
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    //Se crea el arreglo de los niños.
+                    niños = new String[numNiños];
+                    
+                    //Se guardan los niños.
+                    numNiños = 0;
+                    try {
+                        f = new FileReader(f2);
+                        BufferedReader b = new BufferedReader(f);
+                        while((cadena = b.readLine())!=null) {
+                            niños[numNiños] = cadena;
+                            numNiños++;
+                        }
+                        b.close();
+                        
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    //SE ACTUALIZA CADA NIÑO EN EL ARREGLO
+                    for(String niño : niños){
+                        try {
+                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            Statement stmt = con.createStatement();
+                            stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfTeléfonoTutor.getText()+"' WHERE ID = "+niño);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    
+                    //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoTutor.getText()+"', Nombres = '"+tfNombresTutor.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoTutor.getText()+"', Apellido_materno = '"+tfApellidoMaternoTutor.getText()+"', Foto = '"+
+                          (nuevaFotoTutor == null ? dirFotoTutor : nuevaFotoTutor.getAbsolutePath() )+"', Ninos = '"+f2.getAbsolutePath()+"' WHERE Telefono = '"+teléfonoTutor+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+            IniciarVentana();
+            dispose();
         }
         
     }//GEN-LAST:event_bGuardarActionPerformed
@@ -1614,6 +1732,19 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bTomarFotoNiñoActionPerformed
 
+    private void bTomarFotoTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoTutorActionPerformed
+        JFileChooser ficAbrirArchivo = new JFileChooser();
+        ficAbrirArchivo.setFileFilter(new FileNameExtensionFilter("archivo de imagen", "jpg", "jpeg"));
+        int respuesta=ficAbrirArchivo.showOpenDialog(this);
+        
+        if(respuesta==JFileChooser.APPROVE_OPTION ){
+            nuevaFotoTutor = ficAbrirArchivo.getSelectedFile();
+            Image foto = getToolkit().getImage(nuevaFotoTutor.getAbsolutePath());
+            foto = foto.getScaledInstance(260, 260, 260);
+            lblFotoTutor.setIcon(new ImageIcon(foto));
+        }
+    }//GEN-LAST:event_bTomarFotoTutorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1660,11 +1791,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbCambiarAut1;
     private javax.swing.JCheckBox cbCambiarAut2;
     private javax.swing.JCheckBox cbCambiarAut3;
-    private javax.swing.JCheckBox cbCambiarTutor;
     private javax.swing.JCheckBox cbEditarAut1;
     private javax.swing.JCheckBox cbEditarAut2;
     private javax.swing.JCheckBox cbEditarAut3;
     private javax.swing.JCheckBox cbEditarNiño;
+    private javax.swing.JCheckBox cbEditarTutor;
     private javax.swing.JCheckBox cbEliminarAut1;
     private javax.swing.JCheckBox cbEliminarAut2;
     private javax.swing.JCheckBox cbEliminarAut3;
