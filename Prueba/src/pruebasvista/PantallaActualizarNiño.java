@@ -162,13 +162,13 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbEditarTutor.setSelected(false);
         cbEditarAut1.setSelected(false);
         cbEliminarAut1.setSelected(false);
-        cbCambiarAut1.setSelected(false);
+        cbAsignarAut1.setSelected(false);
         cbEditarAut2.setSelected(false);
         cbEliminarAut2.setSelected(false);
-        cbCambiarAut2.setSelected(false);
+        cbAsignarAut2.setSelected(false);
         cbEditarAut3.setSelected(false);
         cbEliminarAut3.setSelected(false);
-        cbEditarAut3.setSelected(false);
+        cbAsignarAut3.setSelected(false);
         
         //DESHABILITACIÓN DE LOS BOTONES PARA TOMAR FOTOS
         bTomarFotoNiño.setEnabled(false);
@@ -382,14 +382,50 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         bTomarFotoAut3.setEnabled(false);
     }
     
+    public boolean Tutor(String direccion, String telefono){
+        String aux;
+        boolean existe = false;
+        
+        try{
+            BufferedReader bf = new BufferedReader(new FileReader(direccion));
+            while((aux = bf.readLine()) != null){
+                if(aux.equals(telefono)){
+                    existe = true;
+                    break;
+                }
+                else{
+                    existe = false;
+                }
+            }
+        }
+        catch(IOException e){
+            JOptionPane.showMessageDialog(null, "Error con la lectura del archivo");
+        }
+        return(existe);
+    }
+    
     public void AgregarIDNiño(String direccion, String ID){
         BufferedWriter bw = null;
         FileWriter fw = null;
+        String aux;
+        
+        try{
+            BufferedReader bf = new BufferedReader(new FileReader(direccion));
+            while((aux = bf.readLine()) != null){
+                if(aux.equals(ID)){
+                    return;
+                }
+            }
+        }
+
+        catch(IOException e){
+            JOptionPane.showMessageDialog(null, "Error con la lectura del archivo");
+        }
         
         try {
             fw = new FileWriter(direccion, true);
             bw = new BufferedWriter(fw);
-            bw.write("\n"+ID);
+            bw.write(ID);
         } catch (IOException ex) {
             Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -546,6 +582,43 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             cbAsignarTutor.setEnabled(false);
             cbEditarTutor.setEnabled(true);
         }
+        
+        //SI EL NIÑO YA TIENE AL AUTORIZADO 1, ENTONCES SE BLOQUEA LA OPCIÓN DE ASIGNAR Y ELIMINAR
+        if(tfNombresAut1.getText().equals("")){
+            cbAsignarAut1.setEnabled(true);
+            cbEditarAut1.setEnabled(false);
+            cbEliminarAut1.setEnabled(false);
+        }
+        else{
+            cbAsignarAut1.setEnabled(false);
+            cbEditarAut1.setEnabled(true);
+            cbEliminarAut1.setEnabled(true);
+        }
+        
+        //SI EL NIÑO YA TIENE AL AUTORIZADO 2, ENTONCES SE BLOQUEA LA OPCIÓN DE ASIGNAR Y ELIMINAR
+        if(tfNombresAut2.getText().equals("")){
+            cbAsignarAut2.setEnabled(true);
+            cbEditarAut2.setEnabled(false);
+            cbEliminarAut2.setEnabled(false);
+        }
+        else{
+            cbAsignarAut2.setEnabled(false);
+            cbEditarAut2.setEnabled(true);
+            cbEliminarAut2.setEnabled(true);
+        }
+        
+        //SI EL NIÑO YA TIENE AL AUTORIZADO 2, ENTONCES SE BLOQUEA LA OPCIÓN DE ASIGNAR
+        if(tfNombresAut3.getText().equals("")){
+            cbAsignarAut3.setEnabled(true);
+            cbEditarAut3.setEnabled(false);
+            cbEliminarAut3.setEnabled(false);
+        }
+        else{
+            cbAsignarAut3.setEnabled(false);
+            cbEditarAut3.setEnabled(true);
+            cbEliminarAut3.setEnabled(true);
+        }
+        
     }
     
     /**
@@ -627,9 +700,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbEliminarAut3 = new javax.swing.JCheckBox();
         bGuardar = new javax.swing.JButton();
         cbEditarNiño = new javax.swing.JCheckBox();
-        cbCambiarAut1 = new javax.swing.JCheckBox();
-        cbCambiarAut2 = new javax.swing.JCheckBox();
-        cbCambiarAut3 = new javax.swing.JCheckBox();
+        cbAsignarAut1 = new javax.swing.JCheckBox();
+        cbAsignarAut2 = new javax.swing.JCheckBox();
+        cbAsignarAut3 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -804,24 +877,24 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         });
 
-        cbCambiarAut1.setText("Cambiar");
-        cbCambiarAut1.addActionListener(new java.awt.event.ActionListener() {
+        cbAsignarAut1.setText("Asignar");
+        cbAsignarAut1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCambiarAut1ActionPerformed(evt);
+                cbAsignarAut1ActionPerformed(evt);
             }
         });
 
-        cbCambiarAut2.setText("Cambiar");
-        cbCambiarAut2.addActionListener(new java.awt.event.ActionListener() {
+        cbAsignarAut2.setText("Asignar");
+        cbAsignarAut2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCambiarAut2ActionPerformed(evt);
+                cbAsignarAut2ActionPerformed(evt);
             }
         });
 
-        cbCambiarAut3.setText("Cambiar");
-        cbCambiarAut3.addActionListener(new java.awt.event.ActionListener() {
+        cbAsignarAut3.setText("Asignar");
+        cbAsignarAut3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCambiarAut3ActionPerformed(evt);
+                cbAsignarAut3ActionPerformed(evt);
             }
         });
 
@@ -919,7 +992,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cbEliminarAut1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbCambiarAut1))
+                                .addComponent(cbAsignarAut1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblApellidoPaternoAut1)
@@ -957,7 +1030,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                 .addGap(9, 9, 9)
                                 .addComponent(cbEliminarAut2)
                                 .addGap(3, 3, 3)
-                                .addComponent(cbCambiarAut2))
+                                .addComponent(cbAsignarAut2))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblApellidoPaternoAut2)
@@ -997,7 +1070,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbEliminarAut3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbCambiarAut3))
+                                .addComponent(cbAsignarAut3))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblApellidoPaternoAut3)
@@ -1094,17 +1167,17 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addComponent(cbEditarAut1)
                                 .addComponent(cbEliminarAut1)
-                                .addComponent(cbCambiarAut1))
+                                .addComponent(cbAsignarAut1))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4)
                                 .addComponent(cbEditarAut2)
                                 .addComponent(cbEliminarAut2)
-                                .addComponent(cbCambiarAut2))
+                                .addComponent(cbAsignarAut2))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel5)
                                 .addComponent(cbEditarAut3)
                                 .addComponent(cbEliminarAut3)
-                                .addComponent(cbCambiarAut3)))
+                                .addComponent(cbAsignarAut3)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblFotoAut1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1294,7 +1367,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void cbEditarAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditarAut1ActionPerformed
         if(cbEditarAut1.isSelected()){
             cbEliminarAut1.setSelected(false);
-            cbCambiarAut1.setSelected(false);
+            cbAsignarAut1.setSelected(false);
             DefaultAutorizado1();
             tfNombresAut1.setForeground(Color.black);
             tfApellidoPaternoAut1.setForeground(Color.black);
@@ -1315,7 +1388,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void cbEditarAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditarAut2ActionPerformed
         if(cbEditarAut2.isSelected()){
             cbEliminarAut2.setSelected(false);
-            cbCambiarAut2.setSelected(false);
+            cbAsignarAut2.setSelected(false);
             DefaultAutorizado2();
             tfNombresAut2.setForeground(Color.black);
             tfApellidoPaternoAut2.setForeground(Color.black);
@@ -1336,7 +1409,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void cbEditarAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditarAut3ActionPerformed
         if(cbEditarAut3.isSelected()){
             cbEliminarAut3.setSelected(false);
-            cbCambiarAut3.setSelected(false);
+            cbAsignarAut3.setSelected(false);
             DefaultAutorizado3();
             tfNombresAut3.setForeground(Color.black);
             tfApellidoPaternoAut3.setForeground(Color.black);
@@ -1387,6 +1460,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }*/
         }
         
+        /*EDITAR NIÑO*/
         //Si se está editando al niño y se deja un espacio en blanco, entonces se marca como error.
         if((tfNombresNiño.getText().equals("") || tfApellidoPaternoNiño.getText().equals("") || tfApellidoMaternoNiño.getText().equals("")) &&
             cbEditarNiño.isSelected()){
@@ -1394,17 +1468,91 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             datosIncompletos = true;
         }
         
+        /*ASIGNAR TUTOR*/
         //Si se está asociando a un tutor y el espacio queda en blanco, entonces se marca como error.
         if((tfNombresTutor.getText().equals("")) && cbAsignarTutor.isSelected()){
             JOptionPane.showMessageDialog(null, "El teléfono del tutor está en blanco\nRevise e inténtelo de nuevo.", "ERROR", 1);
             datosIncompletos = true;
         }
         
+        /*ASIGNAR TUTOR*/
+        //Si el teléfono del tutor asignado ya pertenece a un autorizado del niño, entonces se marca el error.
+        if( ( (tfNombresTutor.getText().equals(tfTeléfonoAut1.getText()) && !tfNombresAut1.getText().equals("") )|| 
+              (tfNombresTutor.getText().equals(tfTeléfonoAut2.getText()) && !tfNombresAut2.getText().equals("") )||  
+              (tfNombresTutor.getText().equals(tfTeléfonoAut3.getText()) && !tfNombresAut3.getText().equals("") ) ) && cbAsignarTutor.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del tutor\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        
+        /*EDITAR TUTOR*/
         //Si se cambia a un tutor y algún campo de texto queda en blanco, entonces se marca como error.
         if((tfNombresTutor.getText().equals("") || tfApellidoPaternoTutor.getText().equals("") || tfApellidoMaternoTutor.getText().equals("") ||
             tfTeléfonoTutor.getText().equals("")) && cbEditarTutor.isSelected()){
             JOptionPane.showMessageDialog(null, "Información del tutor incompleta.\nRevise e inténtelo de nuevo.", "ERROR", 1);
             datosIncompletos = true;
+        }
+        
+        //EDITAR TUTOR
+        //Si el teléfono del tutor a editar ya pertenece a un autorizado del niño, entonces se marca el error.
+        if( ( (tfTeléfonoTutor.getText().equals(tfTeléfonoAut1.getText()) && !tfTeléfonoTutor.getText().equals("") )|| 
+              (tfTeléfonoTutor.getText().equals(tfTeléfonoAut2.getText()) && !tfTeléfonoTutor.getText().equals("") )||  
+              (tfTeléfonoTutor.getText().equals(tfTeléfonoAut3.getText()) && !tfTeléfonoTutor.getText().equals("") ) ) && cbEditarTutor.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del tutor\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        
+        /*ASIGNAR AUTORIZADO 1*/
+        //Si se está asociando a un tutor y el espacio queda en blanco, entonces se marca como error.
+        if((tfNombresAut1.getText().equals("")) && cbAsignarAut1.isSelected()){
+            JOptionPane.showMessageDialog(null, "El teléfono del autorizado 1 está en blanco\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
+        
+        /*ASIGNAR AUTORIZADO1*/
+        //Si el teléfono del tutor asignado ya pertenece a un autorizado del niño, entonces se marca el error.
+        if( ( (tfNombresAut1.getText().equals(tfTeléfonoTutor.getText()) && !tfNombresTutor.getText().equals("") )|| 
+              (tfNombresAut1.getText().equals(tfTeléfonoAut2.getText()) && !tfNombresAut2.getText().equals("") )||  
+              (tfNombresAut1.getText().equals(tfTeléfonoAut3.getText()) && !tfNombresAut3.getText().equals("") ) ) && cbAsignarAut1.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del autorizado 1\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        
+        /*ASIGNAR AUTORIZADO 2*/
+        //Si se está asociando a un tutor y el espacio queda en blanco, entonces se marca como error.
+        if((tfNombresAut2.getText().equals("")) && cbAsignarAut2.isSelected()){
+            JOptionPane.showMessageDialog(null, "El teléfono del autorizado 2 está en blanco\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
+        
+        /*ASIGNAR AUTORIZADO2*/
+        //Si el teléfono del tutor asignado ya pertenece a un autorizado del niño, entonces se marca el error.
+        if( ( (tfNombresAut2.getText().equals(tfTeléfonoTutor.getText()) && !tfNombresTutor.getText().equals("") )|| 
+              (tfNombresAut2.getText().equals(tfTeléfonoAut1.getText()) && !tfNombresAut1.getText().equals("") )||  
+              (tfNombresAut2.getText().equals(tfTeléfonoAut3.getText()) && !tfNombresAut3.getText().equals("") ) ) && cbAsignarAut2.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del autorizado 2\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        
+        /*ASIGNAR AUTORIZADO 3*/
+        //Si se está asociando a un tutor y el espacio queda en blanco, entonces se marca como error.
+        if((tfNombresAut3.getText().equals("")) && cbAsignarAut3.isSelected()){
+            JOptionPane.showMessageDialog(null, "El teléfono del autorizado 3 está en blanco\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
+        
+        /*ASIGNAR AUTORIZADO 3*/
+        //Si el teléfono del tutor asignado ya pertenece a un autorizado del niño, entonces se marca el error.
+        if( ( (tfNombresAut3.getText().equals(tfTeléfonoTutor.getText()) && !tfNombresTutor.getText().equals("") )|| 
+              (tfNombresAut3.getText().equals(tfTeléfonoAut1.getText()) && !tfNombresAut1.getText().equals("") )||  
+              (tfNombresAut3.getText().equals(tfTeléfonoAut2.getText()) && !tfNombresAut2.getText().equals("") ) ) && cbAsignarAut3.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del autorizado 3\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        
+        
+        //SI EXISTE ALGUNA CLASE DE ERROR, ENTONCES LA PANTALLA SE REFRESCA INMEDIATAMENTE
+        if(error || datosIncompletos){
+            MostrarPantalla(ID);
         }
         
         //SE PROCEDE A CHECAR CADA CHECKBOX PARA SABER QUÉ INFORMACIÓN MODIFICAR
@@ -1422,7 +1570,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
             }
-            IniciarVentana();
+             MostrarPantalla(ID);
         }
         
         //Si la opción de asignar tutor está seleccionada, entonces se procede.
@@ -1433,18 +1581,20 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 existe en la base de datos
             */
             try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
-                    Statement stmt = con.createStatement();
-                    ResultSet rs;
-                    rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresTutor.getText()+"'");
-                    rs.first();
-                    Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el tutor no exista lanza una excepción
-                } catch (SQLException ex) {
-                    Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, "El tutor con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
-                    error = true; //Si el tutor no existe se marca como error.
-                    
-                }
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
+                rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresTutor.getText()+"'");
+                rs.first();
+                Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el tutor no exista lanza una excepción
+            } catch (SQLException ex) {
+                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "El tutor con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
+                error = true; //Si el tutor no existe se marca como error.
+
+            }
+            
+            
             
             //Si no hay error de ningún tipo, entonces se procede a guardar al tutor asociado
             if(!error && !datosIncompletos && confirmacion){
@@ -1465,8 +1615,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
             }
-            IniciarVentana();
-            dispose();
            
         }
         
@@ -1563,14 +1711,145 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
             }
-            IniciarVentana();
-            dispose();
         }
+        
+        /*********************CRUD DE LOS AUTORIZADOS*************************************************/
+        //------------------------------------------------ASIGNACIÓN----------------------------------/
+        
+        //AUTORIZADO 1
+        //Si la opción de asignar tutor está seleccionada, entonces se procede.
+        if(cbAsignarAut1.isSelected()){
+            /*
+                Se obtiene el Estatus del tutor para saber donde buscar la información; además, 
+                este bloque sirve como bandera para saber si el tutor que queremos asociar realmente
+                existe en la base de datos
+            */
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
+                rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresAut1.getText()+"'");
+                rs.first();
+                Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el autorizado no exista lanza una excepción
+            } catch (SQLException ex) {
+                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "La persona con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
+                error = true; //Si el autorizado no existe se marca como error.
+
+            }
+            
+            //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
+            if(!error && !datosIncompletos && confirmacion){
+                
+                ruta = directorioRaiz+"/Autorizados/Autorizados"+ID+".txt";
+                
+                AgregarIDNiño(ruta, tfNombresAut1.getText()); //Se agrega el ID al archivo de niños.
+
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+           
+        }
+        
+        //AUTORIZADO 2
+        //Si la opción de asignar tutor está seleccionada, entonces se procede.
+        if(cbAsignarAut2.isSelected()){
+            /*
+                Se obtiene el Estatus del tutor para saber donde buscar la información; además, 
+                este bloque sirve como bandera para saber si el tutor que queremos asociar realmente
+                existe en la base de datos
+            */
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
+                rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresAut2.getText()+"'");
+                rs.first();
+                Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el tutor no exista lanza una excepción
+            } catch (SQLException ex) {
+                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "La persona con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
+                error = true; //Si el tutor no existe se marca como error.
+
+            }
+            
+            //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
+            if(!error && !datosIncompletos && confirmacion){
+                
+                ruta = directorioRaiz+"/Autorizados/Autorizados"+ID+".txt";
+                
+                AgregarIDNiño(ruta, tfNombresAut2.getText()); //Se agrega el ID al archivo de niños.
+
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+           
+        }
+        
+        //AUTORIZADO 1
+        //Si la opción de asignar tutor está seleccionada, entonces se procede.
+        if(cbAsignarAut3.isSelected()){
+            /*
+                Se obtiene el Estatus del tutor para saber donde buscar la información; además, 
+                este bloque sirve como bandera para saber si el tutor que queremos asociar realmente
+                existe en la base de datos
+            */
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
+                rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresAut3.getText()+"'");
+                rs.first();
+                Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el tutor no exista lanza una excepción
+            } catch (SQLException ex) {
+                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "La persona con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
+                error = true; //Si el tutor no existe se marca como error.
+            }
+            
+            //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
+            if(!error && !datosIncompletos && confirmacion){
+                ruta = directorioRaiz+"/Autorizados/Autorizados"+ID+".txt";
+                
+                /*
+                    se procede a averiguar si el niño tiene un file de autorizados, si no, se crea y se guarda el autorizado.
+                */
+                File bandera = new File(ruta); 
+                //Si el file no existe, entonces se crea
+                if(!bandera.exists()){
+                    try {
+                        bandera.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
+                    }
+                    
+                    //Como el niño no tenía autorizados, entonces ahora debe enlazarse este file al niño en la base de datos
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+ID);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
+                        error = true; //Si el tutor no existe se marca como error.
+                    }
+                    
+                }
+                
+                //Se agrega el ID al archivo de niños.
+                AgregarIDNiño(ruta, tfNombresAut3.getText()); 
+
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+           
+        }
+        
+        MostrarPantalla(ID);
+        
         
     }//GEN-LAST:event_bGuardarActionPerformed
 
-    private void cbCambiarAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarAut1ActionPerformed
-        if(cbCambiarAut1.isSelected()){
+    private void cbAsignarAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAsignarAut1ActionPerformed
+        if(cbAsignarAut1.isSelected()){
             cbEditarAut1.setSelected(false);
             cbEliminarAut1.setSelected(false);
             DefaultAutorizado1();
@@ -1590,12 +1869,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         else{
              DefaultAutorizado1();
         }
-    }//GEN-LAST:event_cbCambiarAut1ActionPerformed
+    }//GEN-LAST:event_cbAsignarAut1ActionPerformed
 
     private void cbEliminarAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEliminarAut1ActionPerformed
         if(cbEliminarAut1.isSelected()){
             if(cbEditarAut1.isSelected())cbEditarAut1.setSelected(false);
-            if(cbCambiarAut1.isSelected())cbCambiarAut1.setSelected(false);
+            if(cbAsignarAut1.isSelected())cbAsignarAut1.setSelected(false);
             DefaultAutorizado1();
             
             tfNombresAut1.setForeground(Color.lightGray);
@@ -1622,7 +1901,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void cbEliminarAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEliminarAut2ActionPerformed
         if(cbEliminarAut2.isSelected()){
             if(cbEditarAut2.isSelected())cbEditarAut2.setSelected(false);
-            if(cbCambiarAut2.isSelected())cbCambiarAut2.setSelected(false);
+            if(cbAsignarAut2.isSelected())cbAsignarAut2.setSelected(false);
             DefaultAutorizado2();
             
             tfNombresAut2.setForeground(Color.lightGray);
@@ -1646,8 +1925,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbEliminarAut2ActionPerformed
 
-    private void cbCambiarAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarAut2ActionPerformed
-        if(cbCambiarAut2.isSelected()){
+    private void cbAsignarAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAsignarAut2ActionPerformed
+        if(cbAsignarAut2.isSelected()){
             cbEditarAut2.setSelected(false);
             cbEliminarAut2.setSelected(false);
             DefaultAutorizado2();
@@ -1667,12 +1946,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         else{
              DefaultAutorizado2();
         }
-    }//GEN-LAST:event_cbCambiarAut2ActionPerformed
+    }//GEN-LAST:event_cbAsignarAut2ActionPerformed
 
     private void cbEliminarAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEliminarAut3ActionPerformed
         if(cbEliminarAut3.isSelected()){
             if(cbEditarAut3.isSelected())cbEditarAut3.setSelected(false);
-            if(cbCambiarAut3.isSelected())cbCambiarAut3.setSelected(false);
+            if(cbAsignarAut3.isSelected())cbAsignarAut3.setSelected(false);
             DefaultAutorizado3();
             
             tfNombresAut3.setForeground(Color.lightGray);
@@ -1696,8 +1975,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbEliminarAut3ActionPerformed
 
-    private void cbCambiarAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarAut3ActionPerformed
-        if(cbCambiarAut3.isSelected()){
+    private void cbAsignarAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAsignarAut3ActionPerformed
+        if(cbAsignarAut3.isSelected()){
             cbEditarAut3.setSelected(false);
             cbEliminarAut3.setSelected(false);
             DefaultAutorizado3();
@@ -1717,7 +1996,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         else{
              DefaultAutorizado3();
         }
-    }//GEN-LAST:event_cbCambiarAut3ActionPerformed
+    }//GEN-LAST:event_cbAsignarAut3ActionPerformed
 
     private void bTomarFotoNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoNiñoActionPerformed
         JFileChooser ficAbrirArchivo = new JFileChooser();
@@ -1787,10 +2066,10 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private javax.swing.JButton bTomarFotoAut3;
     private javax.swing.JButton bTomarFotoNiño;
     private javax.swing.JButton bTomarFotoTutor;
+    private javax.swing.JCheckBox cbAsignarAut1;
+    private javax.swing.JCheckBox cbAsignarAut2;
+    private javax.swing.JCheckBox cbAsignarAut3;
     private javax.swing.JCheckBox cbAsignarTutor;
-    private javax.swing.JCheckBox cbCambiarAut1;
-    private javax.swing.JCheckBox cbCambiarAut2;
-    private javax.swing.JCheckBox cbCambiarAut3;
     private javax.swing.JCheckBox cbEditarAut1;
     private javax.swing.JCheckBox cbEditarAut2;
     private javax.swing.JCheckBox cbEditarAut3;
