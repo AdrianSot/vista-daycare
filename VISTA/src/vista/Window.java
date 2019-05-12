@@ -3,54 +3,59 @@ package vista;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-/**
- *
- * @author fernandadominguez
- */
 public class Window extends javax.swing.JFrame {
     Connection con;
     public String username;
     public String password;
     public enum UserStat {AdminFailPass, RecepFailPass, RecepLogged, AdminLogged};
     public UserStat userStatus;
-    public Timer timer;
+    public static Timer timer;
+    public boolean act = false;
     
     /* Administrador */
-    mainWindowAdmin adminWindow;
-
-    /* Recepcionista */
-    mainWindowRecep recepWindow;
+    PantallaRegistrarRecepcionista pantallaregistro;
+    PantallaConsultarRecepcionista consultarecepcionista;
+    PantallaActualizarRecepcionista actualizarecepcionista;
+    PantallaEliminarRecepcionista eliminarecepcionista;
     
-    /**
-     * Creates new form Window
-     */
+    /* Recepcionista */
+    
+    PantallaRegistrarNiño pantallaregistrarniño; 
+    PantallaConsultarNiño pantallaconsultarniño;
+    
+    
     public Window() {
         initComponents();
         setTitle("VISTA");
         setSize(1000,800);    //Default
-        setLocation(200,100); //Default
-        
+        setLocation(200,100); //Default      
         userStatus = UserStat.AdminFailPass;
         
         /* Administrador */
-        adminWindow = new mainWindowAdmin();
+        pantallaregistro = new PantallaRegistrarRecepcionista();
+        consultarecepcionista = new PantallaConsultarRecepcionista();
+        actualizarecepcionista = new PantallaActualizarRecepcionista();
+        eliminarecepcionista = new PantallaEliminarRecepcionista();
+        
+        add(consultarecepcionista);
+        add(pantallaregistro);
+        add(actualizarecepcionista);
+        add(eliminarecepcionista);
       
         
         
         /* Recepcionista */
-        recepWindow = new mainWindowRecep();
+        pantallaregistrarniño = new PantallaRegistrarNiño();
+        pantallaconsultarniño = new PantallaConsultarNiño();
         
-        add(adminWindow);
-        add(recepWindow);
+        add(pantallaregistrarniño);
+        add(pantallaconsultarniño);
         
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -75,9 +80,21 @@ public class Window extends javax.swing.JFrame {
         pfPassword = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         jbLog = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        miRegistrar = new javax.swing.JMenuItem();
+        miConsultar = new javax.swing.JMenuItem();
+        miActualizar = new javax.swing.JMenuItem();
+        miEliminar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Apple SD Gothic Neo", 1, 36)); // NOI18N
         jLabel1.setText("VISTA");
@@ -125,6 +142,51 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
+        jMenu1.setText("Archivo");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Niños");
+
+        miRegistrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        miRegistrar.setText("Registrar");
+        miRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegistrarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miRegistrar);
+
+        miConsultar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        miConsultar.setText("Consultar");
+        miConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsultarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miConsultar);
+
+        miActualizar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        miActualizar.setText("Actualizar");
+        miActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miActualizarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miActualizar);
+
+        miEliminar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        miEliminar.setText("Eliminar");
+        miEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miEliminarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miEliminar);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,7 +229,7 @@ public class Window extends javax.swing.JFrame {
                     .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56)
                 .addComponent(jbLog)
-                .addContainerGap(387, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
 
         pack();
@@ -200,7 +262,6 @@ public class Window extends javax.swing.JFrame {
         }
         
         /* Consulta */
-        /*
        try{
             System.out.println("esta haciendo algo");
             con = DriverManager.getConnection("jdbc:mysql://localhost:8080/VISTA", "root", "");
@@ -227,9 +288,10 @@ public class Window extends javax.swing.JFrame {
         }catch(SQLException e){
             Logger.getLogger(Window.class.getName()).log(Level.SEVERE,null, e);
             JOptionPane.showMessageDialog(this, "Por favor intente de nuevo.", "ERROR", JOptionPane.PLAIN_MESSAGE);
-        }*/
-       userStatus = UserStat.RecepLogged;
+        }
+       //serStatus = UserStat.RecepLogged;
         System.out.println("stat" + userStatus);
+        setTimer(100000);
         userWindow();
     }
     
@@ -257,19 +319,90 @@ public class Window extends javax.swing.JFrame {
     
     /*************************************************************************/
     
-    void userWindow(){
-    jLabel1.setVisible(false);
-    jLabel2.setVisible(false);
-    jLabel3.setVisible(false);
-    jLabel4.setVisible(false);
-    jbLog.setVisible(false);
-    pfPassword.setVisible(false);
-    tfUsername.setVisible(false);
-    if(userStatus == UserStat.AdminLogged){
-        adminWindow.setVisible(true);
-    }else
-        recepWindow.setVisible(true);
+    public void userWindow(){
+        jLabel1.setText("Bienvenido de nuevo.");
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jbLog.setVisible(false);
+        pfPassword.setVisible(false);
+        tfUsername.setVisible(false);
+        
+        if(userStatus == UserStat.AdminLogged){
+            setTitle("VISTA para Administrador");
+            jMenu2.setText("Recepcionistas");
+        }
+        jMenuBar1.setVisible(true);
     }
+    
+    /*************************************************************************/
+    
+    public void LogOut()
+    {
+        
+        JOptionPane.showMessageDialog(this, "Su sesión ha excedido el tiempo límite. Por favor, ingrese de nuevo.", 
+                                      "ERROR", JOptionPane.PLAIN_MESSAGE);
+        pantallaregistrarniño.setVisible(false);
+        pantallaconsultarniño.setVisible(false);
+        consultarecepcionista.setVisible(false);
+        pantallaregistro.setVisible(false);
+        actualizarecepcionista.setVisible(false);
+        eliminarecepcionista.setVisible(false);
+        jLabel1.setText("VISTA");
+        jLabel2.setVisible(true);
+        jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
+        jbLog.setVisible(true);
+        pfPassword.setVisible(true);
+        tfUsername.setVisible(true);
+    }
+   
+    /*************************************************************************/
+    
+    /**
+     * @param m
+     */
+    public void setTimer(long m)
+    {
+        TimerTask cerrar = new TimerTask() {
+            @Override
+            public void run() {
+               actualiza(m);
+               LogOut();
+            }
+        };
+        timer = new Timer();
+        timer.schedule(cerrar, m);
+    }
+    
+    /*************************************************************************/
+    
+    public void actualiza(long m)
+    {
+        if(pantallaregistro.act || consultarecepcionista.act actualizarecepcionista.act
+        eliminarecepcionista.act || pantallaregistrarniño.act || pantallaconsultarniño.act){
+            TimerTask cerrar = new TimerTask() {
+
+                @Override
+                public void run() {
+                    System.out.println("reseteeo");
+                    act = false;
+                    pantallaregistro.act = false;
+                    consultarecepcionista.act = false;
+                    actualizarecepcionista.act = false;
+                    eliminarecepcionista.act = false;
+                    pantallaregistrarniño.act = false;
+                    pantallaconsultarniño.act = false;
+
+                }
+            };
+            timer.cancel();
+            timer = new Timer();
+            timer.schedule(new cerrar, m);
+        }
+        
+    }
+    
     /*************************************************************************/
     
     private void tfUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsernameActionPerformed
@@ -303,6 +436,62 @@ public class Window extends javax.swing.JFrame {
         if(evt.getKeyCode() == 10)
             Log();
     }//GEN-LAST:event_pfPasswordKeyPressed
+
+    private void miRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegistrarActionPerformed
+        if(userStatus == UserStat.AdminLogged){
+            pantallaregistro.IniciarVentana();
+            pantallaregistro.setVisible(true);
+            eliminarecepcionista.setVisible(false);
+            actualizarecepcionista.setVisible(false);
+            consultarecepcionista.setVisible(false);
+            consultarecepcionista.borraTabla();
+        }else{
+            pantallaconsultarniño.setVisible(false);
+            pantallaregistrarniño.setVisible(true);
+            pantallaregistrarniño.IniciarVentana();
+        }
+    }//GEN-LAST:event_miRegistrarActionPerformed
+
+    private void miEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miEliminarActionPerformed
+        if(userStatus == UserStat.AdminLogged){
+            eliminarecepcionista.IniciarVentana();
+            eliminarecepcionista.setVisible(true);
+            pantallaregistro.setVisible(false);
+            actualizarecepcionista.setVisible(false);
+            consultarecepcionista.setVisible(false);
+            
+        }
+    }//GEN-LAST:event_miEliminarActionPerformed
+
+    private void miActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarActionPerformed
+        if(userStatus == UserStat.AdminLogged){
+            actualizarecepcionista.IniciarVentana();
+        eliminarecepcionista.setVisible(false);
+        pantallaregistro.setVisible(false);
+        actualizarecepcionista.setVisible(true);
+        consultarecepcionista.setVisible(false);
+        }
+    }//GEN-LAST:event_miActualizarActionPerformed
+
+    private void miConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarActionPerformed
+        if(userStatus == UserStat.AdminLogged){
+            consultarecepcionista.setVisible(true);
+            eliminarecepcionista.setVisible(false);
+            actualizarecepcionista.setVisible(false);
+            pantallaregistro.setVisible(false);
+            consultarecepcionista.borraTabla();
+            consultarecepcionista.IniciarVentana();
+        }else{
+             pantallaregistrarniño.setVisible(false);
+             pantallaconsultarniño.setVisible(true);
+             pantallaconsultarniño.IniciarVentana();
+        }
+        
+    }//GEN-LAST:event_miConsultarActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        act = true;
+    }//GEN-LAST:event_formMouseClicked
  
     /*************************************************************************/
     
@@ -346,7 +535,14 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JButton jbLog;
+    private javax.swing.JMenuItem miActualizar;
+    private javax.swing.JMenuItem miConsultar;
+    private javax.swing.JMenuItem miEliminar;
+    private javax.swing.JMenuItem miRegistrar;
     private javax.swing.JPasswordField pfPassword;
     private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables

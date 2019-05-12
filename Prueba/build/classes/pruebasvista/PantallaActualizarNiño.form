@@ -140,7 +140,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cbCambiarAut1" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbAsignarAut1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -191,7 +191,7 @@
                               <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                              <Component id="cbCambiarAut2" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbAsignarAut2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -244,7 +244,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cbCambiarAut3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbAsignarAut3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -374,19 +374,19 @@
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEditarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbCambiarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbAsignarAut1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEditarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbCambiarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbAsignarAut2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEditarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbEliminarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbCambiarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbAsignarAut3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -868,28 +868,28 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEditarNi&#xf1;oActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="cbCambiarAut1">
+    <Component class="javax.swing.JCheckBox" name="cbAsignarAut1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cambiar"/>
+        <Property name="text" type="java.lang.String" value="Asignar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarAut1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbAsignarAut1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="cbCambiarAut2">
+    <Component class="javax.swing.JCheckBox" name="cbAsignarAut2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cambiar"/>
+        <Property name="text" type="java.lang.String" value="Asignar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarAut2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbAsignarAut2ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="cbCambiarAut3">
+    <Component class="javax.swing.JCheckBox" name="cbAsignarAut3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cambiar"/>
+        <Property name="text" type="java.lang.String" value="Asignar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarAut3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbAsignarAut3ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

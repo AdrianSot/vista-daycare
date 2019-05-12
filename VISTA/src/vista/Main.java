@@ -1,9 +1,5 @@
 package vista;
 
-/**
- *
- * @author fernandadominguez
- */
 public class Main {
 
     /**
@@ -11,6 +7,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Window w = new Window();
+        w.getJMenuBar().setVisible(false);
         w.setVisible(true);
     }
     
