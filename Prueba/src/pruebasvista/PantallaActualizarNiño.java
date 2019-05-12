@@ -160,6 +160,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbEditarNiño.setSelected(false);
         cbAsignarTutor.setSelected(false);
         cbEditarTutor.setSelected(false);
+        cbCambiarTutor.setSelected(false);
         cbEditarAut1.setSelected(false);
         cbEliminarAut1.setSelected(false);
         cbAsignarAut1.setSelected(false);
@@ -412,7 +413,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         try{
             BufferedReader bf = new BufferedReader(new FileReader(direccion));
             while((aux = bf.readLine()) != null){
-                if(aux.equals(ID)){
+                if(aux.equals(ID) || aux.equals(ID+"\n")){
                     return;
                 }
             }
@@ -426,6 +427,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             fw = new FileWriter(direccion, true);
             bw = new BufferedWriter(fw);
             bw.write(ID);
+            bw.newLine();
         } catch (IOException ex) {
             Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -509,8 +511,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         try{
             BufferedReader bf = new BufferedReader(new FileReader(archivoAutorizados));
             while((aux = bf.readLine()) != null){ //Se guardan los teléfonos de los autorizados en un arreglo
-                teléfonosAutorizados[numAut] = aux;
-                numAut++;
+                if(!aux.equals(teléfonoTutor)){ //Se salta el teléfono del tutor
+                    teléfonosAutorizados[numAut] = aux;
+                    numAut++;
+                }
+                
             }
 
             for(String a : teléfonosAutorizados){
@@ -573,12 +578,14 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         tfApellidoMaternoAut3.setText(apellidosMaternosAutorizados[2]);
         tfTeléfonoAut3.setText(teléfonosAutorizados[2]);
         
-        //SI EL NIÑO YA TIENE UN TUTOR, ENTONCES SE BLOQUEA LA OPCIÓN DE ASIGNARLE UNO
+        //SI EL NIÑO YA TIENE UN TUTOR, ENTONCES SE BLOQUEA LA OPCIÓN DE ASIGNARLE UNO, PERO LO PUEDE 
         if(tfNombresTutor.getText().equals("")){
+            cbCambiarTutor.setEnabled(false);
             cbAsignarTutor.setEnabled(true);
             cbEditarTutor.setEnabled(false);
         }
         else{
+            cbCambiarTutor.setEnabled(true);
             cbAsignarTutor.setEnabled(false);
             cbEditarTutor.setEnabled(true);
         }
@@ -703,6 +710,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbAsignarAut1 = new javax.swing.JCheckBox();
         cbAsignarAut2 = new javax.swing.JCheckBox();
         cbAsignarAut3 = new javax.swing.JCheckBox();
+        cbCambiarTutor = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -898,6 +906,13 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         });
 
+        cbCambiarTutor.setText("Cambiar");
+        cbCambiarTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCambiarTutorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -964,8 +979,10 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                         .addComponent(lblTutor)
                                         .addGap(104, 104, 104)
                                         .addComponent(cbAsignarTutor)
-                                        .addGap(38, 38, 38)
-                                        .addComponent(cbEditarTutor))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cbEditarTutor)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbCambiarTutor))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(264, 264, 264)
                                 .addComponent(bTomarFotoNiño)
@@ -1107,7 +1124,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTutor)
                             .addComponent(cbAsignarTutor)
-                            .addComponent(cbEditarTutor))
+                            .addComponent(cbEditarTutor)
+                            .addComponent(cbCambiarTutor))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblFotoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1283,6 +1301,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             tfApellidoMaternoTutor.setForeground(Color.black);
             tfTeléfonoTutor.setForeground(Color.black);
             cbAsignarTutor.setSelected(false);
+            cbCambiarTutor.setSelected(false);
             lblNombreTutor.setText("Nombre: ");
             
             tfNombresTutor.setText(nombresTutor);
@@ -1300,6 +1319,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             tfApellidoMaternoTutor.setEditable(true);
             tfTeléfonoTutor.setEditable(true);
             bTomarFotoTutor.setEnabled(true);
+            
+            lblNombreTutor.setVisible(true);
+            lblApellidoPaternoTutor.setVisible(true);
+            lblApellidoMaternoTutor.setVisible(true);
+            lblTeléfonoTutor.setVisible(true);
+            
         }
         else{
             tfNombresTutor.setForeground(Color.lightGray);
@@ -1434,6 +1459,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             confirmacion = true;
         }
         
+        /*****************************DETECCIÓN DE ERRORES ANTES DE GUARDAR LOS CAMBIOS***************************************************/
+        
         //ANTES DE COMENZAR A HACER CAMBIOS SE CHECAN LOS TELÉFONOS
         /***********************************PENDIENTE************************/
         for(int i = 0 ; i < Teléfonos.length ; i++){
@@ -1492,7 +1519,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             datosIncompletos = true;
         }
         
-        //EDITAR TUTOR
+        /*EDITAR TUTOR*/
         //Si el teléfono del tutor a editar ya pertenece a un autorizado del niño, entonces se marca el error.
         if( ( (tfTeléfonoTutor.getText().equals(tfTeléfonoAut1.getText()) && !tfTeléfonoTutor.getText().equals("") )|| 
               (tfTeléfonoTutor.getText().equals(tfTeléfonoAut2.getText()) && !tfTeléfonoTutor.getText().equals("") )||  
@@ -1501,12 +1528,30 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             error = true;
         }
         
+        /*CAMBIAR TUTOR*/
+        //Si el teléfono del tutor a cambiar ya pertenece a un autorizado del niño, o al mismo tutor antiguo, entonces se marca como error
+        if( ( (tfNombresTutor.getText().equals(tfTeléfonoAut1.getText()) && !tfNombresTutor.getText().equals("") )|| 
+              (tfNombresTutor.getText().equals(tfTeléfonoAut2.getText()) && !tfNombresTutor.getText().equals("") )||  
+              (tfNombresTutor.getText().equals(tfTeléfonoAut3.getText()) && !tfNombresTutor.getText().equals("") )||  
+              (tfNombresTutor.getText().equals(teléfonoTutor) ) ) && cbCambiarTutor.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del tutor\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        /*CAMBIAR TUTOR*/
+        //Si se está cambiando a un tutor y el espacio queda en blanco, entonces se marca como error.
+        if((tfNombresTutor.getText().equals("")) && cbCambiarTutor.isSelected()){
+            JOptionPane.showMessageDialog(null, "El teléfono del tutor está en blanco\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
+        
         /*ASIGNAR AUTORIZADO 1*/
         //Si se está asociando a un tutor y el espacio queda en blanco, entonces se marca como error.
         if((tfNombresAut1.getText().equals("")) && cbAsignarAut1.isSelected()){
             JOptionPane.showMessageDialog(null, "El teléfono del autorizado 1 está en blanco\nRevise e inténtelo de nuevo.", "ERROR", 1);
             datosIncompletos = true;
         }
+        
+        
         
         /*ASIGNAR AUTORIZADO1*/
         //Si el teléfono del tutor asignado ya pertenece a un autorizado del niño, entonces se marca el error.
@@ -1555,6 +1600,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             MostrarPantalla(ID);
         }
         
+        /************************************SE COMIENZAN A GUARDAR TODOS LOS CAMBIOS************************************************************/
+        
+        
         //SE PROCEDE A CHECAR CADA CHECKBOX PARA SABER QUÉ INFORMACIÓN MODIFICAR
         if(cbEditarNiño.isSelected()){
             if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del niño
@@ -1599,10 +1647,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             //Si no hay error de ningún tipo, entonces se procede a guardar al tutor asociado
             if(!error && !datosIncompletos && confirmacion){
                 
-                //De acuerdo al Estatus, el archivo que contiene el ID del niño se busca en una carpeta diferente
-                if(Estatus.equals("Tutor")) ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+tfNombresTutor.getText()+".txt";
-                if(Estatus.equals("Autorizado")) ruta = directorioRaiz+"/Niños(autorizados)/NiñosAutorizados_"+tfNombresTutor.getText()+".txt";
-                
+                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresTutor.getText()+".txt";
                 AgregarIDNiño(ruta, ID); //Se agrega el ID al archivo de niños.
 
                 //Se inserta el teléfono del tutor en la información del niño en la base de datos.
@@ -1613,6 +1658,34 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
+                /* Se procede a averiguar si el niño tiene un archivo de autorizados, si no, se crea y se guarda al tutor ahí*/
+                ruta = directorioRaiz+"/Niños/TutoresDe"+ID+".txt";
+                File bandera = new File(ruta);
+                
+                //Si el file no existe, entonces se crea
+                if(!bandera.exists()){
+                    try {
+                        bandera.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
+                    }
+                    
+                    //Como el niño no tenía autorizados, entonces ahora debe enlazarse este file al niño en la base de datos
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+ID);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
+                        error = true; //Si el tutor no existe se marca como error.
+                    }   
+                }
+                //Se agrega el autorizado al archivo de autorizados del niño.
+                AgregarIDNiño(ruta, tfNombresTutor.getText());
+                
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
             }
            
@@ -1635,14 +1708,16 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }//CASO CUANDO EL TELÉFONO SÍ CAMBIA
                 
                 else{
+                    
                     //SE LE CAMBIA EL NOMBRE AL ARCHIVO
                     File f1 = new File(archivoNiñosTutor); //Archivo original
-                    ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+tfTeléfonoTutor.getText()+".txt"; //Nombre del nuevo archivo
+                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoTutor.getText()+".txt"; //Nombre del nuevo archivo
                     
                     File f2 = new File(ruta); //Archivo nuevo
                     f1.renameTo(f2); //Se renombra el archivo
                     
                     f1.delete(); //Se borra el archivo viejo
+                    
                     
                     //ACTUALIZO EL TUTOR DE CADA NIÑO
                     
@@ -1687,7 +1762,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
-                    //SE ACTUALIZA CADA NIÑO EN EL ARREGLO
+                    //SE ACTUALIZA EL TUTOR DE CADA NIÑO Y EL PATH DEL ARCHIVO (PUES AHORA TIENE UN NOMBRE DIFERENTE)
+                    //... TODO ESTO EN EL ARREGLO EN LA BASE DE DATOS 
                     for(String niño : niños){
                         try {
                             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
@@ -1697,6 +1773,38 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
+                    
+                    //SE ACTUALIZA EL NÚMERO NUEVO EN CADA ARCHIVO DE AUTORIZADOS DE CADA NIÑO DEL TUTOR
+                    File archAutorizados;
+                    for(String niño : niños){
+                        archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+niño+".txt");
+                        String texto = "";
+                        String aux = "";
+                        String bfRead;
+                        
+                        //Se lee el texto
+                        try{
+                            BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
+                            BufferedReader bf = new BufferedReader(new FileReader(archAutorizados));
+
+                            //Se copia el texto en una variable
+                            while((bfRead = bf.readLine() )!= null){
+                                aux = aux+bfRead+"\n";
+                            }
+                            texto = aux;
+
+                            //Se borra el ID del archivo
+                            texto = texto.replace(teléfonoTutor+"\n",tfTeléfonoTutor.getText()+"\n");
+                            FileWriter fw = new FileWriter(archAutorizados);
+                            bw.write(texto);
+                            bw.close();
+                            
+                        }
+                        catch(Exception e){
+                            JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+niño);
+                        }
+                    }
+               
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
                     try {
@@ -1713,12 +1821,156 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         }
         
+        //Si la opción de cambiar tutor está seleccionada, entonces se procede
+        if(cbCambiarTutor.isSelected()){
+            /*
+                Se obtiene el Estatus del tutor para saber donde buscar la información; además, 
+                este bloque sirve como bandera para saber si el tutor que queremos asociar realmente
+                existe en la base de datos
+            */
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
+                rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresTutor.getText()+"'");
+                rs.first();
+                Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el tutor no exista lanza una excepción
+            } catch (SQLException ex) {
+                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "El tutor con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
+                error = true; //Si el tutor no existe se marca como error.
+
+            }
+            //Si no hay error de ningún tipo, entonces se procede a guardar al tutor asociado
+            if(!error && !datosIncompletos && confirmacion){
+                
+                //SE CAMBIA EL TELÉFONO DEL **TUTOR** EN EL ARCHIVO DE TUTORES DEL NIÑO
+
+                    File archAutorizados2 = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                    String texto = "";
+                    String aux = "";
+                    String bfRead;
+
+                    //Se lee el texto
+                    try{
+                        BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados2, true));
+                        BufferedReader bf = new BufferedReader(new FileReader(archAutorizados2));
+
+                        //Se copia el texto en una variable
+                        while((bfRead = bf.readLine() )!= null){
+                            aux = aux+bfRead+"\n";
+                        }
+                        texto = aux;
+
+                        //SE CAMBIA EL NÚMERO DEL TUTOR ANTIGUO POR EL DEL NUEVO TUTOR
+                        texto = texto.replace(teléfonoTutor+"\n",tfNombresTutor.getText()+"\n");
+                        FileWriter fw = new FileWriter(archAutorizados2);
+                        bw.write(texto);
+                        bw.close();
+
+                    }
+                    catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+ID);
+                    }
+                    
+                    //SE AGREGA EL ID DEL NIÑO AL ARCHIVO DE NIÑOS DEL NUEVO TUTOR
+                    /* Se procede a averiguar si el autorizado tiene un archivo de niños, si no, se crea y se guarda al niño ahí*/
+                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresTutor.getText()+".txt";
+                    File bandera = new File(ruta);
+
+                    //Si el file no existe, entonces se crea
+                    if(!bandera.exists()){
+                        try {
+                            bandera.createNewFile();
+                        } catch (IOException ex) {
+                            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
+                        }
+
+                        //Como el aturizado no tenía niños, entonces ahora debe enlazarse este file al autorizado en la base de datos
+                        try {
+                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            Statement stmt = con.createStatement();
+                            stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresTutor.getText()+"'");
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
+                            error = true; //Si el tutor no existe se marca como error.
+                        }   
+                    }
+                    //Se agrega el ID al archivo de niños del autoriza.
+                    AgregarIDNiño(ruta, ID);
+                    
+                    //SE BORRA EL ID DEL NIÑO EN EL ARCHIVO DEL TUTOR VIEJO
+                    ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonoTutor+".txt";
+                    File archTutor;
+                    
+                    archTutor = new File(ruta);
+                    texto = "";
+                    aux = "";
+
+                    //Se lee el texto
+                    try{
+                        BufferedWriter bw = new BufferedWriter(new FileWriter(archTutor, true));
+                        BufferedReader bf = new BufferedReader(new FileReader(archTutor));
+
+                        //Se copia el texto en una variable
+                        while((bfRead = bf.readLine() )!= null){
+                            aux = aux+bfRead+"\n";
+                        }
+                        texto = aux;
+
+                        //SE ELIMINA EL ID DEL NIÑO EN EL ARCHIVO DEL TUTOR VIEJO
+                        texto = texto.replace(ID+"\n", "");
+                        //Si el archivo se queda vacío, entonces se elimina junto con el tutor
+                        if(texto.isBlank()){
+                            File archivo = new File(ruta);
+                            archivo.delete(); //Se elimina el archivo vacío
+                            try{ //Se elimina al tutor
+                               con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                               Statement stmt = con.createStatement();
+                               stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+teléfonoTutor+"'");
+
+                            }
+                            catch(SQLException e){
+                                Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, e);
+                            }
+
+                        }
+                        else{
+                            FileWriter fw = new FileWriter(archTutor);
+                            bw.write(texto);
+                            bw.close();
+                        }
+                        
+
+                    }
+                    catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+ID);
+                    }
+                    
+                    
+                    //SE LE CAMBIA EL TUTOR AL NIÑO EN LA BASE DE DATOS
+                    try {
+                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            Statement stmt = con.createStatement();
+                                stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfNombresTutor.getText()+"' WHERE ID = "+ID );
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(null, "Error al tratar de enlazar al nuevo tutor con el niño","ERROR",1);
+                            error = true; //Si el tutor no existe se marca como error.
+                        }  
+            }
+            
+            
+        }
         /*********************CRUD DE LOS AUTORIZADOS*************************************************/
         //------------------------------------------------ASIGNACIÓN----------------------------------/
         
         //AUTORIZADO 1
         //Si la opción de asignar tutor está seleccionada, entonces se procede.
         if(cbAsignarAut1.isSelected()){
+            
             /*
                 Se obtiene el Estatus del tutor para saber donde buscar la información; además, 
                 este bloque sirve como bandera para saber si el tutor que queremos asociar realmente
@@ -1741,13 +1993,160 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
             if(!error && !datosIncompletos && confirmacion){
                 
-                ruta = directorioRaiz+"/Autorizados/Autorizados"+ID+".txt";
+                ruta = directorioRaiz+"/Niños/TutoresDe"+ID+".txt";
+                /*
+                    se procede a averiguar si el niño tiene un file de autorizados, si no, se crea y se guarda el autorizado.
+                */
+                File bandera = new File(ruta); 
+                //Si el file no existe, entonces se crea
+                if(!bandera.exists()){
+                    try {
+                        bandera.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
+                    }
+                    
+                    //Como el niño no tenía autorizados, entonces ahora debe enlazarse este file al niño en la base de datos
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+ID);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
+                        error = true; //Si el tutor no existe se marca como error.
+                    }   
+                }
                 
-                AgregarIDNiño(ruta, tfNombresAut1.getText()); //Se agrega el ID al archivo de niños.
+                //Se agrega al tutor al archivo de los autorizados del niño.
+                AgregarIDNiño(ruta, tfNombresAut1.getText());
+                
+                
+                /* Se procede a averiguar si el autorizado tiene un archivo de niños, si no, se crea y se guarda al niño ahí*/
+                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresAut1.getText()+".txt";
+                bandera = new File(ruta);
+                
+                //Si el file no existe, entonces se crea
+                if(!bandera.exists()){
+                    try {
+                        bandera.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
+                    }
+                    
+                    //Como el aturizado no tenía niños, entonces ahora debe enlazarse este file al autorizado en la base de datos
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                            stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresAut1.getText()+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
+                        error = true; //Si el tutor no existe se marca como error.
+                    }   
+                }
+                //Se agrega el ID al archivo de niños del autoriza.
+                AgregarIDNiño(ruta, ID);
+                
+                
 
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
             }
            
+        }
+        
+        if(cbEliminarAut1.isSelected()){
+            if(!error && !datosIncompletos && confirmacion){
+            
+                //SE ELIMINA EL TELÉFONO DEL **AUTORIZADO** EN EL ARCHIVO DE TUTORES DEL NIÑO
+                File archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                String texto = "";
+                String aux = "";
+                String bfRead;
+
+                //Se lee el texto
+                try{
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
+                    BufferedReader bf = new BufferedReader(new FileReader(archAutorizados));
+
+                    //Se copia el texto en una variable
+                    while((bfRead = bf.readLine() )!= null){
+                        aux = aux+bfRead+"\n";
+                    }
+                    texto = aux;
+
+                    //SE ELIMINA EL NÚMERO DEL AUTORIZADO 
+
+                    texto = texto.replace(tfTeléfonoAut1.getText()+"\n", "");
+
+                    //Si el archivo se queda vacío, entonces se elimina
+                    if(texto.isBlank()){
+                        File archivo = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                        archivo.delete(); //Se elimina el archivo vacío
+
+                    }
+                    else{
+                        FileWriter fw = new FileWriter(archAutorizados);
+                        bw.write(texto);
+                        bw.close();
+                    }
+
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el teléfono del autorizado1 en el archivo del niño."+ID);
+                }
+
+                //SE BORRA AL NIÑO DEL ARCHIVO DE NIÑOS DEL AUTORIZADO
+                File archNiños = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt");
+                texto = "";
+                aux = "";
+
+                //Se lee el texto
+                try{
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(archNiños, true));
+                    BufferedReader bf = new BufferedReader(new FileReader(archNiños));
+
+                    //Se copia el texto en una variable
+                    while((bfRead = bf.readLine() )!= null){
+                        aux = aux+bfRead+"\n";
+                    }
+                    texto = aux;
+
+                    //SE ELIMINA EL ID DEL NIÑO 
+                    texto = texto.replace(ID+"\n", "");
+
+                    //Si el archivo se queda vacío, entonces se elimina junto con el autorizado
+                    if(texto.isBlank()){
+
+                        File archivo = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt");
+                        archivo.delete(); //Se elimina el archivo vacío
+
+                        try{ //Se elimina al tutor
+                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            Statement stmt = con.createStatement();
+                            stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+tfTeléfonoAut1.getText()+"'");
+                         }
+                         catch(SQLException e){
+                             Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, e);
+                         }
+
+                    }
+                    else{
+                        FileWriter fw = new FileWriter(archNiños);
+                        bw.write(texto);
+                        bw.close();
+                    }
+
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Error al borrar el ID del niño en el archivo del autorizado1"+ID);
+                }
+                
+                JOptionPane.showMessageDialog(null, "Se ha borrado exitosamente al autorizado 1");
+            }
+            
         }
         
         //AUTORIZADO 2
@@ -1775,40 +2174,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
             if(!error && !datosIncompletos && confirmacion){
                 
-                ruta = directorioRaiz+"/Autorizados/Autorizados"+ID+".txt";
-                
-                AgregarIDNiño(ruta, tfNombresAut2.getText()); //Se agrega el ID al archivo de niños.
-
-                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
-            }
-           
-        }
-        
-        //AUTORIZADO 1
-        //Si la opción de asignar tutor está seleccionada, entonces se procede.
-        if(cbAsignarAut3.isSelected()){
-            /*
-                Se obtiene el Estatus del tutor para saber donde buscar la información; además, 
-                este bloque sirve como bandera para saber si el tutor que queremos asociar realmente
-                existe en la base de datos
-            */
-            try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
-                Statement stmt = con.createStatement();
-                ResultSet rs;
-                rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresAut3.getText()+"'");
-                rs.first();
-                Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el tutor no exista lanza una excepción
-            } catch (SQLException ex) {
-                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "La persona con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
-                error = true; //Si el tutor no existe se marca como error.
-            }
-            
-            //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
-            if(!error && !datosIncompletos && confirmacion){
-                ruta = directorioRaiz+"/Autorizados/Autorizados"+ID+".txt";
-                
+                ruta = directorioRaiz+"/Niños/TutoresDe"+ID+".txt";
                 /*
                     se procede a averiguar si el niño tiene un file de autorizados, si no, se crea y se guarda el autorizado.
                 */
@@ -1831,16 +2197,308 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
                         error = true; //Si el tutor no existe se marca como error.
+                    }  
+                }
+                //Se agrega al tutor al archivo de los autorizados del niño.
+                AgregarIDNiño(ruta, tfNombresAut2.getText()); 
+                
+                
+                /* Se procede a averiguar si el autorizado tiene un archivo de niños, si no, se crea y se guarda al niño ahí*/
+                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresAut2.getText()+".txt";
+                bandera = new File(ruta);
+                
+                //Si el file no existe, entonces se crea
+                if(!bandera.exists()){
+                    try {
+                        bandera.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
                     }
                     
+                    //Como el Tutor no tenía niños, entonces ahora debe enlazarse este file al autorizado en la base de datos
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresAut2.getText()+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
+                        error = true; //Si el tutor no existe se marca como error.
+                    }   
+                }
+                //Se agrega el ID al archivo de niños del autoriza.
+                AgregarIDNiño(ruta, ID);
+
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+        }
+        
+        if(cbEliminarAut2.isSelected()){
+            if(!error && !datosIncompletos && confirmacion){
+            
+                //SE ELIMINA EL TELÉFONO DEL **AUTORIZADO** EN EL ARCHIVO DE TUTORES DEL NIÑO
+                File archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                String texto = "";
+                String aux = "";
+                String bfRead;
+
+                //Se lee el texto
+                try{
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
+                    BufferedReader bf = new BufferedReader(new FileReader(archAutorizados));
+
+                    //Se copia el texto en una variable
+                    while((bfRead = bf.readLine() )!= null){
+                        aux = aux+bfRead+"\n";
+                    }
+                    texto = aux;
+
+                    //SE ELIMINA EL NÚMERO DEL AUTORIZADO 
+
+                    texto = texto.replace(tfTeléfonoAut2.getText()+"\n", "");
+
+                    //Si el archivo se queda vacío, entonces se elimina
+                    if(texto.isBlank()){
+                        File archivo = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                        archivo.delete(); //Se elimina el archivo vacío
+
+                    }
+                    else{
+                        FileWriter fw = new FileWriter(archAutorizados);
+                        bw.write(texto);
+                        bw.close();
+                    }
+
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el teléfono del autorizado1 en el archivo del niño."+ID);
+                }
+
+                //SE BORRA AL NIÑO DEL ARCHIVO DE NIÑOS DEL AUTORIZADO
+                File archNiños = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt");
+                texto = "";
+                aux = "";
+
+                //Se lee el texto
+                try{
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(archNiños, true));
+                    BufferedReader bf = new BufferedReader(new FileReader(archNiños));
+
+                    //Se copia el texto en una variable
+                    while((bfRead = bf.readLine() )!= null){
+                        aux = aux+bfRead+"\n";
+                    }
+                    texto = aux;
+
+                    //SE ELIMINA EL ID DEL NIÑO 
+                    texto = texto.replace(ID+"\n", "");
+
+                    //Si el archivo se queda vacío, entonces se elimina junto con el autorizado
+                    if(texto.isBlank()){
+
+                        File archivo = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt");
+                        archivo.delete(); //Se elimina el archivo vacío
+
+                        try{ //Se elimina al tutor
+                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            Statement stmt = con.createStatement();
+                            stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+tfTeléfonoAut2.getText()+"'");
+                         }
+                         catch(SQLException e){
+                             Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, e);
+                         }
+
+                    }
+                    else{
+                        FileWriter fw = new FileWriter(archNiños);
+                        bw.write(texto);
+                        bw.close();
+                    }
+
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Error al borrar el ID del niño en el archivo del autorizado1"+ID);
                 }
                 
-                //Se agrega el ID al archivo de niños.
-                AgregarIDNiño(ruta, tfNombresAut3.getText()); 
+                JOptionPane.showMessageDialog(null, "Se ha borrado exitosamente al autorizado 2");
+            }
+            
+        }
+        
+        //AUTORIZADO 3
+        //Si la opción de asignar tutor está seleccionada, entonces se procede.
+        if(cbAsignarAut3.isSelected()){
+            /*
+                Se obtiene el Estatus del tutor para saber donde buscar la información; además, 
+                este bloque sirve como bandera para saber si el tutor que queremos asociar realmente
+                existe en la base de datos
+            */
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
+                rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresAut3.getText()+"'");
+                rs.first();
+                Estatus = rs.getObject(1).toString(); //Bandera que, en caso de que el tutor no exista lanza una excepción
+            } catch (SQLException ex) {
+                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "La persona con el teléfono ingresado no existe. Revise e inténte de nuevo","ERROR",1);
+                error = true; //Si el tutor no existe se marca como error.
+            }
+            
+            //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
+            if(!error && !datosIncompletos && confirmacion){
+                ruta = directorioRaiz+"/Niños/TutoresDe"+ID+".txt";
+                /*
+                    se procede a averiguar si el niño tiene un file de autorizados, si no, se crea y se guarda el autorizado.
+                */
+                File bandera = new File(ruta); 
+                //Si el file no existe, entonces se crea
+                if(!bandera.exists()){
+                    try {
+                        bandera.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
+                    }
+                    
+                    //Como el niño no tenía autorizados, entonces ahora debe enlazarse este file al niño en la base de datos
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+ID);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
+                        error = true; //Si el tutor no existe se marca como error.
+                    }   
+                }
+                //Se agrega al tutor al archivo de los autorizados del niño.
+                AgregarIDNiño(ruta, tfNombresAut3.getText());
+                
+                /* Se procede a averiguar si el autorizado tiene un archivo de niños, si no, se crea y se guarda al niño ahí*/
+                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresAut3.getText()+".txt";
+                bandera = new File(ruta);
+                
+                //Si el file no existe, entonces se crea
+                if(!bandera.exists()){
+                    try {
+                        bandera.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
+                    }
+                    
+                    //Como el autorizado no tenía niños, entonces ahora debe enlazarse este file al autorizado en la base de datos
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresAut3.getText()+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los autorizados con el niño","ERROR",1);
+                        error = true; //Si el tutor no existe se marca como error.
+                    }   
+                }
+                //Se agrega el ID al archivo de niños del autoriza.
+                AgregarIDNiño(ruta, ID);
 
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
             }
            
+        }
+        
+        if(cbEliminarAut3.isSelected()){
+            if(!error && !datosIncompletos && confirmacion){
+            
+                //SE ELIMINA EL TELÉFONO DEL **AUTORIZADO** EN EL ARCHIVO DE TUTORES DEL NIÑO
+                File archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                String texto = "";
+                String aux = "";
+                String bfRead;
+
+                //Se lee el texto
+                try{
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
+                    BufferedReader bf = new BufferedReader(new FileReader(archAutorizados));
+
+                    //Se copia el texto en una variable
+                    while((bfRead = bf.readLine() )!= null){
+                        aux = aux+bfRead+"\n";
+                    }
+                    texto = aux;
+
+                    //SE ELIMINA EL NÚMERO DEL AUTORIZADO 
+
+                    texto = texto.replace(tfTeléfonoAut3.getText()+"\n", "");
+
+                    //Si el archivo se queda vacío, entonces se elimina
+                    if(texto.isBlank()){
+                        File archivo = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                        archivo.delete(); //Se elimina el archivo vacío
+
+                    }
+                    else{
+                        FileWriter fw = new FileWriter(archAutorizados);
+                        bw.write(texto);
+                        bw.close();
+                    }
+
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el teléfono del autorizado1 en el archivo del niño."+ID);
+                }
+
+                //SE BORRA AL NIÑO DEL ARCHIVO DE NIÑOS DEL AUTORIZADO
+                File archNiños = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt");
+                texto = "";
+                aux = "";
+
+                //Se lee el texto
+                try{
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(archNiños, true));
+                    BufferedReader bf = new BufferedReader(new FileReader(archNiños));
+
+                    //Se copia el texto en una variable
+                    while((bfRead = bf.readLine() )!= null){
+                        aux = aux+bfRead+"\n";
+                    }
+                    texto = aux;
+
+                    //SE ELIMINA EL ID DEL NIÑO 
+                    texto = texto.replace(ID+"\n", "");
+
+                    //Si el archivo se queda vacío, entonces se elimina junto con el autorizado
+                    if(texto.isBlank()){
+
+                        File archivo = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt");
+                        archivo.delete(); //Se elimina el archivo vacío
+
+                        try{ //Se elimina al tutor
+                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            Statement stmt = con.createStatement();
+                            stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+tfTeléfonoAut3.getText()+"'");
+                         }
+                         catch(SQLException e){
+                             Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, e);
+                         }
+
+                    }
+                    else{
+                        FileWriter fw = new FileWriter(archNiños);
+                        bw.write(texto);
+                        bw.close();
+                    }
+
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Error al borrar el ID del niño en el archivo del autorizado1"+ID);
+                }
+                
+                JOptionPane.showMessageDialog(null, "Se ha borrado exitosamente al autorizado 3");
+            }
+            
         }
         
         MostrarPantalla(ID);
@@ -2024,6 +2682,44 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bTomarFotoTutorActionPerformed
 
+    private void cbCambiarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarTutorActionPerformed
+        if(cbCambiarTutor.isSelected()){
+            cbEditarTutor.setSelected(false);
+            lblNombreTutor.setText("Teléfono: ");
+            tfNombresTutor.setText("");
+            tfNombresTutor.setForeground(Color.black);
+            tfNombresTutor.setEditable(true);
+
+            lblApellidoPaternoTutor.setVisible(false);
+            lblApellidoMaternoTutor.setVisible(false);
+            lblTeléfonoTutor.setVisible(false);
+            tfApellidoPaternoTutor.setVisible(false);
+            tfApellidoMaternoTutor.setVisible(false);
+            tfTeléfonoTutor.setVisible(false);
+        }
+        else{
+            tfNombresTutor.setEditable(false);
+            
+            tfNombresTutor.setForeground(Color.lightGray);
+            tfApellidoPaternoTutor.setForeground(Color.lightGray);
+            tfApellidoMaternoTutor.setForeground(Color.lightGray);
+            tfTeléfonoTutor.setForeground(Color.lightGray);
+            
+            lblNombreTutor.setText("Nombres: ");
+            tfNombresTutor.setText(nombresTutor);
+            tfApellidoPaternoTutor.setText(apellidoPaternoTutor);
+            tfApellidoMaternoTutor.setText(apellidoMaternoTutor);
+            tfTeléfonoTutor.setText(teléfonoTutor);
+            
+            lblApellidoPaternoTutor.setVisible(true);
+            lblApellidoMaternoTutor.setVisible(true);
+            lblTeléfonoTutor.setVisible(true);
+            tfApellidoPaternoTutor.setVisible(true);
+            tfApellidoMaternoTutor.setVisible(true);
+            tfTeléfonoTutor.setVisible(true);
+        }
+    }//GEN-LAST:event_cbCambiarTutorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2070,6 +2766,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbAsignarAut2;
     private javax.swing.JCheckBox cbAsignarAut3;
     private javax.swing.JCheckBox cbAsignarTutor;
+    private javax.swing.JCheckBox cbCambiarTutor;
     private javax.swing.JCheckBox cbEditarAut1;
     private javax.swing.JCheckBox cbEditarAut2;
     private javax.swing.JCheckBox cbEditarAut3;

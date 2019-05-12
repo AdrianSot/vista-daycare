@@ -115,8 +115,10 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         String bfRead;
         int vacio = 0;
         
+        
         //Se lee el texto
         try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(direccion, true));
             BufferedReader bf = new BufferedReader(new FileReader(direccion));
             
             //Se copia el texto en una variable
@@ -127,7 +129,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
             
             //Se borra el ID del archivo
             texto = texto.replace(ID+"\n","");
-            
             //Si el texto no queda vacío se actualiza el archivo.
             if(texto.isBlank()){
                 vacio = 1;
@@ -136,7 +137,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                 
             }
             else{
-                BufferedWriter bw = new BufferedWriter(new FileWriter(direccion));
                 FileWriter fw = new FileWriter(direccion);
                 bw.write(texto);
                 bw.close();
@@ -550,8 +550,10 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                             infoNiño[0] = rs.getObject(1).toString();
                             infoNiño[1] = rs.getObject(2).toString();
                             infoNiño[2] = rs.getObject(3).toString();
+                            
+                            //QUITÉ ÉSTO PORQUE AHORA TUTOR Y AUTORIZADOS ESTÁN MEZCLADOS EN UN SOLO ARCHIVO
 
-                            //Se extrae el archivo con los niños del tutor.
+                    /*        //Se extrae el archivo con los niños del tutor.
                             rs2 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+rs.getObject(2).toString()+"'");
                             rs2.first();
 
@@ -577,14 +579,17 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                     Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, e);
                                 }
 
-                            }
+                            }*/
+                            
+                            //SE LEERÁ EL ARCHIVO DE LOS AUTORIZADOS, SE EXTRAE EL TELÉFONO DE CADA UNO PARA MANIPULAR SUS ARCHIVOS DE NIÑOS
 
                             //Se lee el archivo de los telAutorizados del niño para extraer el teléfono de cada uno.
                             if(!infoNiño[2].equals("null")){ //Si el archivo es null, entonces no tiene telAutorizados.
                                 int numAutorizado = 0;
                                 String aux;
-                                String[] telAutorizados = new String[3];
-                                String[] archivosAutorizados = new String[3];
+                                String[] telAutorizados = new String[5];
+                                String[] archivosAutorizados = new String[5];
+                                
                                 try{
                                     BufferedReader bf = new BufferedReader(new FileReader(infoNiño[2]));
                                     while((aux = bf.readLine()) != null){
@@ -606,8 +611,8 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                 archivo.delete();
 
                                 //Se obtienen los archivos de los autorizados para borrar al niño de ellos.
-                                ResultSet r4 = null, r5 = null, r6 = null;
-                                for(int i = 0 ; i < 3 ; i++){
+                                ResultSet r4 = null, r5 = null, r6 = null, r7 = null, r8 = null;
+                                for(int i = 0 ; i < 5 ; i++){
                                    if(i == 0 && telAutorizados[i] != null){
                                     r4 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+telAutorizados[i]+"'");
                                     r4.first();
@@ -621,6 +626,16 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                    if(i == 2 && telAutorizados[i] != null){
                                      r6 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+telAutorizados[i]+"'");  
                                      r6.first();
+                                     archivosAutorizados[2] = r6.getObject(1).toString();
+                                   }
+                                   if(i == 3 && telAutorizados[i] != null){
+                                     r7 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+telAutorizados[i]+"'");  
+                                     r7.first();
+                                     archivosAutorizados[2] = r6.getObject(1).toString();
+                                   }
+                                   if(i == 4 && telAutorizados[i] != null){
+                                     r8 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+telAutorizados[i]+"'");  
+                                     r8.first();
                                      archivosAutorizados[2] = r6.getObject(1).toString();
                                    }
                                 }
@@ -661,10 +676,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                         } catch (SQLException ex) {
                             Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, ex);
                         }
-
-
-
-
                     }
                 }
             }
