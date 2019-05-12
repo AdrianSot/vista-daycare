@@ -710,15 +710,16 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     //Se crea el archivo que contiene a todos los autorizados
                     if(numAutorizados != 0){
                         try {
-                            ruta = directorioRaiz+"/Autorizados/Autorizados"+idNiño+".txt";
+                            ruta = directorioRaiz+"/Niños/TutoresDe"+idNiño+".txt";
                             file = new File(ruta);
                             // Si el archivo no existe es creado
                             if (!file.exists()) {
                                 file.createNewFile();
                             }
-                            FileWriter fw = new FileWriter(file);
+                            FileWriter fw = new FileWriter(file, true);
                             BufferedWriter bw = new BufferedWriter(fw);
                             bw.write(contenido);
+                            bw.newLine();
                             bw.close();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -791,11 +792,32 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 
                 
                 if(!errorBaseDatos){
+                    
                     //Se crea el archivo con los niños del tutor.
                     System.out.println(cbSinTutor.isSelected());
                     if(!cbSinTutor.isSelected()) {
+                        //Se mete al tutor al archivo de autorizados del niño
+                         try {
+                            ruta = directorioRaiz+"/Niños/TutoresDe"+idNiño+".txt";
+                            System.out.println(ruta);
+                            contenido = telefonoTutor;
+                            file2 = new File(ruta);
+                            // Si el archivo no existe es creado
+                            if (!file2.exists()) {
+                                file2.createNewFile();
+                            }
+                            FileWriter fw = new FileWriter(file2, true);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(contenido);
+                            bw.newLine();
+                            bw.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        
+                        //Se mete al archivo del tutor al niño.
                         try {
-                            ruta = directorioRaiz+"/Niños(tutores)/NiñosTutor_"+telefonoTutor+".txt";
+                            ruta = directorioRaiz+"/Tutores/NiñosDe"+telefonoTutor+".txt";
                             System.out.println(ruta);
                             contenido = idNiño;
                             file2 = new File(ruta);
@@ -803,9 +825,10 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             if (!file2.exists()) {
                                 file2.createNewFile();
                             }
-                            FileWriter fw = new FileWriter(file2);
+                            FileWriter fw = new FileWriter(file2, true);
                             BufferedWriter bw = new BufferedWriter(fw);
                             bw.write(contenido);
+                            bw.newLine();
                             bw.close();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -852,7 +875,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     for(int i = 0 ; i < numAutorizados ; i++){
                     
                         try {
-                            ruta = directorioRaiz+"/Niños(autorizados)/NiñosAutorizados_"+teléfonosAutorizados[i]+".txt";
+                            ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[i]+".txt";
                             contenido = idNiño;
                             file3 = new File(ruta);
                             // Si el archivo no existe es creado
@@ -898,7 +921,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                     
                                     if(i == 1){
                                         
-                                        ruta = directorioRaiz+"/Niños(autorizados)/NiñosAutorizados_"+teléfonosAutorizados[0]+".txt";
+                                        ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[0]+".txt";
                                         file3 = new File(ruta);
                                         try{
                                             file3.delete();
@@ -920,14 +943,14 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                         
                                     }
                                     if(i == 2){
-                                        ruta = directorioRaiz+"/Niños(autorizados)/NiñosAutorizados_"+teléfonosAutorizados[1]+".txt";
+                                        ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[1]+".txt";
                                         file3 = new File(ruta);
                                         try{
                                             file3.delete();
                                         }catch(HeadlessException e){
                                             
                                         }
-                                        ruta = directorioRaiz+"/Niños(autorizados)/NiñosAutorizados_"+teléfonosAutorizados[0]+".txt";
+                                        ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[0]+".txt";
                                         file3 = new File(ruta);
                                         try{
                                             file3.delete();
@@ -965,9 +988,10 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                 }
                                 break;
                             }
-                            FileWriter fw = new FileWriter(file3);
+                            FileWriter fw = new FileWriter(file3, true);
                             BufferedWriter bw = new BufferedWriter(fw);
                             bw.write(contenido);
+                            bw.newLine();
                             bw.close();
 
                         } catch (HeadlessException | IOException e) {
