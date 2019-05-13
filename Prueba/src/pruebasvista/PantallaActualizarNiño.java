@@ -49,7 +49,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     String teléfonosAutorizados[] = {"","",""}; // Teléfonos de los autorizados
     
     //Archivos
-    String archivoNiñosTutor, archivoTutor, archivoAutorizados;
+    String archivoNiñosTutor, archivoTutor, archivoAutorizados, archivoNiñosAut1, archivoNiñosAut2, archivoNiñosAut3;
     
     //Imágenes
     Image fotoNiño, fotoTutor;
@@ -268,7 +268,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         telTutor = telAut1 = telAut2 = telAut3 = ""; //Se inicializan los teléfonos auxiliares
         
         //Archivos
-        archivoNiñosTutor = archivoTutor = archivoAutorizados = "";
+        archivoNiñosTutor = archivoTutor = archivoAutorizados = archivoNiñosAut1 = archivoNiñosAut2 = archivoNiñosAut3 = "";
         
         //Fotos
         fotoNiño = fotoTutor =null;
@@ -545,6 +545,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     fotosAutorizados[numAut] = getToolkit().getImage(rs.getObject(5).toString());
                     fotosAutorizados[numAut] = fotosAutorizados[numAut].getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                     iconosAutorizados[numAut] = new ImageIcon(fotosAutorizados[numAut]);
+                    if(numAut == 0) archivoNiñosAut1 = rs.getObject(6).toString();
+                    else if(numAut == 1) archivoNiñosAut2 = rs.getObject(6).toString();
+                    else if(numAut == 2) archivoNiñosAut3 = rs.getObject(6).toString();
                     numAut++;
                 }
                 
@@ -1463,6 +1466,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         
         //ANTES DE COMENZAR A HACER CAMBIOS SE CHECAN LOS TELÉFONOS
         /***********************************PENDIENTE************************/
+        
+        //CREO QUE ESTO NO ES NECESARIO
+        /*
         for(int i = 0 ; i < Teléfonos.length ; i++){
             if(cbEditarAut1.isSelected() && tfTeléfonoAut1.getText().equals(Teléfonos[i])){
                 JOptionPane.showMessageDialog(null, "El teléfono del Autorizado 1 se repite. (Ya existe en la base de datos)\nNo se guardarán los cambios", "ERROR", 1);
@@ -1485,7 +1491,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 error = true;
                 break;
             }*/
-        }
+        //} 
         
         /*EDITAR NIÑO*/
         //Si se está editando al niño y se deja un espacio en blanco, entonces se marca como error.
@@ -1590,6 +1596,57 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         if( ( (tfNombresAut3.getText().equals(tfTeléfonoTutor.getText()) && !tfNombresTutor.getText().equals("") )|| 
               (tfNombresAut3.getText().equals(tfTeléfonoAut1.getText()) && !tfNombresAut1.getText().equals("") )||  
               (tfNombresAut3.getText().equals(tfTeléfonoAut2.getText()) && !tfNombresAut2.getText().equals("") ) ) && cbAsignarAut3.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del autorizado 3\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        
+         /*EDITAR AUTORIZADO 1*/
+        //Si se cambia al autorizado1 y algún campo de texto queda en blanco, entonces se marca como error.
+        if((tfNombresAut1.getText().equals("") || tfApellidoPaternoAut1.getText().equals("") || tfApellidoMaternoAut1.getText().equals("") ||
+            tfTeléfonoAut1.getText().equals("")) && cbEditarAut1.isSelected()){
+            JOptionPane.showMessageDialog(null, "Información del autorizado 1 incompleta.\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
+        
+        /*EDITAR AUTORIZADO 1*/
+        //Si el teléfono del tutor a editar ya pertenece a un autorizado del niño, entonces se marca el error.
+        if( ( (tfTeléfonoAut1.getText().equals(tfTeléfonoTutor.getText()) && !tfTeléfonoAut1.getText().equals("") )|| 
+              (tfTeléfonoAut1.getText().equals(tfTeléfonoAut2.getText()) && !tfTeléfonoAut1.getText().equals("") )||  
+              (tfTeléfonoAut1.getText().equals(tfTeléfonoAut3.getText()) && !tfTeléfonoAut1.getText().equals("") ) ) && cbEditarAut1.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del autorizado 1\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        
+        /*EDITAR AUTORIZADO 2*/
+        //Si se cambia al autorizado1 y algún campo de texto queda en blanco, entonces se marca como error.
+        if((tfNombresAut2.getText().equals("") || tfApellidoPaternoAut2.getText().equals("") || tfApellidoMaternoAut2.getText().equals("") ||
+            tfTeléfonoAut2.getText().equals("")) && cbEditarAut2.isSelected()){
+            JOptionPane.showMessageDialog(null, "Información del autorizado 2 incompleta.\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
+        
+        /*EDITAR AUTORIZADO 2*/
+        //Si el teléfono del tutor a editar ya pertenece a un autorizado del niño, entonces se marca el error.
+        if( ( (tfTeléfonoAut2.getText().equals(tfTeléfonoTutor.getText()) && !tfTeléfonoAut2.getText().equals("") )|| 
+              (tfTeléfonoAut2.getText().equals(tfTeléfonoAut1.getText()) && !tfTeléfonoAut2.getText().equals("") )||  
+              (tfTeléfonoAut2.getText().equals(tfTeléfonoAut3.getText()) && !tfTeléfonoAut2.getText().equals("") ) ) && cbEditarAut2.isSelected()){
+            JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del autorizado 2\n Revise e inténtelo de nuevo.");
+            error = true;
+        }
+        
+        /*EDITAR AUTORIZADO 3*/
+        //Si se cambia al autorizado1 y algún campo de texto queda en blanco, entonces se marca como error.
+        if((tfNombresAut3.getText().equals("") || tfApellidoPaternoAut3.getText().equals("") || tfApellidoMaternoAut3.getText().equals("") ||
+            tfTeléfonoAut3.getText().equals("")) && cbEditarAut3.isSelected()){
+            JOptionPane.showMessageDialog(null, "Información del autorizado 3 incompleta.\nRevise e inténtelo de nuevo.", "ERROR", 1);
+            datosIncompletos = true;
+        }
+        
+        /*EDITAR AUTORIZADO 3*/
+        //Si el teléfono del tutor a editar ya pertenece a un autorizado del niño, entonces se marca el error.
+        if( ( (tfTeléfonoAut3.getText().equals(tfTeléfonoTutor.getText()) && !tfTeléfonoAut3.getText().equals("") )|| 
+              (tfTeléfonoAut3.getText().equals(tfTeléfonoAut1.getText()) && !tfTeléfonoAut3.getText().equals("") )||  
+              (tfTeléfonoAut3.getText().equals(tfTeléfonoAut2.getText()) && !tfTeléfonoAut3.getText().equals("") ) ) && cbEditarAut2.isSelected()){
             JOptionPane.showMessageDialog(null, "El niño ya tiene asociada a una persona con el teléfono del autorizado 3\n Revise e inténtelo de nuevo.");
             error = true;
         }
@@ -2499,6 +2556,360 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Se ha borrado exitosamente al autorizado 3");
             }
             
+        }
+        
+        //SI LA OPCIÓN DE EDITAR AL AUTORIZADO 1 ESTÁ SELECCIONADA, ENTONCES SE PROCEDE
+        if(cbEditarAut1.isSelected()){
+            if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del tutor
+                //CASO CUANDO EL TELÉFONO NO CAMBIA
+                if(teléfonosAutorizados[0].equals(tfTeléfonoAut1.getText())){
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut1.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoAut1.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut1.getText()+"', Foto = '"+
+                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : nuevaFotoAut1.getAbsolutePath() )+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }//CASO CUANDO EL TELÉFONO SÍ CAMBIA
+                
+                else{
+                    
+                    //SE LE CAMBIA EL NOMBRE AL ARCHIVO
+                    File f1 = new File(archivoNiñosAut1); //Archivo original
+                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt"; //Nombre del nuevo archivo
+                    
+                    File f2 = new File(ruta); //Archivo nuevo
+                    f1.renameTo(f2); //Se renombra el archivo
+                    
+                    f1.delete(); //Se borra el archivo viejo
+                    
+                    
+                    //SE DEBE ACTUALIZAR EL TELÉFONO NUEVO DEL AUTORIZADO EN LOS ARCHIVOS DE TUTORES DE TODOS SUS NIÑOS
+                    
+                    int numNiños = 0; //Tamaño del arreglo
+                    String cadena;
+                    String[] niños;
+                    FileReader f;
+                    
+                    //Se cuentan los niños
+                    try {
+                        f = new FileReader(f2);
+                        BufferedReader b = new BufferedReader(f);
+                        while((cadena = b.readLine())!=null) {
+                            numNiños++;
+                            System.out.println(cadena);
+                        }
+                        b.close();
+                        
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    //Se crea el arreglo de los niños.
+                    niños = new String[numNiños];
+                    
+                    //Se guardan los niños.
+                    numNiños = 0;
+                    try {
+                        f = new FileReader(f2);
+                        BufferedReader b = new BufferedReader(f);
+                        while((cadena = b.readLine())!=null) {
+                            niños[numNiños] = cadena;
+                            numNiños++;
+                        }
+                        b.close();
+                        
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    //SE ACTUALIZA EL NÚMERO NUEVO EN CADA ARCHIVO DE AUTORIZADOS DE CADA NIÑO DEL TUTOR
+                    File archAutorizados;
+                    for(String niño : niños){
+                        archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+niño+".txt");
+                        String texto = "";
+                        String aux = "";
+                        String bfRead;
+                        
+                        //Se lee el texto
+                        try{
+                            BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
+                            BufferedReader bf = new BufferedReader(new FileReader(archAutorizados));
+
+                            //Se copia el texto en una variable
+                            while((bfRead = bf.readLine() )!= null){
+                                aux = aux+bfRead+"\n";
+                            }
+                            texto = aux;
+
+                            //Se borra el ID del archivo
+                            texto = texto.replace(teléfonosAutorizados[0]+"\n",tfTeléfonoAut1.getText()+"\n");
+                            FileWriter fw = new FileWriter(archAutorizados);
+                            bw.write(texto);
+                            bw.close();
+                            
+                        }
+                        catch(Exception e){
+                            JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+niño);
+                        }
+                    }
+               
+                    
+                    //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut1.getText()+"', Nombres = '"+tfNombresAut1.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoAut1.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut1.getText()+"', Foto = '"+
+                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : nuevaFotoAut1.getAbsolutePath() )+"', Ninos = '"+f2.getAbsolutePath()+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+        }
+        
+        //SI LA OPCIÓN DE EDITAR AL AUTORIZADO 2 ESTÁ SELECCIONADA, ENTONCES SE PROCEDE
+        if(cbEditarAut2.isSelected()){
+            if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del tutor
+                //CASO CUANDO EL TELÉFONO NO CAMBIA
+                if(teléfonosAutorizados[1].equals(tfTeléfonoAut2.getText())){
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut2.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoAut2.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut2.getText()+"', Foto = '"+
+                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : nuevaFotoAut2.getAbsolutePath() )+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }//CASO CUANDO EL TELÉFONO SÍ CAMBIA
+                
+                else{
+                    
+                    //SE LE CAMBIA EL NOMBRE AL ARCHIVO
+                    File f1 = new File(archivoNiñosAut2); //Archivo original
+                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt"; //Nombre del nuevo archivo
+                    
+                    File f2 = new File(ruta); //Archivo nuevo
+                    f1.renameTo(f2); //Se renombra el archivo
+                    
+                    f1.delete(); //Se borra el archivo viejo
+                    
+                    
+                    //SE DEBE ACTUALIZAR EL TELÉFONO NUEVO DEL AUTORIZADO EN LOS ARCHIVOS DE TUTORES DE TODOS SUS NIÑOS
+                    
+                    int numNiños = 0; //Tamaño del arreglo
+                    String cadena;
+                    String[] niños;
+                    FileReader f;
+                    
+                    //Se cuentan los niños
+                    try {
+                        f = new FileReader(f2);
+                        BufferedReader b = new BufferedReader(f);
+                        while((cadena = b.readLine())!=null) {
+                            numNiños++;
+                            System.out.println(cadena);
+                        }
+                        b.close();
+                        
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    //Se crea el arreglo de los niños.
+                    niños = new String[numNiños];
+                    
+                    //Se guardan los niños.
+                    numNiños = 0;
+                    try {
+                        f = new FileReader(f2);
+                        BufferedReader b = new BufferedReader(f);
+                        while((cadena = b.readLine())!=null) {
+                            niños[numNiños] = cadena;
+                            numNiños++;
+                        }
+                        b.close();
+                        
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    //SE ACTUALIZA EL NÚMERO NUEVO EN CADA ARCHIVO DE AUTORIZADOS DE CADA NIÑO DEL TUTOR
+                    File archAutorizados;
+                    for(String niño : niños){
+                        archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+niño+".txt");
+                        String texto = "";
+                        String aux = "";
+                        String bfRead;
+                        
+                        //Se lee el texto
+                        try{
+                            BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
+                            BufferedReader bf = new BufferedReader(new FileReader(archAutorizados));
+
+                            //Se copia el texto en una variable
+                            while((bfRead = bf.readLine() )!= null){
+                                aux = aux+bfRead+"\n";
+                            }
+                            texto = aux;
+
+                            //Se borra el ID del archivo
+                            texto = texto.replace(teléfonosAutorizados[1]+"\n",tfTeléfonoAut2.getText()+"\n");
+                            FileWriter fw = new FileWriter(archAutorizados);
+                            bw.write(texto);
+                            bw.close();
+                            
+                        }
+                        catch(Exception e){
+                            JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+niño);
+                        }
+                    }
+               
+                    
+                    //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut2.getText()+"', Nombres = '"+tfNombresAut2.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoAut2.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut2.getText()+"', Foto = '"+
+                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : nuevaFotoAut2.getAbsolutePath() )+"', Ninos = '"+f2.getAbsolutePath()+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
+        }
+        
+        //SI LA OPCIÓN DE EDITAR AL AUTORIZADO 3 ESTÁ SELECCIONADA, ENTONCES SE PROCEDE
+        if(cbEditarAut3.isSelected()){
+            if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del tutor
+                //CASO CUANDO EL TELÉFONO NO CAMBIA
+                if(teléfonosAutorizados[2].equals(tfTeléfonoAut3.getText())){
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut3.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoAut3.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut3.getText()+"', Foto = '"+
+                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : nuevaFotoAut3.getAbsolutePath() )+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }//CASO CUANDO EL TELÉFONO SÍ CAMBIA
+                
+                else{
+                    
+                    //SE LE CAMBIA EL NOMBRE AL ARCHIVO
+                    File f1 = new File(archivoNiñosAut3); //Archivo original
+                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt"; //Nombre del nuevo archivo
+                    
+                    File f2 = new File(ruta); //Archivo nuevo
+                    f1.renameTo(f2); //Se renombra el archivo
+                    
+                    f1.delete(); //Se borra el archivo viejo
+                    
+                    
+                    //SE DEBE ACTUALIZAR EL TELÉFONO NUEVO DEL AUTORIZADO EN LOS ARCHIVOS DE TUTORES DE TODOS SUS NIÑOS
+                    
+                    int numNiños = 0; //Tamaño del arreglo
+                    String cadena;
+                    String[] niños;
+                    FileReader f;
+                    
+                    //Se cuentan los niños
+                    try {
+                        f = new FileReader(f2);
+                        BufferedReader b = new BufferedReader(f);
+                        while((cadena = b.readLine())!=null) {
+                            numNiños++;
+                            System.out.println(cadena);
+                        }
+                        b.close();
+                        
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    //Se crea el arreglo de los niños.
+                    niños = new String[numNiños];
+                    
+                    //Se guardan los niños.
+                    numNiños = 0;
+                    try {
+                        f = new FileReader(f2);
+                        BufferedReader b = new BufferedReader(f);
+                        while((cadena = b.readLine())!=null) {
+                            niños[numNiños] = cadena;
+                            numNiños++;
+                        }
+                        b.close();
+                        
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    //SE ACTUALIZA EL NÚMERO NUEVO EN CADA ARCHIVO DE AUTORIZADOS DE CADA NIÑO DEL TUTOR
+                    File archAutorizados;
+                    for(String niño : niños){
+                        archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+niño+".txt");
+                        String texto = "";
+                        String aux = "";
+                        String bfRead;
+                        
+                        //Se lee el texto
+                        try{
+                            BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
+                            BufferedReader bf = new BufferedReader(new FileReader(archAutorizados));
+
+                            //Se copia el texto en una variable
+                            while((bfRead = bf.readLine() )!= null){
+                                aux = aux+bfRead+"\n";
+                            }
+                            texto = aux;
+
+                            //Se borra el ID del archivo
+                            texto = texto.replace(teléfonosAutorizados[2]+"\n",tfTeléfonoAut3.getText()+"\n");
+                            FileWriter fw = new FileWriter(archAutorizados);
+                            bw.write(texto);
+                            bw.close();
+                            
+                        }
+                        catch(Exception e){
+                            JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+niño);
+                        }
+                    }
+               
+                    
+                    //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut3.getText()+"', Nombres = '"+tfNombresAut3.getText()+"', Apellido_paterno = '"+
+                         tfApellidoPaternoAut3.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut3.getText()+"', Foto = '"+
+                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : nuevaFotoAut3.getAbsolutePath() )+"', Ninos = '"+f2.getAbsolutePath()+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
+            }
         }
         
         MostrarPantalla(ID);
