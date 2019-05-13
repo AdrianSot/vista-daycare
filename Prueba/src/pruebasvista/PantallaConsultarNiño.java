@@ -587,8 +587,8 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                             if(!infoNiño[2].equals("null")){ //Si el archivo es null, entonces no tiene telAutorizados.
                                 int numAutorizado = 0;
                                 String aux;
-                                String[] telAutorizados = new String[5];
-                                String[] archivosAutorizados = new String[5];
+                                String[] telAutorizados = new String[10];
+                                String[] archivosAutorizados = new String[10];
                                 
                                 try{
                                     BufferedReader bf = new BufferedReader(new FileReader(infoNiño[2]));
@@ -631,12 +631,12 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                    if(i == 3 && telAutorizados[i] != null){
                                      r7 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+telAutorizados[i]+"'");  
                                      r7.first();
-                                     archivosAutorizados[2] = r6.getObject(1).toString();
+                                     archivosAutorizados[2] = r7.getObject(1).toString();
                                    }
                                    if(i == 4 && telAutorizados[i] != null){
                                      r8 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+telAutorizados[i]+"'");  
                                      r8.first();
-                                     archivosAutorizados[2] = r6.getObject(1).toString();
+                                     archivosAutorizados[2] = r8.getObject(1).toString();
                                    }
                                 }
 
