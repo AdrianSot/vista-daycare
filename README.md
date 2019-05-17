@@ -1,4 +1,5 @@
 # VISTA
-Proyecto de Ingeniería de Software I
 
-Programa que ayuda en la logística de una guardería al momento de llevarse niños, identificando con reconocimiento facial y verificando que la persona que se lo lleve es el tutor o está autorizadio.
+Proyecto en realización para la materia de Ingeniería de Software I (2019-1).
+
+Programa que ayuda en la logística de una guardería al momento de llevarse niños, identificando y verificando con reconocimiento facial que la persona que se lo lleve es el tutor o está autorizado.
