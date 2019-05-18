@@ -5,6 +5,20 @@
  */
 package pruebasvista;
 
+import java.awt.Image;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author pedrohdez
@@ -14,8 +28,63 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
     /**
      * Creates new form PantallaCrearTutor
      */
+     Connection con;
+     Statement stmt;
+     
+     String Teléfonos[];
+     File fotoTutor;
+     boolean error = false;
     public PantallaCrearTutor() {
         initComponents();
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch (ClassNotFoundException ex) {
+            Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void IniciarPantalla(){
+        //SE LIMPIAN TODOS LOS TEXT FIELDS
+        tfNombres.setText("");
+        tfApellidoPaterno.setText("");
+        tfApellidoMaterno.setText("");
+        tfTeléfono.setText("");
+        lblFoto.setIcon(null);
+        lblFoto.setText("SIN FOTO");
+        fotoTutor = null;
+        
+        //SE EXTRAEN TODOS LOS TELÉFONOS DE LA BD PARA QUE AL MOMENTO DE AJUSTAR LA INFORMACIÓN NO SE REPITAN LOS TUTORES/AUTORIZADOS
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            Statement stmt = con.createStatement();
+            ResultSet rs, rs2;
+            rs = stmt.executeQuery("SELECT COUNT(*) FROM Tutores");
+            rs.first();
+            
+            Teléfonos = new String[Integer.parseInt(rs.getObject(1).toString())];
+            System.out.println("TAMAÑO DEL ARREGLO: "+Teléfonos.length);
+            
+            rs2 = stmt.executeQuery("SELECT Telefono FROM Tutores");
+            rs2.first();
+            
+            for(int i = 0; i < Teléfonos.length ; i++){
+                Teléfonos[i] = rs2.getObject(1).toString();
+                rs2.next();
+            }
+            
+            for(int i = 0 ; i < Teléfonos.length ; i++){
+                System.out.println(Teléfonos[i]);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }
 
     /**
@@ -35,7 +104,9 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
         tfApellidoPaterno = new javax.swing.JTextField();
         tfApellidoMaterno = new javax.swing.JTextField();
         tfTeléfono = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        lblFoto = new javax.swing.JLabel();
+        bTomarFoto = new javax.swing.JButton();
+        bGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -47,7 +118,21 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
 
         lblTeléfono.setText("Teléfono:");
 
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        bTomarFoto.setText("Tomar foto");
+        bTomarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTomarFotoActionPerformed(evt);
+            }
+        });
+
+        bGuardar.setText("Guardar cambios");
+        bGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,16 +157,24 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                         .addComponent(lblTeléfono)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bTomarFoto)
+                .addGap(151, 151, 151))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(255, 255, 255)
+                .addComponent(bGuardar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombres)
@@ -98,11 +191,66 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTeléfono)
                             .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bTomarFoto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(bGuardar)
+                .addGap(148, 148, 148))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
+        
+         for (String Teléfono : Teléfonos) {
+             if ( tfTeléfono.getText().equals(Teléfono) ) {
+                 JOptionPane.showMessageDialog(null, "El tutor con teléfono "+tfTeléfono.getText()+" ya existe", "ERROR", 1);
+                 error = true;
+                 break;
+             }
+         }
+        
+        if(tfNombres.getText().equals("") || tfApellidoPaterno.getText().equals("") || tfApellidoMaterno.getText().equals("") ||
+           tfTeléfono.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "La información es incompleta. Revise e inténtelo de nuevo", "ERROR", 1);
+            error = true;
+            
+        }
+        
+        if(!error){
+             //Se introduce al niño a la base de datos
+                try {
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    stmt = con.createStatement();
+                    stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+tfTeléfono.getText()+"','"+tfNombres.getText()+"','"+tfApellidoPaterno.getText()+"','"+
+                            tfApellidoMaterno.getText()+"','" +(fotoTutor == null ? "No" : fotoTutor.getAbsolutePath())+"','null', 'Tutor')");
+                } 
+                catch (SQLException ex) {
+                    Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del niño.\nIntente de nuevo.");
+                }
+                
+                JOptionPane.showMessageDialog(null, "Se ha creado al tutor");
+                dispose();
+        }
+        else error = false;
+       
+    }//GEN-LAST:event_bGuardarActionPerformed
+
+    private void bTomarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoActionPerformed
+        JFileChooser ficAbrirArchivo = new JFileChooser();
+        ficAbrirArchivo.setFileFilter(new FileNameExtensionFilter("archivo de imagen", "jpg", "jpeg"));
+        int respuesta=ficAbrirArchivo.showOpenDialog(this);
+        
+        if(respuesta==JFileChooser.APPROVE_OPTION ){
+            fotoTutor = ficAbrirArchivo.getSelectedFile();
+            Image foto = getToolkit().getImage(fotoTutor.getAbsolutePath());
+            foto = foto.getScaledInstance(260, 260, 260);
+            lblFoto.setIcon(new ImageIcon(foto));
+        }
+           
+    }//GEN-LAST:event_bTomarFotoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,9 +288,11 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton bGuardar;
+    private javax.swing.JButton bTomarFoto;
     private javax.swing.JLabel lblApellidoMaterno;
     private javax.swing.JLabel lblApellidoPaterno;
+    private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblTeléfono;
     private javax.swing.JTextField tfApellidoMaterno;

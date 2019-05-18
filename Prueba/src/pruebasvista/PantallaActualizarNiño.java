@@ -77,11 +77,15 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     boolean error, confirmacion, datosIncompletos;
     String Estatus; //Bandera para saber si un tutor es autorizado o tutor.
     
+    PantallaCrearTutor crearTutor;
+    
     //Rutas
     String ruta, directorioRaiz;  
     
     public PantallaActualizarNiño() {
         initComponents();
+        
+        crearTutor = new PantallaCrearTutor();
         
         IniciarVentana();
         try {
@@ -714,6 +718,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbAsignarAut2 = new javax.swing.JCheckBox();
         cbAsignarAut3 = new javax.swing.JCheckBox();
         cbCambiarTutor = new javax.swing.JCheckBox();
+        bCrearTutor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -813,6 +818,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         });
 
         bTomarFotoAut1.setText("Tomar foto");
+        bTomarFotoAut1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTomarFotoAut1ActionPerformed(evt);
+            }
+        });
 
         bTomarFotoAut2.setText("Tomar foto");
 
@@ -913,6 +923,13 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbCambiarTutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCambiarTutorActionPerformed(evt);
+            }
+        });
+
+        bCrearTutor.setText("Crear tutor");
+        bCrearTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCrearTutorActionPerformed(evt);
             }
         });
 
@@ -1114,9 +1131,13 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         .addGap(717, 717, 717)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(713, 713, 713)
-                        .addComponent(bGuardar)))
+                        .addContainerGap()
+                        .addComponent(bCrearTutor)))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bGuardar)
+                .addGap(711, 711, 711))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1262,9 +1283,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     .addComponent(lbl4, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
+                .addComponent(bCrearTutor)
+                .addGap(3, 3, 3)
                 .addComponent(bGuardar)
-                .addGap(220, 220, 220))
+                .addGap(201, 201, 201))
         );
 
         pack();
@@ -1703,9 +1726,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             
             //Si no hay error de ningún tipo, entonces se procede a guardar al tutor asociado
             if(!error && !datosIncompletos && confirmacion){
-                
-                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresTutor.getText()+".txt";
-                AgregarIDNiño(ruta, ID); //Se agrega el ID al archivo de niños.
 
                 //Se inserta el teléfono del tutor en la información del niño en la base de datos.
                 try {
@@ -1742,6 +1762,33 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
                 //Se agrega el autorizado al archivo de autorizados del niño.
                 AgregarIDNiño(ruta, tfNombresTutor.getText());
+                
+                
+                
+                /*Se procede a avegriguar si el tutor tiene un archivo de niños, si no, se crea y se guarda el id del niño*/
+                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresTutor.getText()+".txt";
+                bandera = new File(ruta);
+                if(!bandera.exists()){
+                    try {
+                        bandera.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de niños para el tutor","ERROR",1);
+                    }
+                    
+                    //Como el tutor no tenía niños, entonces ahora debe enlazarse este file al tutor en la base de datos
+                    try {
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresTutor.getText()+"'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error al tratar de enlazar el archivo de los niños con el tutor","ERROR",1);
+                        error = true; //Si el tutor no existe se marca como error.
+                    }   
+                }
+                //Se agrega el niño al archivo de niños del tutor.
+                AgregarIDNiño(ruta, ID);
                 
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios con éxito");
             }
@@ -3131,6 +3178,17 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbCambiarTutorActionPerformed
 
+    private void bCrearTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCrearTutorActionPerformed
+        crearTutor.setLocation(this.getLocationOnScreen());
+        crearTutor.IniciarPantalla();
+        crearTutor.setVisible(true);
+        crearTutor.setTitle("CREAR TUTOR");
+    }//GEN-LAST:event_bCrearTutorActionPerformed
+
+    private void bTomarFotoAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bTomarFotoAut1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3167,6 +3225,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bCrearTutor;
     private javax.swing.JButton bGuardar;
     private javax.swing.JButton bTomarFotoAut1;
     private javax.swing.JButton bTomarFotoAut2;
