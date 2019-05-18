@@ -27,7 +27,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     //Se crean los "botones" de actualizar y eliminar
         JLabel editar = new JLabel();
         JLabel eliminar = new JLabel();
-    public boolean act;
     
     public PantallaConsultarNiño() {
         initComponents();
@@ -37,7 +36,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
             Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        act = false;
         editar.setSize(10,10);
         eliminar.setSize(10,10);
         
@@ -671,7 +669,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bActualizarActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        act = true;
     }//GEN-LAST:event_formMouseClicked
 
 

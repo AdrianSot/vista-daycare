@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
 
     Connection con;
-    public boolean act = false;
     
     public PantallaRegistrarRecepcionista() {
         initComponents();
@@ -160,7 +159,6 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        act = true;
     }//GEN-LAST:event_formMouseClicked
 
 

@@ -51,7 +51,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     String ruta = null;
     String contenido = null;
 
-    public boolean act = false;
     
     public PantallaRegistrarNiño() {
         initComponents();
@@ -1310,7 +1309,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tfTeléfonoActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        act = true;
     }//GEN-LAST:event_formMouseClicked
 
 

@@ -12,7 +12,6 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
 
     Connection con;
     int confirmacion;
-    public boolean act = false;
     
     public PantallaEliminarRecepcionista() {
         initComponents();
@@ -164,7 +163,6 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formMouseEntered
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        act = true;
     }//GEN-LAST:event_formMouseClicked
 
 

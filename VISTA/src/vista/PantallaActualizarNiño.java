@@ -67,15 +67,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     
     //Rutas
     String ruta, directorioRaiz;  
-    
-    public boolean act;
-    
+        
     public PantallaActualizarNiño() {
         initComponents();
         
         setSize(1000,000);
         setLocation(0,-25);
-        act = false;
         
         IniciarVentana();
         try {
@@ -2024,7 +2021,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     }//GEN-LAST:event_bTomarFotoTutorActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        act = true;
     }//GEN-LAST:event_formMouseClicked
 
     /**

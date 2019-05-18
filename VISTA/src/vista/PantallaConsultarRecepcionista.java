@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
     Connection con;
-    public boolean act = false;
     
     public PantallaConsultarRecepcionista() {
         initComponents();
@@ -244,7 +243,6 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CbBuscarActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        act = true;
     }//GEN-LAST:event_formMouseClicked
 
 

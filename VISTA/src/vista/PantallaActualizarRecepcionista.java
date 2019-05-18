@@ -13,7 +13,6 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
 
     Connection con;
     boolean exito = true;
-    public boolean act = false;
     
     public PantallaActualizarRecepcionista() {
         initComponents();
@@ -277,7 +276,6 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
     }//GEN-LAST:event_BActualizarActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        act = true;
     }//GEN-LAST:event_formMouseClicked
 
 
