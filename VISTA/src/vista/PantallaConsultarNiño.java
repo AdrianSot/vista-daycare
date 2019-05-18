@@ -40,6 +40,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     
     public PantallaConsultarNiño() {
+        
         setSize(1000,800);
         setLocation(0,-25);
         initComponents();
@@ -48,6 +49,8 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         
         editar.setSize(10,10);
         eliminar.setSize(10,10);

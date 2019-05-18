@@ -8,6 +8,7 @@ import java.awt.Window;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.logging.Level;
@@ -27,6 +28,27 @@ public class AutoClose {
     
     AutoClose() {
         w.setVisible(true);
+        w.drawingTimer.start();
+        
+        w.addWindowListener(new WindowAdapter() {
+ 
+            @Override
+            public void windowClosing(WindowEvent e) {
+
+                
+                w.drawingTimer.stop();
+                try{
+                    Thread.sleep(40);
+                }
+                catch (java.lang.InterruptedException exception){
+                }
+                w.saveTracker();
+                w.closeCamera();
+            }
+        });
+        
+        
+        
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

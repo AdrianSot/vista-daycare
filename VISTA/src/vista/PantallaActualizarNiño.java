@@ -94,7 +94,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         catch (ClassNotFoundException ex) {
             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        this.setExtendedState(MAXIMIZED_BOTH);
         
     }
     
