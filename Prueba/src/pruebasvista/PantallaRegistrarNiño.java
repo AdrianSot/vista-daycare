@@ -69,6 +69,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         catch (ClassNotFoundException ex) {
             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         directorioRaiz = System.getProperty("user.dir");
         fotoTutor = null;
         bAnterior.setVisible(false);
@@ -109,7 +110,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             
             rs2 = stmt.executeQuery("SELECT Telefono FROM Tutores");
             rs2.first();
-            
             for(int i = 0; i < Teléfonos.length ; i++){
                 Teléfonos[i] = rs2.getObject(1).toString();
                 rs2.next();
