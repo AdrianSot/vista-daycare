@@ -281,11 +281,16 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="713" max="-2" attributes="0"/>
-                      <Component id="bGuardar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bCrearTutor" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="bGuardar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="711" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -475,9 +480,11 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lbl5" min="-2" pref="10" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Component id="bCrearTutor" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               <Component id="bGuardar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="220" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -780,6 +787,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Tomar foto"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bTomarFotoAut1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bTomarFotoAut2">
       <Properties>
@@ -901,6 +911,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCambiarTutorActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="bCrearTutor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Crear tutor"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bCrearTutorActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
