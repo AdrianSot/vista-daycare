@@ -52,7 +52,7 @@ public class LoginWindow extends javax.swing.JFrame {
         }else{
             /* Consulta */
             try{
-                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC", "root", "");
                  Statement s = con.createStatement();
 
                  ResultSet UserSet = s.executeQuery("SELECT Usuario FROM Recepcionistas WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");

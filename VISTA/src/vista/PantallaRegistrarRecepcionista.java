@@ -19,6 +19,7 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
     
     Connection con;
     String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
+    boolean errorFormulario, errorUsuario;
     
     public PantallaRegistrarRecepcionista() {
         initComponents();
@@ -38,6 +39,7 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
         tfApellido.setText("");
         tfNombreUsuario.setText("");
         tfContraseña.setText("");
+        errorFormulario = errorUsuario = false;
     }
 
     /**
@@ -138,8 +140,31 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
        if(tfNombre.getText().equals("") || tfApellido.getText().equals("") ||
            tfContraseña.getText().equals("") || tfNombreUsuario.getText().equals("") ){
             JOptionPane.showMessageDialog(null, "Error. Rellene el formulario completo e inténtelo de nuevo.");
-        }  
-        else{
+            errorFormulario = true;
+       }
+       
+       if(!tfNombreUsuario.getText().matches("^(?=.{5,10}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")){
+            
+           JOptionPane.showMessageDialog(this, "El nombre de usuario debe ser de al menos 5 "
+                   + "caracteres alfanuméricos \ny puede incluir los caracteres especiales \"_\" o \".\".", 
+                   "ERROR", JOptionPane.PLAIN_MESSAGE);
+           tfNombreUsuario.setText("");
+           tfContraseña.setText("");
+           errorUsuario = true;
+           
+        //Mensaje para que no esté en blanco y validación para que no contenga espacios
+        }else if(tfContraseña.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Por favor introduzca una contraseña.", 
+                    "ERROR", JOptionPane.PLAIN_MESSAGE);
+            errorUsuario = true;
+        }else if(tfContraseña.getText().matches("\\s+")){
+            JOptionPane.showMessageDialog(this, "La contraseña que ingresaste es incorrecta."
+                    + "\nVuelve a intentarlo", "ERROR", JOptionPane.PLAIN_MESSAGE);
+            tfContraseña.setText("");
+            errorUsuario = true;
+        }
+        
+        if(!errorUsuario && !errorFormulario){
            try {
                 con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();

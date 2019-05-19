@@ -129,6 +129,9 @@ public class MainWindow extends javax.swing.JFrame {
         
         FSDKCam.FSDK_VideoFormats formatList = new FSDKCam.FSDK_VideoFormats();
         FSDKCam.GetVideoFormatList(cameraName, formatList, count);
+        formatList.formats[0].BPP = 16;
+        formatList.formats[0].Width = 640;
+        formatList.formats[0].Height = 480;
         FSDKCam.SetVideoFormat(cameraName, formatList.formats[0]);
         
         cameraHandle = new FSDKCam.HCamera();
