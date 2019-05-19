@@ -8,6 +8,8 @@ import java.awt.Window;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -31,8 +33,6 @@ public class AutoClose {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 }
-
-                //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 w.setVisible(true);
 
                 Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
@@ -52,7 +52,8 @@ public class AutoClose {
                             }
                             if (win == w) {
                                 timer.restart();
-                                //label.setText("Interrupted..." + (++count));
+                                if(Main.lw.isDisplayable())
+                                    Main.lw.setVisible(false);
                             }
                         }
                     }
@@ -66,8 +67,56 @@ public class AutoClose {
                         Main.lw.setVisible(true);
                     }
                 });
-                if(Main.lw.userStatus == Main.lw.userStatus.AdminLogged || Main.lw.userStatus == Main.lw.userStatus.RecepLogged)
-                    timer.start();
+                    WindowListener fw = new WindowListener() {
+                    @Override
+                    public void windowOpened(WindowEvent e) {
+                        if(e.getWindow() == w){
+                            timer.start();
+                            Main.lw.setVisible(false);
+                        }
+                            
+                        
+                    }
+
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        if(e.getWindow() == w){
+                            Main.lw.setVisible(true);
+                        }
+                    }
+
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        if(e.getWindow() == w)
+                            Main.lw.setVisible(true);
+                    }
+
+                    @Override
+                    public void windowIconified(WindowEvent e) {
+
+                    }
+
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {
+
+                    }
+
+                    @Override
+                    public void windowActivated(WindowEvent e) {
+                        if(e.getWindow() == w)
+                            timer.start();
+                        else
+                            w.setVisible(false);
+                    }
+
+                    @Override
+                    public void windowDeactivated(WindowEvent e) {
+                        if(e.getWindow() == w)
+                            Main.lw.setVisible(true);
+                        else
+                            timer.start();
+                    }
+                };
             }
         });
     }

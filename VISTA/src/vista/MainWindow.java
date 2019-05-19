@@ -245,8 +245,8 @@ public class MainWindow extends javax.swing.JFrame {
         Main.lw.setVisible(true);
         this.dispose();
         userStatus = UserStat.AdminFailPass;
-         //JOptionPane.showMessageDialog(this, "Su sesión ha excedido el tiempo límite. Por favor, ingrese de nuevo.", 
-           //                           "ERROR", JOptionPane.PLAIN_MESSAGE);
+         JOptionPane.showMessageDialog(this, "Su sesión ha excedido el tiempo límite. Por favor, ingrese de nuevo.", 
+                                   "ERROR", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_jMSalirMouseClicked
  
     /*************************************************************************/
