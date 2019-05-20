@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,6 +41,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     //Se crean los "botones" de actualizar y eliminar
         JLabel editar = new JLabel();
         JLabel eliminar = new JLabel();
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     
     public PantallaConsultarNiño() {
         initComponents();
@@ -114,8 +117,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         String aux = "";
         String bfRead;
         int vacio = 0;
-        
-        
         //Se lee el texto
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(direccion, true));
@@ -123,24 +124,35 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
             
             //Se copia el texto en una variable
             while((bfRead = bf.readLine() )!= null){
-                aux = aux+bfRead+"\n";
+                aux = aux+bfRead+"\r\n";
             }
             texto = aux;
             
             //Se borra el ID del archivo
-            texto = texto.replace(ID+"\n","");
+            if(texto.contains("\r\n"+ID+"\r\n")) texto = texto.replace("\r\n"+ID+"\r\n","\r\n");
+            else if(texto.contains(ID+"\r\n")) texto = texto.replace(ID+"\r\n","");
+            else texto.replace(ID, "");
+            
             //Si el texto no queda vacío se actualiza el archivo.
-            if(texto.isBlank()){
-                vacio = 1;
+            if(texto.isBlank() || texto.equals("\r\n") || (!texto.contains("0") && !texto.contains("1") && 
+               !texto.contains("2") && !texto.contains("3") && !texto.contains("4") && !texto.contains("5") && 
+               !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
+                bw.close();
+                bf.close();
                 File archivo = new File(direccion);
                 archivo.delete();
+                vacio = 1;
                 
             }
             else{
                 FileWriter fw = new FileWriter(direccion);
                 bw.write(texto);
+                bf.close();
                 bw.close();
+                fw.close();
+                vacio = 0;
             }
+            
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error con la lectura del archivo.");
@@ -279,7 +291,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         
         //SE EXTRAE LA INFORMACIÓN DE LA TABLA DE LOS NIÑOS
          try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");    
+            con = DriverManager.getConnection(linkbd, "root", "");    
             Statement stmt = con.createStatement();
             ResultSet rs;
             rs = stmt.executeQuery("SELECT * FROM Ninos"); 
@@ -389,7 +401,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                 tabla.addColumn("");
                 
                 try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    con = DriverManager.getConnection(linkbd, "root", "");
                     Statement stmt = con.createStatement();
                     ResultSet rs;
                     rs = stmt.executeQuery("SELECT * FROM Ninos WHERE ID = "+tfNombres.getText());
@@ -448,7 +460,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                 tabla.addColumn("");
                 tabla.addColumn("");
                 try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    con = DriverManager.getConnection(linkbd, "root", "");
                     Statement stmt = con.createStatement();
                     ResultSet rs;
                     rs = stmt.executeQuery("SELECT * FROM Ninos WHERE Nombres = '"+tfNombres.getText()+"' AND "
@@ -539,7 +551,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                         String[] fotos = new String[5];
 
                         try {
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             Statement stmt = con.createStatement();
 
                             //Se extrae la información necesaria de la tabla del niño.
@@ -593,9 +605,12 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                 try{
                                     BufferedReader bf = new BufferedReader(new FileReader(infoNiño[2]));
                                     while((aux = bf.readLine()) != null){
-                                        telAutorizados[numAutorizado] = aux;
+                                        telAutorizados[numAutorizado] = aux;        
                                         numAutorizado++;
                                     }
+                                    bf.close();
+                                    File arch = new File(infoNiño[2]);
+                                    arch.delete();
 
                                     for(String a : telAutorizados){
                                         System.out.println(a);
@@ -606,9 +621,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                     JOptionPane.showMessageDialog(null, "No existe archivo de autorizados del niño");
                                 }
                                 numAutorizado = 0;
-
-                                File archivo = new File(infoNiño[2]);
-                                archivo.delete();
 
                                 //Se obtienen los archivos de los autorizados para borrar al niño de ellos.
                                 ResultSet r4 = null, r5 = null, r6 = null, r7 = null, r8 = null;
@@ -631,12 +643,12 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                    if(i == 3 && telAutorizados[i] != null){
                                      r7 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+telAutorizados[i]+"'");  
                                      r7.first();
-                                     archivosAutorizados[2] = r7.getObject(1).toString();
+                                     archivosAutorizados[3] = r7.getObject(1).toString();
                                    }
                                    if(i == 4 && telAutorizados[i] != null){
                                      r8 = stmt.executeQuery("SELECT Ninos FROM Tutores WHERE Telefono = '"+telAutorizados[i]+"'");  
                                      r8.first();
-                                     archivosAutorizados[2] = r8.getObject(1).toString();
+                                     archivosAutorizados[4] = r8.getObject(1).toString();
                                    }
                                 }
 
@@ -650,16 +662,15 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                     if(ruta != null){
                                         if( BuscarIDNiño(ruta, IDNiño) == 1 ){
 
-                                        try{
-                                            //GUARDAR LAS FOTOS!
-                                           // rs3 = stmt.executeQuery("SELECT Foto FROM Tutores WHERE Telefono = '"+telAutorizados[numAutorizado]+"'");
-                                            stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+telAutorizados[numAutorizado]+"'");
+                                            try{
+                                                //GUARDAR LAS FOTOS!
+                                               // rs3 = stmt.executeQuery("SELECT Foto FROM Tutores WHERE Telefono = '"+telAutorizados[numAutorizado]+"'");
+                                                stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+telAutorizados[numAutorizado]+"'");
 
-                                        }
-                                        catch(SQLException e){
-                                            Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, e);
-                                        }
-
+                                            }
+                                            catch(SQLException e){
+                                                Logger.getLogger(PantallaConsultarNiño.class.getName()).log(Level.SEVERE, null, e);
+                                            }
                                         }  
                                         numAutorizado++;
                                     }  

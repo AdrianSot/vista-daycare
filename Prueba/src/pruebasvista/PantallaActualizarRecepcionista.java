@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -25,6 +27,7 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
      */
     Connection con;
     boolean exito = true;
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaActualizarRecepcionista() {
         initComponents();
         
@@ -178,7 +181,7 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
         }
         else{
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");    
+                con = DriverManager.getConnection(linkbd, "root", "");    
                 Statement stmt = con.createStatement();
                     
                 if(tfNombre.getText().isEmpty() && tfApellido.getText().isEmpty() && tfUsuario.getText().isEmpty() && !tfContraseña.getText().isEmpty()){

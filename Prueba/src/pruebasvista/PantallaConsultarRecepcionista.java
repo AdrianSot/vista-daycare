@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -25,6 +27,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
      * Creates new form ConsultaRecepcionista
      */
     Connection con;
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     
     public PantallaConsultarRecepcionista() {
         initComponents();
@@ -178,7 +181,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
       
                 DefaultTableModel modelo = (DefaultTableModel)TbRecepcionistas.getModel();
 
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 
@@ -221,7 +224,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         try {  
              DefaultTableModel modelo = (DefaultTableModel)TbRecepcionistas.getModel();
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            con = DriverManager.getConnection(linkbd, "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Recepcionistas");
             

@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -34,6 +36,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
      String Teléfonos[];
      File fotoTutor;
      boolean error = false;
+     String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaCrearTutor() {
         initComponents();
         
@@ -57,7 +60,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
         
         //SE EXTRAEN TODOS LOS TELÉFONOS DE LA BD PARA QUE AL MOMENTO DE AJUSTAR LA INFORMACIÓN NO SE REPITAN LOS TUTORES/AUTORIZADOS
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            con = DriverManager.getConnection(linkbd, "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs, rs2;
             rs = stmt.executeQuery("SELECT COUNT(*) FROM Tutores");
@@ -221,10 +224,10 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
         if(!error){
              //Se introduce al niño a la base de datos
                 try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    con = DriverManager.getConnection(linkbd, "root", "");
                     stmt = con.createStatement();
                     stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+tfTeléfono.getText()+"','"+tfNombres.getText()+"','"+tfApellidoPaterno.getText()+"','"+
-                            tfApellidoMaterno.getText()+"','" +(fotoTutor == null ? "No" : fotoTutor.getAbsolutePath())+"','null', 'Tutor')");
+                            tfApellidoMaterno.getText()+"','" +(fotoTutor == null ? "No" : fotoTutor.getAbsolutePath().replace("\\", "/"))+"','null', 'Tutor')");
                 } 
                 catch (SQLException ex) {
                     Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,9 +7,9 @@
  */
 package pruebasvista;
 
+//jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC [root on Default schema]
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -56,7 +58,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     Image fotosAutorizados[] ={null,null,null}; 
     
     //Direcciones de las imágenes
-    String dirFotoNiño, dirFotoTutor;
+    String dirFotoNiño, dirFotoTutor, dirFotoNiñoNueva, dirFotoTutorNueva;
     String dirFotosAutorizados[] = {"No", "No", "No"};
     
     //Íconos
@@ -82,6 +84,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     //Rutas
     String ruta, directorioRaiz;  
     
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaActualizarNiño() {
         initComponents();
         
@@ -101,7 +104,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     public void IniciarVentana(){
         //SE EXTRAEN TODOS LOS TELÉFONOS DE LA BD PARA QUE AL MOMENTO DE AJUSTAR LA INFORMACIÓN NO SE REPITAN LOS TUTORES/AUTORIZADOS
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            con = DriverManager.getConnection(linkbd, "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs, rs2;
             rs = stmt.executeQuery("SELECT COUNT(*) FROM Tutores");
@@ -300,7 +303,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         Estatus = "";
         
         //Rutas
-        ruta = ""; directorioRaiz = System.getProperty("user.dir");  
+        ruta = ""; 
+        String aux = System.getProperty("user.dir");
+        directorioRaiz = aux.replace("\\", "/");  
     }
 
     public void DefaultAutorizado1(){
@@ -417,10 +422,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         try{
             BufferedReader bf = new BufferedReader(new FileReader(direccion));
             while((aux = bf.readLine()) != null){
-                if(aux.equals(ID) || aux.equals(ID+"\n")){
+                if(aux.equals(ID) || aux.equals(ID+"\r\n")){
+                    bf.close();
                     return;
                 }
             }
+            bf.close();
         }
 
         catch(IOException e){
@@ -430,8 +437,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         try {
             fw = new FileWriter(direccion, true);
             bw = new BufferedWriter(fw);
-            bw.write(ID);
-            bw.newLine();
+            bw.write(ID+"\r\n");
+            //bw.newLine();
         } catch (IOException ex) {
             Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -453,7 +460,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         ID = id;
         
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            con = DriverManager.getConnection(linkbd, "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs;
             rs = stmt.executeQuery("SELECT * FROM Ninos WHERE ID = "+ID); //SE EXTRAE LA INFORMACIÓN DEL NIÑO
@@ -482,7 +489,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         
         //SE OBTIENE LA INFORMACIÓN DEL TUTOR
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            con = DriverManager.getConnection(linkbd, "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs;
             rs = stmt.executeQuery("SELECT * FROM Tutores WHERE Telefono = '"+teléfonoTutor+"'"); //SE EXTRAE LA INFORMACIÓN DEL NIÑO
@@ -521,6 +528,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
                 
             }
+            bf.close();
 
             for(String a : teléfonosAutorizados){
                 System.out.println(a);
@@ -534,7 +542,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         numAut = 0;
         for(String tel : teléfonosAutorizados){
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 rs = stmt.executeQuery("SELECT * FROM Tutores WHERE Telefono = '"+tel+"'"); //Se extrae la info de cada autorizado
@@ -825,6 +833,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         });
 
         bTomarFotoAut2.setText("Tomar foto");
+        bTomarFotoAut2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTomarFotoAut2ActionPerformed(evt);
+            }
+        });
 
         bTomarFotoAut3.setText("Tomar foto");
 
@@ -1688,11 +1701,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del niño
                 //Actualización de la información del niño
                 try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    con = DriverManager.getConnection(linkbd, "root", "");
                     Statement stmt = con.createStatement();
                     stmt.executeUpdate("UPDATE Ninos SET Nombres = '"+tfNombresNiño.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoNiño.getText()+"', Apellido_materno = '"+tfApellidoMaternoNiño.getText()+"', Foto = '"+
-                          (nuevaFotoNiño == null ? dirFotoNiño : nuevaFotoNiño.getAbsolutePath() )+"' WHERE ID = "+ID);
+                          (nuevaFotoNiño == null ? dirFotoNiño : dirFotoNiñoNueva )+"' WHERE ID = "+ID);
                 } catch (SQLException ex) {
                     Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1709,7 +1722,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 existe en la base de datos
             */
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresTutor.getText()+"'");
@@ -1729,7 +1742,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                 //Se inserta el teléfono del tutor en la información del niño en la base de datos.
                 try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    con = DriverManager.getConnection(linkbd, "root", "");
                     Statement stmt = con.createStatement();
                     stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfNombresTutor.getText()+"' WHERE ID = "+ID);
                 } catch (SQLException ex) {
@@ -1751,7 +1764,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //Como el niño no tenía autorizados, entonces ahora debe enlazarse este file al niño en la base de datos
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+ID);
                     } catch (SQLException ex) {
@@ -1778,7 +1791,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //Como el tutor no tenía niños, entonces ahora debe enlazarse este file al tutor en la base de datos
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresTutor.getText()+"'");
                     } catch (SQLException ex) {
@@ -1801,11 +1814,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 //CASO CUANDO EL TELÉFONO NO CAMBIA
                 if(teléfonoTutor.equals(tfTeléfonoTutor.getText())){
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresTutor.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoTutor.getText()+"', Apellido_materno = '"+tfApellidoMaternoTutor.getText()+"', Foto = '"+
-                          (nuevaFotoTutor == null ? dirFotoTutor : nuevaFotoTutor.getAbsolutePath() )+"' WHERE Telefono = '"+teléfonoTutor+"'");
+                          (nuevaFotoTutor == null ? dirFotoTutor : dirFotoTutorNueva )+"' WHERE Telefono = '"+teléfonoTutor+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1839,6 +1852,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             System.out.println(cadena);
                         }
                         b.close();
+                        f.close();
                         
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -1859,6 +1873,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             numNiños++;
                         }
                         b.close();
+                        f.close();
                         
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -1869,12 +1884,34 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     //SE ACTUALIZA EL TUTOR DE CADA NIÑO Y EL PATH DEL ARCHIVO (PUES AHORA TIENE UN NOMBRE DIFERENTE)
                     //... TODO ESTO EN EL ARREGLO EN LA BASE DE DATOS 
                     for(String niño : niños){
+                        
+                        //CHECAR SI EL AUTORIZADO CAMBIADO ES TUTOR DE ALGÚN NIÑO EN LA BASE DE DATOS
+                        String tutor = null;
+                        //Se extrae el tutor de cada niño que forma parte del archivo de los niños del autorizado
+                        //y se compara con el teléfono viejo del autorizado, si coinciden, entonces hay que actualizarle
+                        //el tutor a ese niño
+                        
+                        /*Extraes el tutor del niño*/
                         try {
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             Statement stmt = con.createStatement();
-                            stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfTeléfonoTutor.getText()+"' WHERE ID = "+niño);
+                            ResultSet r;
+                            r = stmt.executeQuery("SELECT Tutor FROM Ninos WHERE ID = "+niño);
+                            r.first();
+                            tutor = r.getObject(1).toString();
                         } catch (SQLException ex) {
                             Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        /*Comparas el número del autorizado viejo con el tutor del niño*/
+                        if(teléfonoTutor.equals(tutor)){ //Si coniciden, le cambias el tutor.
+                            try {
+                                con = DriverManager.getConnection(linkbd, "root", "");
+                                Statement stmt = con.createStatement();
+                                stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfTeléfonoTutor.getText()+"' WHERE ID = "+niño);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                     
@@ -1893,15 +1930,17 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                             //Se copia el texto en una variable
                             while((bfRead = bf.readLine() )!= null){
-                                aux = aux+bfRead+"\n";
+                                aux = aux+bfRead+"\r\n";
                             }
                             texto = aux;
 
                             //Se borra el ID del archivo
-                            texto = texto.replace(teléfonoTutor+"\n",tfTeléfonoTutor.getText()+"\n");
+                            texto = texto.replace(teléfonoTutor+"\r\n",tfTeléfonoTutor.getText()+"\r\n");
                             FileWriter fw = new FileWriter(archAutorizados);
                             bw.write(texto);
                             bw.close();
+                            bf.close();
+                            fw.close();
                             
                         }
                         catch(Exception e){
@@ -1912,11 +1951,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoTutor.getText()+"', Nombres = '"+tfNombresTutor.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoTutor.getText()+"', Apellido_materno = '"+tfApellidoMaternoTutor.getText()+"', Foto = '"+
-                          (nuevaFotoTutor == null ? dirFotoTutor : nuevaFotoTutor.getAbsolutePath() )+"', Ninos = '"+f2.getAbsolutePath()+"' WHERE Telefono = '"+teléfonoTutor+"'");
+                          (nuevaFotoTutor == null ? dirFotoTutor : dirFotoTutorNueva )+"', Ninos = '"+f2.getAbsolutePath().replace("\\", "/")+"' WHERE Telefono = '"+teléfonoTutor+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1933,7 +1972,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 existe en la base de datos
             */
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresTutor.getText()+"'");
@@ -1962,15 +2001,18 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                         //Se copia el texto en una variable
                         while((bfRead = bf.readLine() )!= null){
-                            aux = aux+bfRead+"\n";
+                            aux = aux+bfRead+"\r\n";
                         }
                         texto = aux;
 
+                        /* DEBERIA METER EL CONDICIONAL AQUÍ TAMBIEN???? */
                         //SE CAMBIA EL NÚMERO DEL TUTOR ANTIGUO POR EL DEL NUEVO TUTOR
-                        texto = texto.replace(teléfonoTutor+"\n",tfNombresTutor.getText()+"\n");
+                        texto = texto.replace(teléfonoTutor+"\r\n",tfNombresTutor.getText()+"\r\n");
                         FileWriter fw = new FileWriter(archAutorizados2);
                         bw.write(texto);
                         bw.close();
+                        fw.close();
+                        bf.close();
 
                     }
                     catch(Exception e){
@@ -1993,7 +2035,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                         //Como el aturizado no tenía niños, entonces ahora debe enlazarse este file al autorizado en la base de datos
                         try {
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             Statement stmt = con.createStatement();
                             stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresTutor.getText()+"'");
                         } catch (SQLException ex) {
@@ -2020,18 +2062,24 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                         //Se copia el texto en una variable
                         while((bfRead = bf.readLine() )!= null){
-                            aux = aux+bfRead+"\n";
+                            aux = aux+bfRead+"\r\n";
                         }
                         texto = aux;
 
                         //SE ELIMINA EL ID DEL NIÑO EN EL ARCHIVO DEL TUTOR VIEJO
-                        texto = texto.replace(ID+"\n", "");
+     /*DUDAAA*/         if(texto.contains("\r\n"+ID+"\r\n")) texto = texto.replace("\r\n"+ID+"\r\n","\r\n");
+                        else if(texto.contains(ID+"\r\n")) texto = texto.replace(ID+"\r\n","");
+                        else texto.replace(ID, "");
                         //Si el archivo se queda vacío, entonces se elimina junto con el tutor
-                        if(texto.isBlank()){
+                        if(texto.isBlank() || texto.equals("\r\n") || (!texto.contains("0") && !texto.contains("1") && 
+                            !texto.contains("2") && !texto.contains("3") && !texto.contains("4") && !texto.contains("5") && 
+                            !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
+                            bw.close();
+                            bf.close();
                             File archivo = new File(ruta);
                             archivo.delete(); //Se elimina el archivo vacío
                             try{ //Se elimina al tutor
-                               con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                               con = DriverManager.getConnection(linkbd, "root", "");
                                Statement stmt = con.createStatement();
                                stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+teléfonoTutor+"'");
 
@@ -2045,6 +2093,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             FileWriter fw = new FileWriter(archTutor);
                             bw.write(texto);
                             bw.close();
+                            bf.close();
+                            fw.close();
                         }
                         
 
@@ -2056,7 +2106,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE LE CAMBIA EL TUTOR AL NIÑO EN LA BASE DE DATOS
                     try {
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             Statement stmt = con.createStatement();
                                 stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfNombresTutor.getText()+"' WHERE ID = "+ID );
                         } catch (SQLException ex) {
@@ -2081,7 +2131,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 existe en la base de datos
             */
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresAut1.getText()+"'");
@@ -2106,6 +2156,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 if(!bandera.exists()){
                     try {
                         bandera.createNewFile();
+                        System.out.println("Cree un nuevo archivo de tutores asignando al aut1");
                     } catch (IOException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
@@ -2113,7 +2164,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //Como el niño no tenía autorizados, entonces ahora debe enlazarse este file al niño en la base de datos
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+ID);
                     } catch (SQLException ex) {
@@ -2142,7 +2193,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //Como el aturizado no tenía niños, entonces ahora debe enlazarse este file al autorizado en la base de datos
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                             stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresAut1.getText()+"'");
                     } catch (SQLException ex) {
@@ -2177,24 +2228,31 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                     //Se copia el texto en una variable
                     while((bfRead = bf.readLine() )!= null){
-                        aux = aux+bfRead+"\n";
+                        aux = aux+bfRead+"\r\n";
                     }
                     texto = aux;
 
                     //SE ELIMINA EL NÚMERO DEL AUTORIZADO 
 
-                    texto = texto.replace(tfTeléfonoAut1.getText()+"\n", "");
+                    if(texto.contains("\r\n"+tfTeléfonoAut1.getText()+"\r\n")) texto = texto.replace("\r\n"+tfTeléfonoAut1.getText()+"\r\n","\r\n");
+                    else if(texto.contains(tfTeléfonoAut1.getText()+"\r\n")) texto = texto.replace(tfTeléfonoAut1.getText()+"\r\n","");
+                    else texto.replace(tfTeléfonoAut1.getText(), "");
 
                     //Si el archivo se queda vacío, entonces se elimina
-                    if(texto.isBlank()){
-                        File archivo = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
-                        archivo.delete(); //Se elimina el archivo vacío
-
+                    if(texto.isBlank() || texto.equals("\r\n") || (!texto.contains("0") && !texto.contains("1") && 
+                       !texto.contains("2") && !texto.contains("3") && !texto.contains("4") && !texto.contains("5") && 
+                       !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
+                        bf.close();
+                        bw.close();
+                        File archivo = new File(archAutorizados.getAbsolutePath().replace("\\", "/"));
+                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
                     }
                     else{
                         FileWriter fw = new FileWriter(archAutorizados);
                         bw.write(texto);
+                        bf.close();
                         bw.close();
+                        fw.close();
                     }
 
                 }
@@ -2214,21 +2272,26 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                     //Se copia el texto en una variable
                     while((bfRead = bf.readLine() )!= null){
-                        aux = aux+bfRead+"\n";
+                        aux = aux+bfRead+"\r\n";
                     }
                     texto = aux;
 
                     //SE ELIMINA EL ID DEL NIÑO 
-                    texto = texto.replace(ID+"\n", "");
+                    if(texto.contains("\r\n"+ID+"\r\n")) texto = texto.replace("\r\n"+ID+"\r\n","\r\n");
+                    else if(texto.contains(ID+"\r\n")) texto = texto.replace(ID+"\r\n","");
+                    else texto.replace(ID, "");
 
                     //Si el archivo se queda vacío, entonces se elimina junto con el autorizado
-                    if(texto.isBlank()){
-
-                        File archivo = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt");
-                        archivo.delete(); //Se elimina el archivo vacío
-
+                    if(texto.isBlank() || texto.equals("\r\n") || (!texto.contains("0") && !texto.contains("1") && 
+                       !texto.contains("2") && !texto.contains("3") && !texto.contains("4") && !texto.contains("5") && 
+                       !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
+                        bf.close();
+                        bw.close();
+                        File archivo = new File(archNiños.getAbsolutePath().replace("\\", "/"));
+                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
+                        
                         try{ //Se elimina al tutor
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             Statement stmt = con.createStatement();
                             stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+tfTeléfonoAut1.getText()+"'");
                          }
@@ -2240,7 +2303,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     else{
                         FileWriter fw = new FileWriter(archNiños);
                         bw.write(texto);
+                        bf.close();
                         bw.close();
+                        fw.close();
                     }
 
                 }
@@ -2262,7 +2327,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 existe en la base de datos
             */
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresAut2.getText()+"'");
@@ -2285,8 +2350,10 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 File bandera = new File(ruta); 
                 //Si el file no existe, entonces se crea
                 if(!bandera.exists()){
+                    
                     try {
                         bandera.createNewFile();
+                        System.out.println("Se creo un nuevo archivo de tutores para el niño");
                     } catch (IOException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
@@ -2294,7 +2361,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //Como el niño no tenía autorizados, entonces ahora debe enlazarse este file al niño en la base de datos
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+ID);
                     } catch (SQLException ex) {
@@ -2322,7 +2389,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //Como el Tutor no tenía niños, entonces ahora debe enlazarse este file al autorizado en la base de datos
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresAut2.getText()+"'");
                     } catch (SQLException ex) {
@@ -2354,24 +2421,31 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                     //Se copia el texto en una variable
                     while((bfRead = bf.readLine() )!= null){
-                        aux = aux+bfRead+"\n";
+                        aux = aux+bfRead+"\r\n";
                     }
                     texto = aux;
 
                     //SE ELIMINA EL NÚMERO DEL AUTORIZADO 
 
-                    texto = texto.replace(tfTeléfonoAut2.getText()+"\n", "");
-
+                    if(texto.contains("\r\n"+tfTeléfonoAut2.getText()+"\r\n")) texto = texto.replace("\r\n"+tfTeléfonoAut2.getText()+"\r\n","\r\n");
+                    else if(texto.contains(tfTeléfonoAut2.getText()+"\r\n")) texto = texto.replace(tfTeléfonoAut2.getText()+"\r\n","");
+                    else texto.replace(tfTeléfonoAut2.getText(), "");
                     //Si el archivo se queda vacío, entonces se elimina
-                    if(texto.isBlank()){
-                        File archivo = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
-                        archivo.delete(); //Se elimina el archivo vacío
+                    if(texto.isBlank() || texto.equals("\r\n") || (!texto.contains("0") && !texto.contains("1") && 
+                       !texto.contains("2") && !texto.contains("3") && !texto.contains("4") && !texto.contains("5") && 
+                       !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
+                        bf.close();
+                        bw.close();
+                        File archivo = new File(archAutorizados.getAbsolutePath().replace("\\", "/"));
+                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                     }
                     else{
                         FileWriter fw = new FileWriter(archAutorizados);
                         bw.write(texto);
                         bw.close();
+                        bf.close();
+                        fw.close();
                     }
 
                 }
@@ -2391,21 +2465,26 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                     //Se copia el texto en una variable
                     while((bfRead = bf.readLine() )!= null){
-                        aux = aux+bfRead+"\n";
+                        aux = aux+bfRead+"\r\n";
                     }
                     texto = aux;
 
                     //SE ELIMINA EL ID DEL NIÑO 
-                    texto = texto.replace(ID+"\n", "");
+                    if(texto.contains("\r\n"+ID+"\r\n")) texto = texto.replace("\r\n"+ID+"\r\n","\r\n");
+                    else if(texto.contains(ID+"\r\n")) texto = texto.replace(ID+"\r\n","");
+                    else texto.replace(ID, "");
 
                     //Si el archivo se queda vacío, entonces se elimina junto con el autorizado
-                    if(texto.isBlank()){
-
-                        File archivo = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt");
-                        archivo.delete(); //Se elimina el archivo vacío
+                    if(texto.isBlank() || texto.equals("\r\n") || (!texto.contains("0") && !texto.contains("1") && 
+                       !texto.contains("2") && !texto.contains("3") && !texto.contains("4") && !texto.contains("5") && 
+                       !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
+                        bf.close();
+                        bw.close();
+                        File archivo = new File(archNiños.getAbsolutePath().replace("\\", "/"));
+                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                         try{ //Se elimina al tutor
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             Statement stmt = con.createStatement();
                             stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+tfTeléfonoAut2.getText()+"'");
                          }
@@ -2418,6 +2497,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         FileWriter fw = new FileWriter(archNiños);
                         bw.write(texto);
                         bw.close();
+                        bf.close();
+                        fw.close();
                     }
 
                 }
@@ -2439,7 +2520,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 existe en la base de datos
             */
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 rs = stmt.executeQuery("SELECT Estatus FROM Tutores WHERE Telefono = '"+tfNombresAut3.getText()+"'");
@@ -2469,7 +2550,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //Como el niño no tenía autorizados, entonces ahora debe enlazarse este file al niño en la base de datos
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+ID);
                     } catch (SQLException ex) {
@@ -2496,7 +2577,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //Como el autorizado no tenía niños, entonces ahora debe enlazarse este file al autorizado en la base de datos
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Ninos = '"+ruta+"' WHERE Telefono = '"+tfNombresAut3.getText()+"'");
                     } catch (SQLException ex) {
@@ -2529,24 +2610,32 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                     //Se copia el texto en una variable
                     while((bfRead = bf.readLine() )!= null){
-                        aux = aux+bfRead+"\n";
+                        aux = aux+bfRead+"\r\n";
                     }
                     texto = aux;
 
                     //SE ELIMINA EL NÚMERO DEL AUTORIZADO 
 
-                    texto = texto.replace(tfTeléfonoAut3.getText()+"\n", "");
+                    if(texto.contains("\r\n"+tfTeléfonoAut3.getText()+"\r\n")) texto = texto.replace("\r\n"+tfTeléfonoAut3.getText()+"\r\n","\r\n");
+                    else if(texto.contains(tfTeléfonoAut3.getText()+"\r\n")) texto = texto.replace(tfTeléfonoAut3.getText()+"\r\n","");
+                    else texto.replace(tfTeléfonoAut3.getText(), "");
 
                     //Si el archivo se queda vacío, entonces se elimina
-                    if(texto.isBlank()){
-                        File archivo = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
-                        archivo.delete(); //Se elimina el archivo vacío
+                    if(texto.isBlank() || texto.equals("\r\n") || (!texto.contains("0") && !texto.contains("1") && 
+                       !texto.contains("2") && !texto.contains("3") && !texto.contains("4") && !texto.contains("5") && 
+                       !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
+                        bf.close();
+                        bw.close();
+                        File archivo = new File(archAutorizados.getAbsolutePath().replace("\\", "/"));
+                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                     }
                     else{
                         FileWriter fw = new FileWriter(archAutorizados);
                         bw.write(texto);
+                        bf.close();
                         bw.close();
+                        fw.close();
                     }
 
                 }
@@ -2566,21 +2655,26 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                     //Se copia el texto en una variable
                     while((bfRead = bf.readLine() )!= null){
-                        aux = aux+bfRead+"\n";
+                        aux = aux+bfRead+"\r\n";
                     }
                     texto = aux;
 
                     //SE ELIMINA EL ID DEL NIÑO 
-                    texto = texto.replace(ID+"\n", "");
+                    if(texto.contains("\r\n"+ID+"\r\n")) texto = texto.replace("\r\n"+ID+"\r\n","\r\n");
+                    else if(texto.contains(ID+"\r\n")) texto = texto.replace(ID+"\r\n","");
+                    else texto.replace(ID, "");
 
                     //Si el archivo se queda vacío, entonces se elimina junto con el autorizado
-                    if(texto.isBlank()){
-
-                        File archivo = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt");
-                        archivo.delete(); //Se elimina el archivo vacío
+                    if(texto.isBlank() || texto.equals("\r\n") || (!texto.contains("0") && !texto.contains("1") && 
+                       !texto.contains("2") && !texto.contains("3") && !texto.contains("4") && !texto.contains("5") && 
+                       !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
+                        bf.close();
+                        bw.close();
+                        File archivo = new File(archNiños.getAbsolutePath().replace("\\", "/"));
+                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                         try{ //Se elimina al tutor
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             Statement stmt = con.createStatement();
                             stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+tfTeléfonoAut3.getText()+"'");
                          }
@@ -2593,6 +2687,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         FileWriter fw = new FileWriter(archNiños);
                         bw.write(texto);
                         bw.close();
+                        bf.close();
+                        fw.close();
                     }
 
                 }
@@ -2611,11 +2707,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 //CASO CUANDO EL TELÉFONO NO CAMBIA
                 if(teléfonosAutorizados[0].equals(tfTeléfonoAut1.getText())){
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut1.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut1.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut1.getText()+"', Foto = '"+
-                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : nuevaFotoAut1.getAbsolutePath() )+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
+                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : nuevaFotoAut1.getAbsolutePath().replace("\\", "/") )+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2649,6 +2745,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             System.out.println(cadena);
                         }
                         b.close();
+                        f.close();
                         
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -2669,6 +2766,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             numNiños++;
                         }
                         b.close();
+                        f.close();
                         
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -2684,6 +2782,36 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         String aux = "";
                         String bfRead;
                         
+                        //CHECAR SI EL AUTORIZADO CAMBIADO ES TUTOR DE ALGÚN NIÑO EN LA BASE DE DATOS
+                        String tutor = null;
+                        //Se extrae el tutor de cada niño que forma parte del archivo de los niños del autorizado
+                        //y se compara con el teléfono viejo del autorizado, si coinciden, entonces hay que actualizarle
+                        //el tutor a ese niño
+                        
+                        /*Extraes el tutor del niño*/
+                        try {
+                            con = DriverManager.getConnection(linkbd, "root", "");
+                            Statement stmt = con.createStatement();
+                            ResultSet r;
+                            r = stmt.executeQuery("SELECT Tutor FROM Ninos WHERE ID = "+niño);
+                            r.first();
+                            tutor = r.getObject(1).toString();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        /*Comparas el número del autorizado viejo con el tutor del niño*/
+                        if(teléfonosAutorizados[0].equals(tutor)){ //Si coniciden, le cambias el tutor.
+                            try {
+                                con = DriverManager.getConnection(linkbd, "root", "");
+                                Statement stmt = con.createStatement();
+                                stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfTeléfonoAut1.getText()+"' WHERE ID = "+niño);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                        
                         //Se lee el texto
                         try{
                             BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
@@ -2691,15 +2819,17 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                             //Se copia el texto en una variable
                             while((bfRead = bf.readLine() )!= null){
-                                aux = aux+bfRead+"\n";
+                                aux = aux+bfRead+"\r\n";
                             }
                             texto = aux;
 
                             //Se borra el ID del archivo
-                            texto = texto.replace(teléfonosAutorizados[0]+"\n",tfTeléfonoAut1.getText()+"\n");
+                            texto = texto.replace(teléfonosAutorizados[0]+"\r\n",tfTeléfonoAut1.getText()+"\r\n");
                             FileWriter fw = new FileWriter(archAutorizados);
                             bw.write(texto);
                             bw.close();
+                            bf.close();
+                            fw.close();
                             
                         }
                         catch(Exception e){
@@ -2710,11 +2840,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut1.getText()+"', Nombres = '"+tfNombresAut1.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut1.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut1.getText()+"', Foto = '"+
-                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : nuevaFotoAut1.getAbsolutePath() )+"', Ninos = '"+f2.getAbsolutePath()+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
+                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : nuevaFotoAut1.getAbsolutePath().replace("\\", "/") )+"', Ninos = '"+f2.getAbsolutePath().replace("\\", "/")+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2723,17 +2853,18 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         }
         
+        
         //SI LA OPCIÓN DE EDITAR AL AUTORIZADO 2 ESTÁ SELECCIONADA, ENTONCES SE PROCEDE
         if(cbEditarAut2.isSelected()){
             if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del tutor
                 //CASO CUANDO EL TELÉFONO NO CAMBIA
                 if(teléfonosAutorizados[1].equals(tfTeléfonoAut2.getText())){
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut2.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut2.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut2.getText()+"', Foto = '"+
-                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : nuevaFotoAut2.getAbsolutePath() )+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
+                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : nuevaFotoAut2.getAbsolutePath().replace("\\", "/") )+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2767,6 +2898,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             System.out.println(cadena);
                         }
                         b.close();
+                        f.close();
                         
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -2787,6 +2919,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             numNiños++;
                         }
                         b.close();
+                        f.close();
                         
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -2802,6 +2935,35 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         String aux = "";
                         String bfRead;
                         
+                        //CHECAR SI EL AUTORIZADO CAMBIADO ES TUTOR DE ALGÚN NIÑO EN LA BASE DE DATOS
+                        String tutor = null;
+                        //Se extrae el tutor de cada niño que forma parte del archivo de los niños del autorizado
+                        //y se compara con el teléfono viejo del autorizado, si coinciden, entonces hay que actualizarle
+                        //el tutor a ese niño
+                        
+                        /*Extraes el tutor del niño*/
+                        try {
+                            con = DriverManager.getConnection(linkbd, "root", "");
+                            Statement stmt = con.createStatement();
+                            ResultSet r;
+                            r = stmt.executeQuery("SELECT Tutor FROM Ninos WHERE ID = "+niño);
+                            r.first();
+                            tutor = r.getObject(1).toString();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        /*Comparas el número del autorizado viejo con el tutor del niño*/
+                        if(teléfonosAutorizados[1].equals(tutor)){ //Si coniciden, le cambias el tutor.
+                            try {
+                                con = DriverManager.getConnection(linkbd, "root", "");
+                                Statement stmt = con.createStatement();
+                                stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfTeléfonoAut2.getText()+"' WHERE ID = "+niño);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
                         //Se lee el texto
                         try{
                             BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
@@ -2809,15 +2971,17 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                             //Se copia el texto en una variable
                             while((bfRead = bf.readLine() )!= null){
-                                aux = aux+bfRead+"\n";
+                                aux = aux+bfRead+"\r\n";
                             }
                             texto = aux;
 
                             //Se borra el ID del archivo
-                            texto = texto.replace(teléfonosAutorizados[1]+"\n",tfTeléfonoAut2.getText()+"\n");
+                            texto = texto.replace(teléfonosAutorizados[1]+"\r\n",tfTeléfonoAut2.getText()+"\r\n");
                             FileWriter fw = new FileWriter(archAutorizados);
                             bw.write(texto);
                             bw.close();
+                            bf.close();
+                            fw.close();
                             
                         }
                         catch(Exception e){
@@ -2828,11 +2992,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut2.getText()+"', Nombres = '"+tfNombresAut2.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut2.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut2.getText()+"', Foto = '"+
-                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : nuevaFotoAut2.getAbsolutePath() )+"', Ninos = '"+f2.getAbsolutePath()+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
+                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : nuevaFotoAut2.getAbsolutePath().replace("\\", "/") )+"', Ninos = '"+f2.getAbsolutePath().replace("\\", "/")+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2847,11 +3011,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 //CASO CUANDO EL TELÉFONO NO CAMBIA
                 if(teléfonosAutorizados[2].equals(tfTeléfonoAut3.getText())){
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut3.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut3.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut3.getText()+"', Foto = '"+
-                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : nuevaFotoAut3.getAbsolutePath() )+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
+                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : nuevaFotoAut3.getAbsolutePath().replace("\\", "/") )+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2885,6 +3049,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             System.out.println(cadena);
                         }
                         b.close();
+                        f.close();
                         
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -2905,6 +3070,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             numNiños++;
                         }
                         b.close();
+                        f.close();
                         
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -2920,6 +3086,35 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         String aux = "";
                         String bfRead;
                         
+                        //CHECAR SI EL AUTORIZADO CAMBIADO ES TUTOR DE ALGÚN NIÑO EN LA BASE DE DATOS
+                        String tutor = null;
+                        //Se extrae el tutor de cada niño que forma parte del archivo de los niños del autorizado
+                        //y se compara con el teléfono viejo del autorizado, si coinciden, entonces hay que actualizarle
+                        //el tutor a ese niño
+                        
+                        /*Extraes el tutor del niño*/
+                        try {
+                            con = DriverManager.getConnection(linkbd, "root", "");
+                            Statement stmt = con.createStatement();
+                            ResultSet r;
+                            r = stmt.executeQuery("SELECT Tutor FROM Ninos WHERE ID = "+niño);
+                            r.first();
+                            tutor = r.getObject(1).toString();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        /*Comparas el número del autorizado viejo con el tutor del niño*/
+                        if(teléfonosAutorizados[2].equals(tutor)){ //Si coniciden, le cambias el tutor.
+                            try {
+                                con = DriverManager.getConnection(linkbd, "root", "");
+                                Statement stmt = con.createStatement();
+                                stmt.executeUpdate("UPDATE Ninos SET Tutor = '"+tfTeléfonoAut3.getText()+"' WHERE ID = "+niño);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
                         //Se lee el texto
                         try{
                             BufferedWriter bw = new BufferedWriter(new FileWriter(archAutorizados, true));
@@ -2927,15 +3122,17 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
 
                             //Se copia el texto en una variable
                             while((bfRead = bf.readLine() )!= null){
-                                aux = aux+bfRead+"\n";
+                                aux = aux+bfRead+"\r\n";
                             }
                             texto = aux;
 
                             //Se borra el ID del archivo
-                            texto = texto.replace(teléfonosAutorizados[2]+"\n",tfTeléfonoAut3.getText()+"\n");
+                            texto = texto.replace(teléfonosAutorizados[2]+"\r\n",tfTeléfonoAut3.getText()+"\r\n");
                             FileWriter fw = new FileWriter(archAutorizados);
                             bw.write(texto);
                             bw.close();
+                            bf.close();
+                            fw.close();
                             
                         }
                         catch(Exception e){
@@ -2946,11 +3143,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut3.getText()+"', Nombres = '"+tfNombresAut3.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut3.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut3.getText()+"', Foto = '"+
-                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : nuevaFotoAut3.getAbsolutePath() )+"', Ninos = '"+f2.getAbsolutePath()+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
+                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : nuevaFotoAut3.getAbsolutePath().replace("\\", "/") )+"', Ninos = '"+f2.getAbsolutePath().replace("\\", "/")+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -3124,6 +3321,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             Image foto = getToolkit().getImage(nuevaFotoNiño.getAbsolutePath());
             foto = foto.getScaledInstance(260, 260, 260);
             lblFotoNiño.setIcon(new ImageIcon(foto));
+            dirFotoNiñoNueva = nuevaFotoNiño.getAbsolutePath().replace("\\", "/");
         }
     }//GEN-LAST:event_bTomarFotoNiñoActionPerformed
 
@@ -3137,6 +3335,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             Image foto = getToolkit().getImage(nuevaFotoTutor.getAbsolutePath());
             foto = foto.getScaledInstance(260, 260, 260);
             lblFotoTutor.setIcon(new ImageIcon(foto));
+            dirFotoTutorNueva = nuevaFotoTutor.getAbsolutePath().replace("\\", "/");
         }
     }//GEN-LAST:event_bTomarFotoTutorActionPerformed
 
@@ -3188,6 +3387,10 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void bTomarFotoAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bTomarFotoAut1ActionPerformed
+
+    private void bTomarFotoAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bTomarFotoAut2ActionPerformed
 
     /**
      * @param args the command line arguments

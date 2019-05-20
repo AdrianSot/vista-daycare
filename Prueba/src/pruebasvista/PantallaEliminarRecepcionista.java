@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,6 +26,7 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
      */
     Connection con;
     int confirmacion;
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaEliminarRecepcionista() {
         initComponents();
         try {
@@ -136,7 +139,7 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
                                                     +"de los registros de recepcionistas?");
             if(confirmacion == 0){
                 try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    con = DriverManager.getConnection(linkbd, "root", "");
                     Statement stmt = con.createStatement();
                     stmt.executeUpdate("DELETE FROM Recepcionistas WHERE Nombre = '"+tfNombre.getText()+"'AND Apellido = '"+tfApellido.getText()+"' AND Usuario = '"+tfUsuario.getText()+"'");
 

@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -60,6 +62,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     String directorioRaiz;
     String ruta = null;
     String contenido = null;
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     
     public PantallaRegistrarNiño() {
         initComponents();
@@ -99,7 +102,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     public void IniciarVentana(){
         //SE EXTRAEN TODOS LOS TELÉFONOS DE LA BD PARA QUE AL MOMENTO DE AJUSTAR LA INFORMACIÓN NO SE REPITAN LOS TUTORES/AUTORIZADOS
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            con = DriverManager.getConnection(linkbd, "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs, rs2;
             rs = stmt.executeQuery("SELECT COUNT(*) FROM Tutores");
@@ -146,7 +149,8 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         fotoNiño = fotoTutor = fotoAutorizado = null;
         fotoNiño2 = fotoTutor2 = fotoAutorizado2 = null;
         file = file2 = file3 = null;
-        directorioRaiz = System.getProperty("user.dir");   
+        String aux = System.getProperty("user.dir");
+        directorioRaiz = aux.replace("\\", "/");
         ruta = null;
         contenido = null;
         archivoNiño = archivoTutor = archivoAutorizado1 = archivoAutorizado2 = archivoAutorizado3 = null;
@@ -662,10 +666,10 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 
                 //Se introduce al niño a la base de datos
                 try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    con = DriverManager.getConnection(linkbd, "root", "");
                     stmt = con.createStatement();
                     stmt.executeUpdate("INSERT INTO Ninos (Nombres,Apellido_paterno,Apellido_materno,Foto,Tutor,Autorizados) "+
-                            "VALUES ('"+nombresNiño+"','"+apellidoPaternoNiño+"','"+apellidoMaternoNiño+"','"+archivoNiño.getAbsolutePath()+"','"+(telefonoTutor.equals("") ? "null" : telefonoTutor)+"','a');");
+                            "VALUES ('"+nombresNiño+"','"+apellidoPaternoNiño+"','"+apellidoMaternoNiño+"','"+archivoNiño.getAbsolutePath().replace("\\", "/")+"','"+(telefonoTutor.equals("") ? "null" : telefonoTutor)+"','a');");
                 } 
                 catch (SQLException ex) {
                     Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -678,7 +682,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     try {
                         stmt = con.createStatement();
                         ResultSet rs;
-                        rs = stmt.executeQuery("SELECT ID FROM Ninos WHERE Nombres = '"+nombresNiño+"' AND Apellido_paterno = '"+apellidoPaternoNiño+"' AND Apellido_materno = '"+apellidoMaternoNiño+"' AND Foto = '"+archivoNiño.getAbsolutePath()+"' AND Autorizados = 'a'");
+                        rs = stmt.executeQuery("SELECT ID FROM Ninos WHERE Nombres = '"+nombresNiño+"' AND Apellido_paterno = '"+apellidoPaternoNiño+"' AND Apellido_materno = '"+apellidoMaternoNiño+"' AND Foto = '"+archivoNiño.getAbsolutePath().replace("\\", "/")+"' AND Autorizados = 'a'");
                         rs.first();
                         idNiño =  rs.getString(1);
                     } catch (SQLException ex) {
@@ -695,13 +699,13 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     file = null;
                     switch (numAutorizados) {
                         case 1:
-                            contenido = teléfonosAutorizados[0];
+                            contenido = teléfonosAutorizados[0]+"\r\n";
                             break;
                         case 2:
-                            contenido = teléfonosAutorizados[0]+"\n"+teléfonosAutorizados[1];
+                            contenido = teléfonosAutorizados[0]+"\r\n"+teléfonosAutorizados[1]+"\r\n";
                             break;
                         case 3:
-                            contenido = teléfonosAutorizados[0]+"\n"+teléfonosAutorizados[1]+"\n"+teléfonosAutorizados[2];
+                            contenido = teléfonosAutorizados[0]+"\r\n"+teléfonosAutorizados[1]+"\r\n"+teléfonosAutorizados[2]+"\r\n";
                             break;
                         default:
                             break;
@@ -719,8 +723,9 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             FileWriter fw = new FileWriter(file, true);
                             BufferedWriter bw = new BufferedWriter(fw);
                             bw.write(contenido);
-                            bw.newLine();
+                            //bw.newLine();
                             bw.close();
+                            fw.close();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -728,7 +733,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
 
                     //Se agrega a la información del niño la ruta del archivo que contiene a sus autorizados
                     try {
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                        con = DriverManager.getConnection(linkbd, "root", "");
                         stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Ninos SET Autorizados = '"+ruta+"' WHERE ID = "+idNiño);
                     } 
@@ -743,7 +748,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         }
                         
                         try {
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             stmt = con.createStatement();
                             stmt.executeUpdate("DELETE FROM Ninos WHERE ID = "+idNiño);
                         } 
@@ -762,9 +767,9 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     //Se agrega el tutor a la base de datos
                     if(!cbSinTutor.isSelected()){
                         try {
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             stmt = con.createStatement();
-                            stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+telefonoTutor+"','"+nombresTutor+"','"+apellidoPaternoTutor+"','"+apellidoMaternoTutor+"','"+archivoTutor+"','a','Tutor')");
+                            stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+telefonoTutor+"','"+nombresTutor+"','"+apellidoPaternoTutor+"','"+apellidoMaternoTutor+"','"+archivoTutor.getAbsolutePath().replace("\\", "/")+"','a','Tutor')");
                         } 
                         catch (SQLException ex) {
                             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -776,7 +781,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
 
                             }
                             try {
-                                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                con = DriverManager.getConnection(linkbd, "root", "");
                                 stmt = con.createStatement();
                                 stmt.executeUpdate("DELETE FROM Ninos WHERE ID = "+idNiño);
                             } 
@@ -792,7 +797,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 
                 
                 if(!errorBaseDatos){
-                    
                     //Se crea el archivo con los niños del tutor.
                     System.out.println(cbSinTutor.isSelected());
                     if(!cbSinTutor.isSelected()) {
@@ -800,7 +804,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                          try {
                             ruta = directorioRaiz+"/Niños/TutoresDe"+idNiño+".txt";
                             System.out.println(ruta);
-                            contenido = telefonoTutor;
+                            contenido = telefonoTutor+"\r\n";
                             file2 = new File(ruta);
                             // Si el archivo no existe es creado
                             if (!file2.exists()) {
@@ -809,8 +813,20 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             FileWriter fw = new FileWriter(file2, true);
                             BufferedWriter bw = new BufferedWriter(fw);
                             bw.write(contenido);
-                            bw.newLine();
+                            //bw.newLine();
                             bw.close();
+                            fw.close();
+                            
+                            //Se enlaza con el niño el archivo que contiene a sus tutores
+                            try {
+                               con = DriverManager.getConnection(linkbd, "root", "");
+                               stmt = con.createStatement();
+                               stmt.executeUpdate("UPDATE Ninos SET Autorizados ='"+ruta+"' WHERE ID = "+idNiño);
+                           } 
+                           catch (SQLException ex) {
+                               Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                               JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del tutor.\nIntente de nuevo.");
+                           }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -819,7 +835,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         try {
                             ruta = directorioRaiz+"/Tutores/NiñosDe"+telefonoTutor+".txt";
                             System.out.println(ruta);
-                            contenido = idNiño;
+                            contenido = idNiño+"\r\n";
                             file2 = new File(ruta);
                             // Si el archivo no existe es creado
                             if (!file2.exists()) {
@@ -828,15 +844,16 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             FileWriter fw = new FileWriter(file2, true);
                             BufferedWriter bw = new BufferedWriter(fw);
                             bw.write(contenido);
-                            bw.newLine();
+                            //bw.newLine();
                             bw.close();
+                            fw.close();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
                         //Se agrega a la info del tutor la ruta del archivo con los niños de éste
                         try {
-                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                            con = DriverManager.getConnection(linkbd, "root", "");
                             stmt = con.createStatement();
                             stmt.executeUpdate("UPDATE Tutores SET Ninos ='"+ruta+"' WHERE Telefono = '"+telefonoTutor+"'");
                         } 
@@ -852,7 +869,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
 
                             }
                             try {
-                                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                con = DriverManager.getConnection(linkbd, "root", "");
                                 stmt = con.createStatement();
                                 stmt.executeUpdate("DELETE FROM Ninos WHERE ID = "+idNiño);
                             } 
@@ -876,7 +893,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     
                         try {
                             ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[i]+".txt";
-                            contenido = idNiño;
+                            contenido = idNiño+"\r\n";
                             file3 = new File(ruta);
                             // Si el archivo no existe es creado
                             if (!file3.exists()) {
@@ -884,11 +901,11 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                 
                                 //Se introduce a los autorizados a la bd
                                 try {
-                                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                    con = DriverManager.getConnection(linkbd, "root", "");
                                     stmt = con.createStatement();
-                                    if(i == 0) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado1 == null ? "No" : archivoAutorizado1)+"','"+ruta+"','Autorizado')");
-                                    if(i == 1) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado2 == null ? "No" : archivoAutorizado2)+"','"+ruta+"','Autorizado')");
-                                    if(i == 2) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado3 == null ? "No" : archivoAutorizado3)+"','"+ruta+"','Autorizado')");
+                                    if(i == 0) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado1 == null ? "No" : archivoAutorizado1.getAbsolutePath().replace("\\", "/"))+"','"+ruta+"','Autorizado')");
+                                    if(i == 1) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado2 == null ? "No" : archivoAutorizado2.getAbsolutePath().replace("\\", "/"))+"','"+ruta+"','Autorizado')");
+                                    if(i == 2) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado3 == null ? "No" : archivoAutorizado3.getAbsolutePath().replace("\\", "/"))+"','"+ruta+"','Autorizado')");
 
                                 } 
                                 catch (SQLException ex) {
@@ -908,7 +925,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                 }
                                 
                                 try {
-                                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                    con = DriverManager.getConnection(linkbd, "root", "");
                                     stmt = con.createStatement();
                                     stmt.executeUpdate("DELETE FROM Ninos WHERE ID = "+idNiño);
                                     stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+telefonoTutor+"'");
@@ -929,7 +946,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                             
                                         }
                                         try {
-                                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                            con = DriverManager.getConnection(linkbd, "root", "");
                                             stmt = con.createStatement();
                                             stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
                                         } 
@@ -959,7 +976,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                         }
                                         
                                          try {
-                                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                            con = DriverManager.getConnection(linkbd, "root", "");
                                             stmt = con.createStatement();
                                             stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
                                         } 
@@ -969,7 +986,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                             errorBaseDatos = true;
                                         }
                                         try {
-                                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                                            con = DriverManager.getConnection(linkbd, "root", "");
                                             stmt = con.createStatement();
                                             stmt.executeUpdate("DELETE FROM Tutores WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
                                         } 
@@ -991,10 +1008,12 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             FileWriter fw = new FileWriter(file3, true);
                             BufferedWriter bw = new BufferedWriter(fw);
                             bw.write(contenido);
-                            bw.newLine();
+                            //bw.newLine();
                             bw.close();
+                            fw.close();
 
-                        } catch (HeadlessException | IOException e) {
+                        } 
+                            catch (HeadlessException | IOException e) {
                         }
 
 

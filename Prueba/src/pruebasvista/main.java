@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS*/
+
 package pruebasvista;
 
 /**
