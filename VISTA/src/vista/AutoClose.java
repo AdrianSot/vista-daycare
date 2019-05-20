@@ -83,9 +83,14 @@ public class AutoClose {
                         //w.dispose();
                     }
                 });
-                if(Main.lw.isVisible() && w.isVisible()){
-                    Main.lw.setVisible(false);
+                try{
+                    if(Main.lw.isVisible() && w.isVisible()){
+                        Main.lw.setVisible(false);
+                    }
                 }
+                    catch(Exception e){   
+                }
+                
                    WindowListener fw = new WindowListener() {
                     @Override
                     public void windowOpened(WindowEvent e) {

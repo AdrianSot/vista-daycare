@@ -62,7 +62,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         setTitle("VISTA");
-        setSize(1000,800);    
+        setSize(1050,800);    
         setLocation(200,100);    
         
         /* Administrador */
@@ -211,6 +211,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         
+        jMenuBar1.updateUI();
         //------------------
         
         
@@ -310,7 +311,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(IframeLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(mainFrame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         btCapturar.setText("Capturar");
@@ -319,6 +320,8 @@ public class MainWindow extends javax.swing.JFrame {
                 btCapturarActionPerformed(evt);
             }
         });
+
+        lbFotoTutor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setText("Nombre");
 
@@ -381,10 +384,17 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(Iframe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btCapturar)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Archivo");
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jMenu1.setText("Inicio");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Niños");
@@ -447,16 +457,12 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(IframeMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(IframeMain)
-                .addContainerGap())
+            .addComponent(IframeMain)
         );
 
         pack();
@@ -494,37 +500,37 @@ public class MainWindow extends javax.swing.JFrame {
             actualizarecepcionista.setVisible(false);
             consultarecepcionista.setVisible(false);
             consultarecepcionista.borraTabla();
-            IframeMain.setVisible(false);
         }else{
             pantallaconsultarniño.setVisible(false);
             pantallaregistrarniño.setVisible(true);
             pantallaregistrarniño.IniciarVentana();
-            IframeMain.setVisible(false);
         }
+        IframeMain.setVisible(false);
+
     }//GEN-LAST:event_miRegistrarActionPerformed
 
     private void miEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miEliminarActionPerformed
         if(userStatus == UserStat.AdminLogged){
             eliminarecepcionista.IniciarVentana();
             eliminarecepcionista.setVisible(true);
-            IframeMain.setVisible(false);
             pantallaregistro.setVisible(false);
             actualizarecepcionista.setVisible(false);
             consultarecepcionista.setVisible(false);
-            
-            
         }
+            IframeMain.setVisible(false);
+
     }//GEN-LAST:event_miEliminarActionPerformed
 
     private void miActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miActualizarActionPerformed
         if(userStatus == UserStat.AdminLogged){
             actualizarecepcionista.IniciarVentana();
-        IframeMain.setVisible(false);
-        eliminarecepcionista.setVisible(false);
-        pantallaregistro.setVisible(false);
-        actualizarecepcionista.setVisible(true);
-        consultarecepcionista.setVisible(false);
+            eliminarecepcionista.setVisible(false);
+            pantallaregistro.setVisible(false);
+            actualizarecepcionista.setVisible(true);
+            consultarecepcionista.setVisible(false);
         }
+        IframeMain.setVisible(false);
+
     }//GEN-LAST:event_miActualizarActionPerformed
 
     private void miConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarActionPerformed
@@ -536,15 +542,15 @@ public class MainWindow extends javax.swing.JFrame {
             consultarecepcionista.borraTabla();
             consultarecepcionista.IniciarVentana();
             
-            IframeMain.setVisible(false);
+            
         }else{
              pantallaregistrarniño.setVisible(false);
              pantallaconsultarniño.setVisible(true);
              pantallaconsultarniño.IniciarVentana();
         
-             IframeMain.setVisible(false);
         }
-        
+        IframeMain.setVisible(false);
+
     }//GEN-LAST:event_miConsultarActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -670,6 +676,26 @@ public class MainWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error.");
         }
     }//GEN-LAST:event_btCapturarActionPerformed
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        
+        try{
+            pantallaregistrarniño.setVisible(false);
+            pantallaconsultarniño.setVisible(false);
+            eliminarecepcionista.setVisible(false);
+            actualizarecepcionista.setVisible(false);
+            pantallaregistro.setVisible(false);
+            consultarecepcionista.setVisible(false);
+        }
+        catch(Exception e){
+            
+        }
+        IframeMain.setVisible(true);
+        
+            
+        
+        
+    }//GEN-LAST:event_jMenu1MouseClicked
  
     /*************************************************************************/
     

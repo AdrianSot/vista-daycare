@@ -41,7 +41,7 @@ public class CamConRec {
                 catch (java.lang.InterruptedException exception){
                 }
                 mainWindow.saveTracker();
-                mainWindow.closeCamera();
+                
             }
         });
     }
