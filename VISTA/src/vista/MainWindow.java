@@ -166,6 +166,12 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void Salir(){
+        Main.lw = new LoginWindow();
+        Main.lw.setVisible(true);
+        this.dispose();
+        userStatus = UserStat.AdminFailPass;
+    }
     /*************************************************************************/
     
     public void userWindow(){
@@ -241,12 +247,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMSalirActionPerformed
 
     private void jMSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMSalirMouseClicked
-        Main.lw = new LoginWindow();
-        Main.lw.setVisible(true);
-        this.dispose();
-        userStatus = UserStat.AdminFailPass;
-         JOptionPane.showMessageDialog(this, "Su sesión ha excedido el tiempo límite. Por favor, ingrese de nuevo.", 
-                                   "ERROR", JOptionPane.PLAIN_MESSAGE);
+        Salir();
     }//GEN-LAST:event_jMSalirMouseClicked
  
     /*************************************************************************/
