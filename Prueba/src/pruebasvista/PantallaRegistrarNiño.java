@@ -62,6 +62,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     String directorioRaiz;
     String ruta = null;
     String contenido = null;
+    CamConRec camara;
     String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     
     public PantallaRegistrarNiño() {
@@ -97,6 +98,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         cbNumAutorizados.setVisible(false);
         cbSinTutor.setVisible(false);
         cbSinTutor.setSelected(false);
+        camara = new CamConRec();
     }
     
     public void IniciarVentana(){
@@ -384,6 +386,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 Image foto = getToolkit().getImage(archivoNiño.getAbsolutePath());
                 foto = foto.getScaledInstance(260, 260, 260);
                 imagen.setIcon(new ImageIcon(foto));
+                System.out.println("el get path: " + archivoNiño.getName());
             }
             if(tfTeléfono.isVisible() && !cbAutorizados.isVisible()){
                 archivoTutor = ficAbrirArchivo.getSelectedFile();
@@ -669,7 +672,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     con = DriverManager.getConnection(linkbd, "root", "");
                     stmt = con.createStatement();
                     stmt.executeUpdate("INSERT INTO Ninos (Nombres,Apellido_paterno,Apellido_materno,Foto,Tutor,Autorizados) "+
-                            "VALUES ('"+nombresNiño+"','"+apellidoPaternoNiño+"','"+apellidoMaternoNiño+"','"+archivoNiño.getAbsolutePath().replace("\\", "/")+"','"+(telefonoTutor.equals("") ? "null" : telefonoTutor)+"','a');");
+                            "VALUES ('"+nombresNiño+"','"+apellidoPaternoNiño+"','"+apellidoMaternoNiño+"','"+"Fotos niños/"+archivoNiño.getName()+"','"+(telefonoTutor.equals("") ? "null" : telefonoTutor)+"','a');");
                 } 
                 catch (SQLException ex) {
                     Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -682,7 +685,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     try {
                         stmt = con.createStatement();
                         ResultSet rs;
-                        rs = stmt.executeQuery("SELECT ID FROM Ninos WHERE Nombres = '"+nombresNiño+"' AND Apellido_paterno = '"+apellidoPaternoNiño+"' AND Apellido_materno = '"+apellidoMaternoNiño+"' AND Foto = '"+archivoNiño.getAbsolutePath().replace("\\", "/")+"' AND Autorizados = 'a'");
+                        rs = stmt.executeQuery("SELECT ID FROM Ninos WHERE Nombres = '"+nombresNiño+"' AND Apellido_paterno = '"+apellidoPaternoNiño+"' AND Apellido_materno = '"+apellidoMaternoNiño+"' AND Foto = '"+"Fotos niños/"+archivoNiño.getName()+"' AND Autorizados = 'a'");
                         rs.first();
                         idNiño =  rs.getString(1);
                     } catch (SQLException ex) {
@@ -714,7 +717,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     //Se crea el archivo que contiene a todos los autorizados
                     if(numAutorizados != 0){
                         try {
-                            ruta = directorioRaiz+"/Niños/TutoresDe"+idNiño+".txt";
+                            ruta = "Niños/TutoresDe"+idNiño+".txt";
                             file = new File(ruta);
                             // Si el archivo no existe es creado
                             if (!file.exists()) {
@@ -769,7 +772,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         try {
                             con = DriverManager.getConnection(linkbd, "root", "");
                             stmt = con.createStatement();
-                            stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+telefonoTutor+"','"+nombresTutor+"','"+apellidoPaternoTutor+"','"+apellidoMaternoTutor+"','"+archivoTutor.getAbsolutePath().replace("\\", "/")+"','a','Tutor')");
+                            stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+telefonoTutor+"','"+nombresTutor+"','"+apellidoPaternoTutor+"','"+apellidoMaternoTutor+"','"+"Fotos Tutores/"+archivoTutor.getName()+"','a','Tutor')");
                         } 
                         catch (SQLException ex) {
                             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -802,7 +805,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     if(!cbSinTutor.isSelected()) {
                         //Se mete al tutor al archivo de autorizados del niño
                          try {
-                            ruta = directorioRaiz+"/Niños/TutoresDe"+idNiño+".txt";
+                            ruta = "Niños/TutoresDe"+idNiño+".txt";
                             System.out.println(ruta);
                             contenido = telefonoTutor+"\r\n";
                             file2 = new File(ruta);
@@ -833,7 +836,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         
                         //Se mete al archivo del tutor al niño.
                         try {
-                            ruta = directorioRaiz+"/Tutores/NiñosDe"+telefonoTutor+".txt";
+                            ruta = "Tutores/NiñosDe"+telefonoTutor+".txt";
                             System.out.println(ruta);
                             contenido = idNiño+"\r\n";
                             file2 = new File(ruta);
@@ -892,7 +895,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     for(int i = 0 ; i < numAutorizados ; i++){
                     
                         try {
-                            ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[i]+".txt";
+                            ruta = "Tutores/NiñosDe"+teléfonosAutorizados[i]+".txt";
                             contenido = idNiño+"\r\n";
                             file3 = new File(ruta);
                             // Si el archivo no existe es creado
@@ -903,9 +906,9 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                 try {
                                     con = DriverManager.getConnection(linkbd, "root", "");
                                     stmt = con.createStatement();
-                                    if(i == 0) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado1 == null ? "No" : archivoAutorizado1.getAbsolutePath().replace("\\", "/"))+"','"+ruta+"','Autorizado')");
-                                    if(i == 1) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado2 == null ? "No" : archivoAutorizado2.getAbsolutePath().replace("\\", "/"))+"','"+ruta+"','Autorizado')");
-                                    if(i == 2) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado3 == null ? "No" : archivoAutorizado3.getAbsolutePath().replace("\\", "/"))+"','"+ruta+"','Autorizado')");
+                                    if(i == 0) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado1 == null ? "No" : "Fotos Tutores/"+archivoAutorizado1.getName())+"','"+ruta+"','Autorizado')");
+                                    if(i == 1) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado2 == null ? "No" : "Fotos Tutores/"+archivoAutorizado2.getName())+"','"+ruta+"','Autorizado')");
+                                    if(i == 2) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado3 == null ? "No" : "Fotos Tutores/"+archivoAutorizado3.getName())+"','"+ruta+"','Autorizado')");
 
                                 } 
                                 catch (SQLException ex) {
@@ -938,7 +941,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                     
                                     if(i == 1){
                                         
-                                        ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[0]+".txt";
+                                        ruta = "Tutores/NiñosDe"+teléfonosAutorizados[0]+".txt";
                                         file3 = new File(ruta);
                                         try{
                                             file3.delete();
@@ -960,14 +963,14 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                         
                                     }
                                     if(i == 2){
-                                        ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[1]+".txt";
+                                        ruta = "Tutores/NiñosDe"+teléfonosAutorizados[1]+".txt";
                                         file3 = new File(ruta);
                                         try{
                                             file3.delete();
                                         }catch(HeadlessException e){
                                             
                                         }
-                                        ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonosAutorizados[0]+".txt";
+                                        ruta = "/Tutores/NiñosDe"+teléfonosAutorizados[0]+".txt";
                                         file3 = new File(ruta);
                                         try{
                                             file3.delete();

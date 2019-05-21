@@ -1750,7 +1750,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
                 
                 /* Se procede a averiguar si el niño tiene un archivo de autorizados, si no, se crea y se guarda al tutor ahí*/
-                ruta = directorioRaiz+"/Niños/TutoresDe"+ID+".txt";
+                ruta = "Niños/TutoresDe"+ID+".txt";
                 File bandera = new File(ruta);
                 
                 //Si el file no existe, entonces se crea
@@ -1779,7 +1779,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 
                 
                 /*Se procede a avegriguar si el tutor tiene un archivo de niños, si no, se crea y se guarda el id del niño*/
-                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresTutor.getText()+".txt";
+                ruta = "Tutores/NiñosDe"+tfNombresTutor.getText()+".txt";
                 bandera = new File(ruta);
                 if(!bandera.exists()){
                     try {
@@ -1828,7 +1828,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE LE CAMBIA EL NOMBRE AL ARCHIVO
                     File f1 = new File(archivoNiñosTutor); //Archivo original
-                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoTutor.getText()+".txt"; //Nombre del nuevo archivo
+                    ruta = "Tutores/NiñosDe"+tfTeléfonoTutor.getText()+".txt"; //Nombre del nuevo archivo
                     
                     File f2 = new File(ruta); //Archivo nuevo
                     f1.renameTo(f2); //Se renombra el archivo
@@ -1918,7 +1918,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     //SE ACTUALIZA EL NÚMERO NUEVO EN CADA ARCHIVO DE AUTORIZADOS DE CADA NIÑO DEL TUTOR
                     File archAutorizados;
                     for(String niño : niños){
-                        archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+niño+".txt");
+                        archAutorizados = new File("Niños/TutoresDe"+niño+".txt");
                         String texto = "";
                         String aux = "";
                         String bfRead;
@@ -1955,7 +1955,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoTutor.getText()+"', Nombres = '"+tfNombresTutor.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoTutor.getText()+"', Apellido_materno = '"+tfApellidoMaternoTutor.getText()+"', Foto = '"+
-                          (nuevaFotoTutor == null ? dirFotoTutor : dirFotoTutorNueva )+"', Ninos = '"+f2.getAbsolutePath().replace("\\", "/")+"' WHERE Telefono = '"+teléfonoTutor+"'");
+                          (nuevaFotoTutor == null ? dirFotoTutor : dirFotoTutorNueva )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonoTutor+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1989,7 +1989,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 
                 //SE CAMBIA EL TELÉFONO DEL **TUTOR** EN EL ARCHIVO DE TUTORES DEL NIÑO
 
-                    File archAutorizados2 = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                    File archAutorizados2 = new File("Niños/TutoresDe"+ID+".txt");
                     String texto = "";
                     String aux = "";
                     String bfRead;
@@ -2021,7 +2021,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE AGREGA EL ID DEL NIÑO AL ARCHIVO DE NIÑOS DEL NUEVO TUTOR
                     /* Se procede a averiguar si el autorizado tiene un archivo de niños, si no, se crea y se guarda al niño ahí*/
-                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresTutor.getText()+".txt";
+                    ruta = "Tutores/NiñosDe"+tfNombresTutor.getText()+".txt";
                     File bandera = new File(ruta);
 
                     //Si el file no existe, entonces se crea
@@ -2048,7 +2048,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     AgregarIDNiño(ruta, ID);
                     
                     //SE BORRA EL ID DEL NIÑO EN EL ARCHIVO DEL TUTOR VIEJO
-                    ruta = directorioRaiz+"/Tutores/NiñosDe"+teléfonoTutor+".txt";
+                    ruta = "Tutores/NiñosDe"+teléfonoTutor+".txt";
                     File archTutor;
                     
                     archTutor = new File(ruta);
@@ -2147,7 +2147,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
             if(!error && !datosIncompletos && confirmacion){
                 
-                ruta = directorioRaiz+"/Niños/TutoresDe"+ID+".txt";
+                ruta = "Niños/TutoresDe"+ID+".txt";
                 /*
                     se procede a averiguar si el niño tiene un file de autorizados, si no, se crea y se guarda el autorizado.
                 */
@@ -2179,7 +2179,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 
                 
                 /* Se procede a averiguar si el autorizado tiene un archivo de niños, si no, se crea y se guarda al niño ahí*/
-                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresAut1.getText()+".txt";
+                ruta = "Tutores/NiñosDe"+tfNombresAut1.getText()+".txt";
                 bandera = new File(ruta);
                 
                 //Si el file no existe, entonces se crea
@@ -2216,7 +2216,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             if(!error && !datosIncompletos && confirmacion){
             
                 //SE ELIMINA EL TELÉFONO DEL **AUTORIZADO** EN EL ARCHIVO DE TUTORES DEL NIÑO
-                File archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                File archAutorizados = new File("Niños/TutoresDe"+ID+".txt");
                 String texto = "";
                 String aux = "";
                 String bfRead;
@@ -2244,7 +2244,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                        !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
                         bf.close();
                         bw.close();
-                        File archivo = new File(archAutorizados.getAbsolutePath().replace("\\", "/"));
+                        File archivo = new File("Niños/TutoresDe"+ID+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
                     }
                     else{
@@ -2261,7 +2261,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
 
                 //SE BORRA AL NIÑO DEL ARCHIVO DE NIÑOS DEL AUTORIZADO
-                File archNiños = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt");
+                File archNiños = new File("Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt");
                 texto = "";
                 aux = "";
 
@@ -2287,7 +2287,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                        !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
                         bf.close();
                         bw.close();
-                        File archivo = new File(archNiños.getAbsolutePath().replace("\\", "/"));
+                        File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
                         
                         try{ //Se elimina al tutor
@@ -2343,7 +2343,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
             if(!error && !datosIncompletos && confirmacion){
                 
-                ruta = directorioRaiz+"/Niños/TutoresDe"+ID+".txt";
+                ruta = "Niños/TutoresDe"+ID+".txt";
                 /*
                     se procede a averiguar si el niño tiene un file de autorizados, si no, se crea y se guarda el autorizado.
                 */
@@ -2375,7 +2375,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 
                 
                 /* Se procede a averiguar si el autorizado tiene un archivo de niños, si no, se crea y se guarda al niño ahí*/
-                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresAut2.getText()+".txt";
+                ruta = "Tutores/NiñosDe"+tfNombresAut2.getText()+".txt";
                 bandera = new File(ruta);
                 
                 //Si el file no existe, entonces se crea
@@ -2409,7 +2409,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             if(!error && !datosIncompletos && confirmacion){
             
                 //SE ELIMINA EL TELÉFONO DEL **AUTORIZADO** EN EL ARCHIVO DE TUTORES DEL NIÑO
-                File archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                File archAutorizados = new File("Niños/TutoresDe"+ID+".txt");
                 String texto = "";
                 String aux = "";
                 String bfRead;
@@ -2436,7 +2436,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                        !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
                         bf.close();
                         bw.close();
-                        File archivo = new File(archAutorizados.getAbsolutePath().replace("\\", "/"));
+                        File archivo = new File("Niños/TutoresDe"+ID+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                     }
@@ -2454,7 +2454,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
 
                 //SE BORRA AL NIÑO DEL ARCHIVO DE NIÑOS DEL AUTORIZADO
-                File archNiños = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt");
+                File archNiños = new File("Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt");
                 texto = "";
                 aux = "";
 
@@ -2480,7 +2480,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                        !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
                         bf.close();
                         bw.close();
-                        File archivo = new File(archNiños.getAbsolutePath().replace("\\", "/"));
+                        File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                         try{ //Se elimina al tutor
@@ -2534,7 +2534,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             
             //Si no hay error de ningún tipo, entonces se procede a guardar al autorizado en el archivo de autorizados del niño
             if(!error && !datosIncompletos && confirmacion){
-                ruta = directorioRaiz+"/Niños/TutoresDe"+ID+".txt";
+                ruta = "Niños/TutoresDe"+ID+".txt";
                 /*
                     se procede a averiguar si el niño tiene un file de autorizados, si no, se crea y se guarda el autorizado.
                 */
@@ -2563,7 +2563,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 AgregarIDNiño(ruta, tfNombresAut3.getText());
                 
                 /* Se procede a averiguar si el autorizado tiene un archivo de niños, si no, se crea y se guarda al niño ahí*/
-                ruta = directorioRaiz+"/Tutores/NiñosDe"+tfNombresAut3.getText()+".txt";
+                ruta = "Tutores/NiñosDe"+tfNombresAut3.getText()+".txt";
                 bandera = new File(ruta);
                 
                 //Si el file no existe, entonces se crea
@@ -2598,7 +2598,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             if(!error && !datosIncompletos && confirmacion){
             
                 //SE ELIMINA EL TELÉFONO DEL **AUTORIZADO** EN EL ARCHIVO DE TUTORES DEL NIÑO
-                File archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+ID+".txt");
+                File archAutorizados = new File("Niños/TutoresDe"+ID+".txt");
                 String texto = "";
                 String aux = "";
                 String bfRead;
@@ -2626,7 +2626,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                        !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
                         bf.close();
                         bw.close();
-                        File archivo = new File(archAutorizados.getAbsolutePath().replace("\\", "/"));
+                        File archivo = new File("Niños/TutoresDe"+ID+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                     }
@@ -2644,7 +2644,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 }
 
                 //SE BORRA AL NIÑO DEL ARCHIVO DE NIÑOS DEL AUTORIZADO
-                File archNiños = new File(directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt");
+                File archNiños = new File("Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt");
                 texto = "";
                 aux = "";
 
@@ -2670,7 +2670,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                        !texto.contains("6") && !texto.contains("7") && !texto.contains("8") && !texto.contains("9") ) ){
                         bf.close();
                         bw.close();
-                        File archivo = new File(archNiños.getAbsolutePath().replace("\\", "/"));
+                        File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                         try{ //Se elimina al tutor
@@ -2711,7 +2711,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut1.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut1.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut1.getText()+"', Foto = '"+
-                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : nuevaFotoAut1.getAbsolutePath().replace("\\", "/") )+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
+                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : "Fotos Tutores/"+nuevaFotoAut1.getName())+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2721,7 +2721,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE LE CAMBIA EL NOMBRE AL ARCHIVO
                     File f1 = new File(archivoNiñosAut1); //Archivo original
-                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt"; //Nombre del nuevo archivo
+                    ruta = "Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt"; //Nombre del nuevo archivo
                     
                     File f2 = new File(ruta); //Archivo nuevo
                     f1.renameTo(f2); //Se renombra el archivo
@@ -2777,7 +2777,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     //SE ACTUALIZA EL NÚMERO NUEVO EN CADA ARCHIVO DE AUTORIZADOS DE CADA NIÑO DEL TUTOR
                     File archAutorizados;
                     for(String niño : niños){
-                        archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+niño+".txt");
+                        archAutorizados = new File("Niños/TutoresDe"+niño+".txt");
                         String texto = "";
                         String aux = "";
                         String bfRead;
@@ -2844,7 +2844,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut1.getText()+"', Nombres = '"+tfNombresAut1.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut1.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut1.getText()+"', Foto = '"+
-                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : nuevaFotoAut1.getAbsolutePath().replace("\\", "/") )+"', Ninos = '"+f2.getAbsolutePath().replace("\\", "/")+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
+                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : "Fotos Tutores/"+nuevaFotoAut1.getName() )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2864,7 +2864,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut2.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut2.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut2.getText()+"', Foto = '"+
-                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : nuevaFotoAut2.getAbsolutePath().replace("\\", "/") )+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
+                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : "Fotos Tutores/"+nuevaFotoAut2.getName() )+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2874,7 +2874,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE LE CAMBIA EL NOMBRE AL ARCHIVO
                     File f1 = new File(archivoNiñosAut2); //Archivo original
-                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt"; //Nombre del nuevo archivo
+                    ruta = "Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt"; //Nombre del nuevo archivo
                     
                     File f2 = new File(ruta); //Archivo nuevo
                     f1.renameTo(f2); //Se renombra el archivo
@@ -2930,7 +2930,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     //SE ACTUALIZA EL NÚMERO NUEVO EN CADA ARCHIVO DE AUTORIZADOS DE CADA NIÑO DEL TUTOR
                     File archAutorizados;
                     for(String niño : niños){
-                        archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+niño+".txt");
+                        archAutorizados = new File("Niños/TutoresDe"+niño+".txt");
                         String texto = "";
                         String aux = "";
                         String bfRead;
@@ -2996,7 +2996,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut2.getText()+"', Nombres = '"+tfNombresAut2.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut2.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut2.getText()+"', Foto = '"+
-                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : nuevaFotoAut2.getAbsolutePath().replace("\\", "/") )+"', Ninos = '"+f2.getAbsolutePath().replace("\\", "/")+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
+                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : "Fotos Tutores/"+nuevaFotoAut2.getName().replace("\\", "/") )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -3015,7 +3015,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut3.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut3.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut3.getText()+"', Foto = '"+
-                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : nuevaFotoAut3.getAbsolutePath().replace("\\", "/") )+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
+                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : "Fotos Tutores/"+nuevaFotoAut3.getName())+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -3025,7 +3025,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     //SE LE CAMBIA EL NOMBRE AL ARCHIVO
                     File f1 = new File(archivoNiñosAut3); //Archivo original
-                    ruta = directorioRaiz+"/Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt"; //Nombre del nuevo archivo
+                    ruta = "Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt"; //Nombre del nuevo archivo
                     
                     File f2 = new File(ruta); //Archivo nuevo
                     f1.renameTo(f2); //Se renombra el archivo
@@ -3081,7 +3081,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     //SE ACTUALIZA EL NÚMERO NUEVO EN CADA ARCHIVO DE AUTORIZADOS DE CADA NIÑO DEL TUTOR
                     File archAutorizados;
                     for(String niño : niños){
-                        archAutorizados = new File(directorioRaiz+"/Niños/TutoresDe"+niño+".txt");
+                        archAutorizados = new File("Niños/TutoresDe"+niño+".txt");
                         String texto = "";
                         String aux = "";
                         String bfRead;
@@ -3147,7 +3147,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut3.getText()+"', Nombres = '"+tfNombresAut3.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut3.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut3.getText()+"', Foto = '"+
-                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : nuevaFotoAut3.getAbsolutePath().replace("\\", "/") )+"', Ninos = '"+f2.getAbsolutePath().replace("\\", "/")+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
+                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : "Fotos Tutores/"+nuevaFotoAut3.getName() )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
