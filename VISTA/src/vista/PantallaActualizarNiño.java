@@ -83,7 +83,8 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaActualizarNiño() {
         initComponents();
-        
+        setSize(1000,800);
+        setLocation(0,-25);
         crearTutor = new PantallaCrearTutor();
         
         IniciarVentana();

@@ -19,8 +19,11 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
     
     Connection con;
     String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
+    
     public PantallaRegistrarRecepcionista() {
         initComponents();
+        setSize(1000,800);
+        setLocation(0,-25);
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

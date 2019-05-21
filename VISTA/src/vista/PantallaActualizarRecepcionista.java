@@ -24,7 +24,10 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
     Connection con;
     boolean exito = true;
     String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
+    
     public PantallaActualizarRecepcionista() {
+        setSize(1000,800);
+        setLocation(0,-25);
         initComponents();
         
         try {

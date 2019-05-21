@@ -34,7 +34,10 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
      boolean error = false;
      CamConRec camara;
      String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
+     
     public PantallaCrearTutor() {
+        setSize(1000,800);
+        setLocation(0,-25);
         initComponents();
         
         try {

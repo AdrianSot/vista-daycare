@@ -27,6 +27,8 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
     
     public PantallaConsultarRecepcionista() {
         initComponents();
+        setSize(1000,800);
+        setLocation(0,-25);
         
     }
     
