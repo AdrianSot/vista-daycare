@@ -3,13 +3,8 @@ package vista;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class MainWindow extends javax.swing.JFrame {
@@ -20,7 +15,6 @@ public class MainWindow extends javax.swing.JFrame {
     public enum UserStat {AdminFailPass, RecepFailPass, RecepLogged, AdminLogged};
     public static UserStat userStatus;
     public Timer timer;
-    //public static boolean act = false;
     
     /* Administrador */
     PantallaRegistrarRecepcionista pantallaregistro;
@@ -31,7 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
     /* Recepcionista */
     
     PantallaRegistrarNiño pantallaregistrarniño; 
-    //PantallaConsultarNiño pantallaconsultarniño;
+    PantallaConsultarNiño pantallaconsultarniño;
     
     
     public MainWindow() {
@@ -55,10 +49,10 @@ public class MainWindow extends javax.swing.JFrame {
         
         /* Recepcionista */
         pantallaregistrarniño = new PantallaRegistrarNiño();
-        //pantallaconsultarniño = new PantallaConsultarNiño();
+        pantallaconsultarniño = new PantallaConsultarNiño();
         
         add(pantallaregistrarniño);
-        //add(pantallaconsultarniño);
+        add(pantallaconsultarniño);
         
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -179,6 +173,9 @@ public class MainWindow extends javax.swing.JFrame {
         if(userStatus == UserStat.AdminLogged){
             setTitle("VISTA para Administrador");
             jMenu2.setText("Recepcionistas");
+        }else{
+            miEliminar.setVisible(false);
+            miActualizar.setVisible(false);
         }
         jMenuBar1.setVisible(true);
     }
@@ -196,7 +193,7 @@ public class MainWindow extends javax.swing.JFrame {
             consultarecepcionista.setVisible(false);
             consultarecepcionista.borraTabla();
         }else{
-            //pantallaconsultarniño.setVisible(false);
+            pantallaconsultarniño.setVisible(false);
             pantallaregistrarniño.setVisible(true);
             pantallaregistrarniño.IniciarVentana();
         }
@@ -233,8 +230,8 @@ public class MainWindow extends javax.swing.JFrame {
             consultarecepcionista.IniciarVentana();
         }else{
              pantallaregistrarniño.setVisible(false);
-            // pantallaconsultarniño.setVisible(true);
-             //pantallaconsultarniño.IniciarVentana();
+             pantallaconsultarniño.setVisible(true);
+             pantallaconsultarniño.IniciarVentana();
         }
         
     }//GEN-LAST:event_miConsultarActionPerformed

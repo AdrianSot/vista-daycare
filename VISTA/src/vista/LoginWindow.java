@@ -53,17 +53,13 @@ public class LoginWindow extends javax.swing.JFrame {
         
         /* Consulta */
        /*try{
-            System.out.println("esta haciendo algo");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:8080/VISTA", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
             Statement s = con.createStatement();
-            System.out.println("se pudo conectar");
          
             ResultSet UserSet = s.executeQuery("SELECT Usuario FROM Recepcionistas WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");
-            System.out.println("u : " + UserSet.toString());
             if(!UserSet.isBeforeFirst()){
                  userStatus = UserStat.RecepFailPass;
                 UserSet = s.executeQuery("SELECT Usuario FROM Administradores WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");
-                 System.out.println("u : " + UserSet.toString());
                 if(!UserSet.isBeforeFirst()){
                     userStatus = UserStat.AdminFailPass;
                     WarningWindow();
@@ -78,7 +74,7 @@ public class LoginWindow extends javax.swing.JFrame {
             }
            
         }catch(SQLException e){
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE,null, e);
+            Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE,null, e);
             JOptionPane.showMessageDialog(this, "Por favor intente de nuevo.", "ERROR", JOptionPane.PLAIN_MESSAGE);
         }*/
        userStatus = UserStat.RecepLogged; //Esto comenta porque es solo para pruebas jsjs

@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
+
 package vista;
 
 import javax.swing.JOptionPane;
@@ -8,11 +10,18 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author pedrohdez
+ */
 public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
 
+    /**
+     * Creates new form PantallaEliminarRecepcionista
+     */
     Connection con;
     int confirmacion;
-    
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaEliminarRecepcionista() {
         initComponents();
         try {
@@ -46,15 +55,6 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
         tfApellido = new javax.swing.JTextField();
         tfUsuario = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                formMouseEntered(evt);
-            }
-        });
 
         jLabel1.setText("Eliminar Recepcionista");
 
@@ -134,7 +134,7 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
                                                     +"de los registros de recepcionistas?");
             if(confirmacion == 0){
                 try {
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                    con = DriverManager.getConnection(linkbd, "root", "");
                     Statement stmt = con.createStatement();
                     stmt.executeUpdate("DELETE FROM Recepcionistas WHERE Nombre = '"+tfNombre.getText()+"'AND Apellido = '"+tfApellido.getText()+"' AND Usuario = '"+tfUsuario.getText()+"'");
 
@@ -157,13 +157,6 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formMouseEntered
-
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

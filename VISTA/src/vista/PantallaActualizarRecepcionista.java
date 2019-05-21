@@ -1,3 +1,6 @@
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
+
+
 package vista;
 
 import java.sql.Connection;
@@ -7,13 +10,20 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+/**
+ *
+ * @author pedrohdez
+ */
 
 
 public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame {
 
+    /**
+     * Creates new form PantallaActualizarRecepcionista
+     */
     Connection con;
     boolean exito = true;
-    
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaActualizarRecepcionista() {
         initComponents();
         
@@ -55,12 +65,6 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
         tfUsuario = new javax.swing.JTextField();
         tfContraseña = new javax.swing.JTextField();
         BActualizar = new javax.swing.JButton();
-
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
-            }
-        });
 
         LblTitulo.setText("Actualizar información de recepcionistas");
 
@@ -173,7 +177,7 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
         }
         else{
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");    
+                con = DriverManager.getConnection(linkbd, "root", "");    
                 Statement stmt = con.createStatement();
                     
                 if(tfNombre.getText().isEmpty() && tfApellido.getText().isEmpty() && tfUsuario.getText().isEmpty() && !tfContraseña.getText().isEmpty()){
@@ -274,9 +278,6 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
         }
        
     }//GEN-LAST:event_BActualizarActionPerformed
-
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

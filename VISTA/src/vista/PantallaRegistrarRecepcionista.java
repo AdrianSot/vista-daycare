@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
+
 package vista;
 
 import java.sql.Connection;
@@ -11,8 +13,12 @@ import javax.swing.JOptionPane;
 
 public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
 
-    Connection con;
+    /**
+     * Creates new form PantallaRegistrarRecepcionista
+     */
     
+    Connection con;
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaRegistrarRecepcionista() {
         initComponents();
         
@@ -50,12 +56,6 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
-            }
-        });
 
         jLabel1.setText("Registro de recepcionistas");
 
@@ -138,7 +138,7 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
         }  
         else{
            try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate("INSERT INTO Recepcionistas VALUES ('"+tfNombreUsuario.getText()+"','"+tfContraseña.getText()+"','"+tfNombre.getText()+"','"+tfApellido.getText()+"')");
                 JOptionPane.showMessageDialog(null, "Registro exitoso");
@@ -157,9 +157,6 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
             
               
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

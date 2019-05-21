@@ -1,3 +1,6 @@
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
+
+
 package vista;
 
 import java.sql.Connection;
@@ -10,9 +13,17 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
+/**
+ *
+ * @author pedrohdez
+ */
 public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
+
+    /**
+     * Creates new form ConsultaRecepcionista
+     */
     Connection con;
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     
     public PantallaConsultarRecepcionista() {
         initComponents();
@@ -54,12 +65,6 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         tfApellido = new javax.swing.JTextField();
         CbTodo = new javax.swing.JCheckBox();
         CbBuscar = new javax.swing.JCheckBox();
-
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
-            }
-        });
 
         jLabel1.setText("Consulta de recepcionistas");
 
@@ -172,7 +177,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
       
                 DefaultTableModel modelo = (DefaultTableModel)TbRecepcionistas.getModel();
 
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 
@@ -215,7 +220,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         try {  
              DefaultTableModel modelo = (DefaultTableModel)TbRecepcionistas.getModel();
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+            con = DriverManager.getConnection(linkbd, "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Recepcionistas");
             
@@ -241,9 +246,6 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         tfApellido.setVisible(true);
         BConsultar.setVisible(true);
     }//GEN-LAST:event_CbBuscarActionPerformed
-
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

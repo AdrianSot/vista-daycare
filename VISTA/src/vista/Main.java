@@ -10,9 +10,13 @@ public class Main {
     public static void main(String[] args) {
         LoginWindow lw = new LoginWindow();
         lw.setVisible(true);
-        /*Window w = new Window();
-        w.getJMenuBar().setVisible(false);
-        w.setVisible(true);*/
+        /*
+        setSize(1000,800);    
+        setLocation(200,100);
+        
+        setSize(1000,000);
+        setLocation(0,-25);
+        */
     }
     
 }

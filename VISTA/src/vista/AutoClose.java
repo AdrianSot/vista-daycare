@@ -59,6 +59,7 @@ public class AutoClose {
                                         }
                                      }
                                 }catch(NullPointerException n){
+                                    System.out.println("oh no");
                                 }
                                 //t = 0;
                             }
