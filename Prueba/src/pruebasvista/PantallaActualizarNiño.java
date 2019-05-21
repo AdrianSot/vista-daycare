@@ -1,4 +1,4 @@
-/*VERSION DE WINDOWS*/
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -58,7 +58,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     Image fotosAutorizados[] ={null,null,null}; 
     
     //Direcciones de las imágenes
-    String dirFotoNiño, dirFotoTutor, dirFotoNiñoNueva, dirFotoTutorNueva;
+    String dirFotoNiño, dirFotoTutor, dirFotoNiñoNueva, dirFotoTutorNueva, dirFotoAut1Nueva, dirFotoAut2Nueva, dirFotoAut3Nueva;
     String dirFotosAutorizados[] = {"No", "No", "No"};
     
     //Íconos
@@ -84,6 +84,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     //Rutas
     String ruta, directorioRaiz;  
     
+    CamConRec camara;
     String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaActualizarNiño() {
         initComponents();
@@ -102,6 +103,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     }
     
     public void IniciarVentana(){
+        camara = new CamConRec();
         //SE EXTRAEN TODOS LOS TELÉFONOS DE LA BD PARA QUE AL MOMENTO DE AJUSTAR LA INFORMACIÓN NO SE REPITAN LOS TUTORES/AUTORIZADOS
         try {
             con = DriverManager.getConnection(linkbd, "root", "");
@@ -184,6 +186,14 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         bTomarFotoAut1.setEnabled(false);
         bTomarFotoAut2.setEnabled(false);
         bTomarFotoAut3.setEnabled(false);
+        
+        //DESHABILITACIÓN DE LOS BOTONES PARA INSERTAR UNA NUEVA FOTO
+        bInsertarFotoNiño.setEnabled(false);
+        bInsertarFotoTutor.setEnabled(false);
+        bInsertarFotoAut1.setEnabled(false);
+        bInsertarFotoAut2.setEnabled(false);
+        bInsertarFotoAut3.setEnabled(false);
+        
         
         //DESHABILITACIÓN DE LA EDICIÓN DE LOS CAMPOS DE TEXTO DE LOS NIÑOS
         tfNombresNiño.setEditable(false);
@@ -334,6 +344,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         tfApellidoMaternoAut1.setText(apellidosMaternosAutorizados[0]);
         tfTeléfonoAut1.setText(teléfonosAutorizados[0]);
         bTomarFotoAut1.setEnabled(false);
+        bInsertarFotoAut1.setEnabled(false);
     }
     
     public void DefaultAutorizado2(){
@@ -362,6 +373,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         tfApellidoMaternoAut2.setText(apellidosMaternosAutorizados[1]);
         tfTeléfonoAut2.setText(teléfonosAutorizados[1]);
         bTomarFotoAut2.setEnabled(false);
+        bInsertarFotoAut2.setEnabled(false);
     }
     
     public void DefaultAutorizado3(){
@@ -390,6 +402,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         tfApellidoMaternoAut3.setText(apellidosMaternosAutorizados[2]);
         tfTeléfonoAut3.setText(teléfonosAutorizados[2]);
         bTomarFotoAut3.setEnabled(false);
+        bInsertarFotoAut3.setEnabled(false);
     }
     
     public boolean Tutor(String direccion, String telefono){
@@ -727,6 +740,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         cbAsignarAut3 = new javax.swing.JCheckBox();
         cbCambiarTutor = new javax.swing.JCheckBox();
         bCrearTutor = new javax.swing.JButton();
+        bInsertarFotoNiño = new javax.swing.JButton();
+        bInsertarFotoTutor = new javax.swing.JButton();
+        bInsertarFotoAut1 = new javax.swing.JButton();
+        bInsertarFotoAut2 = new javax.swing.JButton();
+        bInsertarFotoAut3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -818,7 +836,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         });
 
-        bTomarFotoTutor.setText("TomarFoto");
+        bTomarFotoTutor.setText("Tomar Foto");
         bTomarFotoTutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bTomarFotoTutorActionPerformed(evt);
@@ -840,6 +858,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         });
 
         bTomarFotoAut3.setText("Tomar foto");
+        bTomarFotoAut3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTomarFotoAut3ActionPerformed(evt);
+            }
+        });
 
         cbAsignarTutor.setText("Asignar tutor");
         cbAsignarTutor.addActionListener(new java.awt.event.ActionListener() {
@@ -946,6 +969,41 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             }
         });
 
+        bInsertarFotoNiño.setText("Insertar foto");
+        bInsertarFotoNiño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bInsertarFotoNiñoActionPerformed(evt);
+            }
+        });
+
+        bInsertarFotoTutor.setText("Insertar foto");
+        bInsertarFotoTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bInsertarFotoTutorActionPerformed(evt);
+            }
+        });
+
+        bInsertarFotoAut1.setText("Insertar foto");
+        bInsertarFotoAut1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bInsertarFotoAut1ActionPerformed(evt);
+            }
+        });
+
+        bInsertarFotoAut2.setText("Insertar foto");
+        bInsertarFotoAut2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bInsertarFotoAut2ActionPerformed(evt);
+            }
+        });
+
+        bInsertarFotoAut3.setText("Insertar foto");
+        bInsertarFotoAut3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bInsertarFotoAut3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -959,9 +1017,9 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         .addGap(85, 85, 85)
                         .addComponent(lbl5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(201, 201, 201)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(201, 201, 201)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblFotoNiño, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
@@ -984,49 +1042,52 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                             .addGap(1, 1, 1)
                                             .addComponent(tfApellidoPaternoNiño, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(87, 87, 87)
-                                .addComponent(lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(87, 87, 87)
+                                .addComponent(lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(bTomarFotoNiño)
+                                .addGap(18, 18, 18)
+                                .addComponent(bInsertarFotoNiño)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblFotoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblNombreTutor)
-                                                .addGap(3, 3, 3)
-                                                .addComponent(tfNombresTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblTeléfonoTutor)
-                                                .addGap(3, 3, 3)
-                                                .addComponent(tfTeléfonoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblApellidoMaternoTutor)
-                                                    .addComponent(lblApellidoPaternoTutor))
-                                                .addGap(3, 3, 3)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(tfApellidoPaternoTutor)
-                                                    .addComponent(tfApellidoMaternoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(89, 89, 89)
-                                        .addComponent(lblTutor)
-                                        .addGap(104, 104, 104)
-                                        .addComponent(cbAsignarTutor)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbEditarTutor)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbCambiarTutor))))
+                                        .addComponent(bTomarFotoTutor)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(bInsertarFotoTutor))
+                                    .addComponent(lblFotoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(264, 264, 264)
-                                .addComponent(bTomarFotoNiño)
-                                .addGap(536, 536, 536)
-                                .addComponent(bTomarFotoTutor)))
+                                .addGap(91, 91, 91)
+                                .addComponent(lblTutor)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNombreTutor)
+                                .addGap(3, 3, 3)
+                                .addComponent(tfNombresTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTeléfonoTutor)
+                                .addGap(3, 3, 3)
+                                .addComponent(tfTeléfonoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblApellidoMaternoTutor)
+                                    .addComponent(lblApellidoPaternoTutor))
+                                .addGap(3, 3, 3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfApellidoPaternoTutor)
+                                    .addComponent(tfApellidoMaternoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(138, 138, 138)
+                                .addComponent(cbAsignarTutor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbEditarTutor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbCambiarTutor)))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(bTomarFotoAut1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -1058,86 +1119,91 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblTeléfonoAut1)
                                 .addGap(3, 3, 3)
-                                .addComponent(tfTeléfonoAut1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfTeléfonoAut1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(bTomarFotoAut1)
+                        .addGap(41, 41, 41)
+                        .addComponent(bInsertarFotoAut1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(bTomarFotoAut2))
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bTomarFotoAut2)
+                                .addGap(27, 27, 27)
+                                .addComponent(bInsertarFotoAut2))
+                            .addComponent(lblFotoAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbEditarAut2)
+                        .addGap(9, 9, 9)
+                        .addComponent(cbEliminarAut2)
+                        .addGap(3, 3, 3)
+                        .addComponent(cbAsignarAut2))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(lblFotoAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(77, 77, 77)
-                                .addComponent(jLabel4)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbEditarAut2)
-                                .addGap(9, 9, 9)
-                                .addComponent(cbEliminarAut2)
-                                .addGap(3, 3, 3)
-                                .addComponent(cbAsignarAut2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblApellidoPaternoAut2)
-                                    .addComponent(lblApellidoMaternoAut2))
-                                .addGap(3, 3, 3)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfApellidoPaternoAut2)
-                                    .addComponent(tfApellidoMaternoAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNombresAut2)
-                                .addGap(3, 3, 3)
-                                .addComponent(tfNombresAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTeléfonoAut2)
-                                .addGap(3, 3, 3)
-                                .addComponent(tfTeléfonoAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(lblApellidoPaternoAut2)
+                            .addComponent(lblApellidoMaternoAut2))
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfApellidoPaternoAut2)
+                            .addComponent(tfApellidoMaternoAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombresAut2)
+                        .addGap(3, 3, 3)
+                        .addComponent(tfNombresAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTeléfonoAut2)
+                        .addGap(3, 3, 3)
+                        .addComponent(tfTeléfonoAut2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(lbl4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(bTomarFotoAut3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bInsertarFotoAut3)
+                        .addGap(48, 48, 48))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblFotoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbEditarAut3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbEliminarAut3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbAsignarAut3))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblFotoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(85, 85, 85)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbEditarAut3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbEliminarAut3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbAsignarAut3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblApellidoPaternoAut3)
-                                    .addComponent(lblApellidoMaternoAut3))
-                                .addGap(3, 3, 3)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfApellidoPaternoAut3)
-                                    .addComponent(tfApellidoMaternoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNombresAut3)
-                                .addGap(3, 3, 3)
-                                .addComponent(tfNombresAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTeléfonoAut3)
-                                .addGap(3, 3, 3)
-                                .addComponent(tfTeléfonoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                            .addComponent(lblApellidoPaternoAut3)
+                            .addComponent(lblApellidoMaternoAut3))
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfApellidoPaternoAut3)
+                            .addComponent(tfApellidoMaternoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombresAut3)
+                        .addGap(3, 3, 3)
+                        .addComponent(tfNombresAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTeléfonoAut3)
+                        .addGap(3, 3, 3)
+                        .addComponent(tfTeléfonoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -1157,16 +1223,14 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTutor)
-                            .addComponent(cbAsignarTutor)
-                            .addComponent(cbEditarTutor)
-                            .addComponent(cbCambiarTutor))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFotoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cbAsignarTutor)
+                                    .addComponent(cbEditarTutor)
+                                    .addComponent(cbCambiarTutor))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblNombreTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfNombresTutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1181,41 +1245,55 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblTeléfonoTutor)
-                                    .addComponent(tfTeléfonoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfTeléfonoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNiño)
-                            .addComponent(cbEditarNiño))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfNombresNiño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblApellidoPaterno)
-                                    .addComponent(tfApellidoPaternoNiño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblApellidoMaterno)
-                                    .addComponent(tfApellidoMaternoNiño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblNiño)
+                                    .addComponent(cbEditarNiño))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tfNombresNiño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(lblApellidoPaterno)
+                                            .addComponent(tfApellidoPaternoNiño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(lblApellidoMaterno)
+                                            .addComponent(tfApellidoMaternoNiño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblFotoNiño, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(lblFotoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(bTomarFotoNiño)
+                                            .addComponent(bTomarFotoTutor)
+                                            .addComponent(bInsertarFotoNiño)
+                                            .addComponent(bInsertarFotoTutor)))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblFotoNiño, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(bTomarFotoNiño)
-                                    .addComponent(bTomarFotoTutor))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblTutor)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(lbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1286,12 +1364,19 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblTeléfonoAut3)
                                     .addComponent(tfTeléfonoAut3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(bTomarFotoAut1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(bTomarFotoAut2))
-                            .addComponent(bTomarFotoAut3)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(bTomarFotoAut3)
+                                        .addComponent(bInsertarFotoAut3))
+                                    .addComponent(bTomarFotoAut1)
+                                    .addComponent(bInsertarFotoAut1)
+                                    .addComponent(bInsertarFotoAut2)))))
                     .addComponent(lbl3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl4, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1315,6 +1400,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
            tfApellidoPaternoNiño.setEditable(true);
            tfApellidoMaternoNiño.setEditable(true);
            bTomarFotoNiño.setEnabled(true);
+           bInsertarFotoNiño.setEnabled(true);
         }
         else{
            tfNombresNiño.setForeground(Color.lightGray);
@@ -1328,6 +1414,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
            tfApellidoPaternoNiño.setText(apellidoPaternoNiño);
            tfApellidoMaternoNiño.setText(apellidoMaternoNiño);
            bTomarFotoNiño.setEnabled(false);
+           bInsertarFotoNiño.setEnabled(false);
            
            lblFotoNiño.setIcon(iconoNiño);
         }
@@ -1358,6 +1445,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             tfApellidoMaternoTutor.setEditable(true);
             tfTeléfonoTutor.setEditable(true);
             bTomarFotoTutor.setEnabled(true);
+            bInsertarFotoTutor.setEnabled(true);
             
             lblNombreTutor.setVisible(true);
             lblApellidoPaternoTutor.setVisible(true);
@@ -1386,6 +1474,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             tfApellidoMaternoTutor.setEditable(false);
             tfTeléfonoTutor.setEditable(false);
             bTomarFotoTutor.setEnabled(false);
+            bInsertarFotoTutor.setEnabled(false);
             
         }
     }//GEN-LAST:event_cbEditarTutorActionPerformed
@@ -1443,6 +1532,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             tfApellidoMaternoAut1.setEditable(true);
             tfTeléfonoAut1.setEditable(true);
             bTomarFotoAut1.setEnabled(true);
+            bInsertarFotoAut1.setEnabled(true);
         }
         else{
             DefaultAutorizado1();
@@ -1464,6 +1554,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             tfApellidoMaternoAut2.setEditable(true);
             tfTeléfonoAut2.setEditable(true);
             bTomarFotoAut2.setEnabled(true);
+            bInsertarFotoAut2.setEnabled(true);
         }
         else{
             DefaultAutorizado2();
@@ -1485,6 +1576,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             tfApellidoMaternoAut3.setEditable(true);
             tfTeléfonoAut3.setEditable(true);
             bTomarFotoAut3.setEnabled(true);
+            bInsertarFotoAut3.setEnabled(true);
         }
         else{
             DefaultAutorizado3();
@@ -1700,6 +1792,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         if(cbEditarNiño.isSelected()){
             if(!error && !datosIncompletos && confirmacion){ //Si no hay error se procede con la actualización del niño
                 //Actualización de la información del niño
+
                 try {
                     con = DriverManager.getConnection(linkbd, "root", "");
                     Statement stmt = con.createStatement();
@@ -1947,7 +2040,14 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+niño);
                         }
                     }
-               
+                    
+                    /*SE LE CAMBIA EL NOMBRE A LA FOTO DEL TUTOR PORQUE CONTIENE SU TELÉFONO EN ESE NOMBRE (Si es que tiene fotito)*/
+                    File original = new File("Fotos Tutores/tutor"+teléfonoTutor+".jpg");
+                    if(original.exists()){
+                        File renombre = new File("Fotos Tutores/tutor"+tfTeléfonoTutor.getText()+".jpg");
+                        original.renameTo(renombre);
+                        dirFotoTutor = "Fotos Tutores/tutor"+tfTeléfonoTutor.getText()+".jpg";
+                    }
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
                     try {
@@ -2290,6 +2390,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
                         
+                        /*EN ESTE CASO TAMBIÉN SE ELIMINA LA FOTO DEL AUTORIZADO*/
+                        
+                        //SE ELIMINA LA FOTO DEL AUTORIZADO PORQUE SE QUEDA SIN NIÑOS Y YA NO NECESITA ESTAR EN LA BASE DE DATOS
+                        File archFotoAutorizado = new File("Fotos Tutores/tutor"+tfTeléfonoAut1.getText()+".jpg");
+                        archFotoAutorizado.delete();
+                        
                         try{ //Se elimina al tutor
                             con = DriverManager.getConnection(linkbd, "root", "");
                             Statement stmt = con.createStatement();
@@ -2482,6 +2588,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         bw.close();
                         File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
+                        
+                        /*EN ESTE CASO TAMBIÉN SE ELIMINA LA FOTO DEL AUTORIZADO*/
+                        
+                        //SE ELIMINA LA FOTO DEL AUTORIZADO PORQUE SE QUEDA SIN NIÑOS Y YA NO NECESITA ESTAR EN LA BASE DE DATOS
+                        File archFotoAutorizado = new File("Fotos Tutores/tutor"+tfTeléfonoAut2.getText()+".jpg");
+                        archFotoAutorizado.delete();
 
                         try{ //Se elimina al tutor
                             con = DriverManager.getConnection(linkbd, "root", "");
@@ -2672,6 +2784,12 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         bw.close();
                         File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt");
                         System.out.println(archivo.delete()); //Se elimina el archivo vacío
+                        
+                        /*EN ESTE CASO TAMBIÉN SE ELIMINA LA FOTO DEL AUTORIZADO*/
+                        
+                        //SE ELIMINA LA FOTO DEL AUTORIZADO PORQUE SE QUEDA SIN NIÑOS Y YA NO NECESITA ESTAR EN LA BASE DE DATOS
+                        File archFotoAutorizado = new File("Fotos Tutores/tutor"+tfTeléfonoAut3.getText()+".jpg");
+                        archFotoAutorizado.delete();
 
                         try{ //Se elimina al tutor
                             con = DriverManager.getConnection(linkbd, "root", "");
@@ -2711,7 +2829,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut1.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut1.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut1.getText()+"', Foto = '"+
-                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : "Fotos Tutores/"+nuevaFotoAut1.getName())+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
+                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : dirFotoAut1Nueva)+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2836,6 +2954,14 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+niño);
                         }
                     }
+                    
+                    /*SE LE CAMBIA EL NOMBRE A LA FOTO DEL AUTORIZADO PORQUE CONTIENE SU TELÉFONO EN ESE NOMBRE (Si es que tiene fotito)*/
+                    File original = new File("Fotos Tutores/tutor"+teléfonosAutorizados[0]+".jpg");
+                    if(original.exists()){
+                        File renombre = new File("Fotos Tutores/tutor"+tfTeléfonoAut1.getText()+".jpg");
+                        original.renameTo(renombre);
+                        dirFotosAutorizados[0] = "Fotos Tutores/tutor"+tfTeléfonoAut1.getText()+".jpg";
+                    }
                
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
@@ -2844,7 +2970,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut1.getText()+"', Nombres = '"+tfNombresAut1.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut1.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut1.getText()+"', Foto = '"+
-                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : "Fotos Tutores/"+nuevaFotoAut1.getName() )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
+                          (nuevaFotoAut1 == null ? dirFotosAutorizados[0] : dirFotoAut1Nueva )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[0]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2864,7 +2990,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut2.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut2.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut2.getText()+"', Foto = '"+
-                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : "Fotos Tutores/"+nuevaFotoAut2.getName() )+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
+                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : dirFotoAut2Nueva )+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2988,6 +3114,14 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+niño);
                         }
                     }
+                    
+                    /*SE LE CAMBIA EL NOMBRE A LA FOTO DEL AUTORIZADO PORQUE CONTIENE SU TELÉFONO EN ESE NOMBRE (Si es que tiene fotito)*/
+                    File original = new File("Fotos Tutores/tutor"+teléfonosAutorizados[1]+".jpg");
+                    if(original.exists()){
+                        File renombre = new File("Fotos Tutores/tutor"+tfTeléfonoAut2.getText()+".jpg");
+                        original.renameTo(renombre);
+                        dirFotosAutorizados[1] = "Fotos Tutores/tutor"+tfTeléfonoAut2.getText()+".jpg";
+                    }
                
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
@@ -2996,7 +3130,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut2.getText()+"', Nombres = '"+tfNombresAut2.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut2.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut2.getText()+"', Foto = '"+
-                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : "Fotos Tutores/"+nuevaFotoAut2.getName().replace("\\", "/") )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
+                          (nuevaFotoAut2 == null ? dirFotosAutorizados[1] : dirFotoAut2Nueva )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[1]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -3015,7 +3149,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Nombres = '"+tfNombresAut3.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut3.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut3.getText()+"', Foto = '"+
-                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : "Fotos Tutores/"+nuevaFotoAut3.getName())+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
+                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : dirFotoAut3Nueva)+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -3139,6 +3273,13 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Error al cambiar el teléfono del tutor en el archivo del niño."+niño);
                         }
                     }
+                    /*SE LE CAMBIA EL NOMBRE A LA FOTO DEL AUTORIZADO PORQUE CONTIENE SU TELÉFONO EN ESE NOMBRE (Si es que tiene fotito)*/
+                    File original = new File("Fotos Tutores/tutor"+teléfonosAutorizados[2]+".jpg");
+                    if(original.exists()){
+                        File renombre = new File("Fotos Tutores/tutor"+tfTeléfonoAut3.getText()+".jpg");
+                        original.renameTo(renombre);
+                        dirFotosAutorizados[2] = "Fotos Tutores/tutor"+tfTeléfonoAut3.getText()+".jpg";
+                    }
                
                     
                     //SE ACTUALIZA LA DIRECCIÓN DEL ARCHIVO DE LOS NIÑOS DEL TUTOR
@@ -3147,7 +3288,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         stmt.executeUpdate("UPDATE Tutores SET Telefono = '"+tfTeléfonoAut3.getText()+"', Nombres = '"+tfNombresAut3.getText()+"', Apellido_paterno = '"+
                          tfApellidoPaternoAut3.getText()+"', Apellido_materno = '"+tfApellidoMaternoAut3.getText()+"', Foto = '"+
-                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : "Fotos Tutores/"+nuevaFotoAut3.getName() )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
+                          (nuevaFotoAut3 == null ? dirFotosAutorizados[2] : dirFotoAut3Nueva )+"', Ninos = '"+"Tutores/"+f2.getName()+"' WHERE Telefono = '"+teléfonosAutorizados[2]+"'");
                     } catch (SQLException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -3312,31 +3453,17 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     }//GEN-LAST:event_cbAsignarAut3ActionPerformed
 
     private void bTomarFotoNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoNiñoActionPerformed
-        JFileChooser ficAbrirArchivo = new JFileChooser();
-        ficAbrirArchivo.setFileFilter(new FileNameExtensionFilter("archivo de imagen", "jpg", "jpeg"));
-        int respuesta=ficAbrirArchivo.showOpenDialog(this);
+        JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                + "Guarde la imagen con el mismo nombre al niño", "ADVERTENCIA", 1);
+        camara.IniciaCamaraPro("nino"+ID, "Fotos ninos");
         
-        if(respuesta==JFileChooser.APPROVE_OPTION ){
-            nuevaFotoNiño = ficAbrirArchivo.getSelectedFile();
-            Image foto = getToolkit().getImage(nuevaFotoNiño.getAbsolutePath());
-            foto = foto.getScaledInstance(260, 260, 260);
-            lblFotoNiño.setIcon(new ImageIcon(foto));
-            dirFotoNiñoNueva = nuevaFotoNiño.getAbsolutePath().replace("\\", "/");
-        }
+        
     }//GEN-LAST:event_bTomarFotoNiñoActionPerformed
 
     private void bTomarFotoTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoTutorActionPerformed
-        JFileChooser ficAbrirArchivo = new JFileChooser();
-        ficAbrirArchivo.setFileFilter(new FileNameExtensionFilter("archivo de imagen", "jpg", "jpeg"));
-        int respuesta=ficAbrirArchivo.showOpenDialog(this);
-        
-        if(respuesta==JFileChooser.APPROVE_OPTION ){
-            nuevaFotoTutor = ficAbrirArchivo.getSelectedFile();
-            Image foto = getToolkit().getImage(nuevaFotoTutor.getAbsolutePath());
-            foto = foto.getScaledInstance(260, 260, 260);
-            lblFotoTutor.setIcon(new ImageIcon(foto));
-            dirFotoTutorNueva = nuevaFotoTutor.getAbsolutePath().replace("\\", "/");
-        }
+        JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                + "Guarde la imagen con el mismo nombre y teléfono asignados al tutor", "ADVERTENCIA", 1);
+        camara.IniciaCamaraPro("tutor"+tfTeléfonoTutor.getText(), "Fotos Tutores");
     }//GEN-LAST:event_bTomarFotoTutorActionPerformed
 
     private void cbCambiarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCambiarTutorActionPerformed
@@ -3385,12 +3512,62 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     }//GEN-LAST:event_bCrearTutorActionPerformed
 
     private void bTomarFotoAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut1ActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado 1", "ADVERTENCIA", 1);
+        camara.IniciaCamaraPro("tutor"+tfTeléfonoAut1.getText(), "Fotos Tutores");
     }//GEN-LAST:event_bTomarFotoAut1ActionPerformed
 
     private void bTomarFotoAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut2ActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado 2", "ADVERTENCIA", 1);
+        camara.IniciaCamaraPro("tutor"+tfTeléfonoAut2.getText(), "Fotos Tutores");
     }//GEN-LAST:event_bTomarFotoAut2ActionPerformed
+
+    private void bInsertarFotoNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInsertarFotoNiñoActionPerformed
+        nuevaFotoNiño = new File("Fotos ninos/nino"+ID+".jpg");
+        dirFotoNiñoNueva = "Fotos ninos/"+nuevaFotoNiño.getName();
+        Image foto = getToolkit().getImage(nuevaFotoNiño.getAbsolutePath());
+        foto = foto.getScaledInstance(260, 260, 260);
+        lblFotoNiño.setIcon(new ImageIcon(foto));
+    }//GEN-LAST:event_bInsertarFotoNiñoActionPerformed
+
+    private void bInsertarFotoTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInsertarFotoTutorActionPerformed
+        nuevaFotoTutor = new File("Fotos Tutores/tutor"+tfTeléfonoTutor.getText()+".jpg");
+        dirFotoTutorNueva = "Fotos Tutores/"+nuevaFotoTutor.getName();
+        Image foto = getToolkit().getImage(nuevaFotoTutor.getAbsolutePath());
+        foto = foto.getScaledInstance(260, 260, 260);
+        lblFotoTutor.setIcon(new ImageIcon(foto));
+    }//GEN-LAST:event_bInsertarFotoTutorActionPerformed
+
+    private void bInsertarFotoAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInsertarFotoAut1ActionPerformed
+        nuevaFotoAut1 = new File("Fotos Tutores/tutor"+tfTeléfonoAut1.getText()+".jpg");
+        dirFotoAut1Nueva = "Fotos Tutores/"+nuevaFotoAut1.getName();
+        Image foto = getToolkit().getImage(nuevaFotoAut1.getAbsolutePath());
+        foto = foto.getScaledInstance(260, 260, 260);
+        lblFotoAut1.setIcon(new ImageIcon(foto));
+    }//GEN-LAST:event_bInsertarFotoAut1ActionPerformed
+
+    private void bInsertarFotoAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInsertarFotoAut2ActionPerformed
+        nuevaFotoAut2 = new File("Fotos Tutores/tutor"+tfTeléfonoAut2.getText()+".jpg");
+        dirFotoAut2Nueva = "Fotos Tutores/"+nuevaFotoAut2.getName();
+        Image foto = getToolkit().getImage(nuevaFotoAut2.getAbsolutePath());
+        foto = foto.getScaledInstance(260, 260, 260);
+        lblFotoAut2.setIcon(new ImageIcon(foto));
+    }//GEN-LAST:event_bInsertarFotoAut2ActionPerformed
+
+    private void bInsertarFotoAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInsertarFotoAut3ActionPerformed
+        nuevaFotoAut3 = new File("Fotos Tutores/tutor"+tfTeléfonoAut3.getText()+".jpg");
+        dirFotoAut3Nueva = "Fotos Tutores/"+nuevaFotoAut3.getName();
+        Image foto = getToolkit().getImage(nuevaFotoAut3.getAbsolutePath());
+        foto = foto.getScaledInstance(260, 260, 260);
+        lblFotoAut3.setIcon(new ImageIcon(foto));
+    }//GEN-LAST:event_bInsertarFotoAut3ActionPerformed
+
+    private void bTomarFotoAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut3ActionPerformed
+        JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado 3", "ADVERTENCIA", 1);
+        camara.IniciaCamaraPro("tutor"+tfTeléfonoAut3.getText(), "Fotos Tutores");
+    }//GEN-LAST:event_bTomarFotoAut3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -3430,6 +3607,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCrearTutor;
     private javax.swing.JButton bGuardar;
+    private javax.swing.JButton bInsertarFotoAut1;
+    private javax.swing.JButton bInsertarFotoAut2;
+    private javax.swing.JButton bInsertarFotoAut3;
+    private javax.swing.JButton bInsertarFotoNiño;
+    private javax.swing.JButton bInsertarFotoTutor;
     private javax.swing.JButton bTomarFotoAut1;
     private javax.swing.JButton bTomarFotoAut2;
     private javax.swing.JButton bTomarFotoAut3;

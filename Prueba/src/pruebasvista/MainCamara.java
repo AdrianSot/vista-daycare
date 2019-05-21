@@ -1,3 +1,5 @@
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -30,10 +32,10 @@ public class MainCamara extends javax.swing.JFrame {
      * Creates new form MainCamara
      */
     String nombreFoto;
+    String direccion;
     
     public MainCamara() {
         initComponents();
-
         BasicInternalFrameUI camara = (BasicInternalFrameUI)Iframe.getUI();
         camara.setNorthPane(null);
 
@@ -128,7 +130,7 @@ public class MainCamara extends javax.swing.JFrame {
                                 if (programStateRemember == programState) {
                                     if (FSDK.FSDKE_OK == FSDK.LockID(tracker, IDs[i]))
                                     {
-                                        FSDK.SaveImageToFile(imageHandle,"fotos\\"+nombreFoto+".jpg");
+                                        System.out.println(FSDK.SaveImageToFile(imageHandle,direccion+"/"+nombreFoto+".jpg"));
                                         // get the user name
                                         userName = (String)JOptionPane.showInputDialog(mainFrame, "Nombre:", "Introduce el nombre", JOptionPane.QUESTION_MESSAGE, null, null, "Nombre");
                                         FSDK.SetName(tracker, IDs[i], userName);
@@ -169,6 +171,7 @@ public class MainCamara extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Iframe.setBorder(null);
+        Iframe.setClosable(true);
         Iframe.setVisible(true);
         Iframe.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {

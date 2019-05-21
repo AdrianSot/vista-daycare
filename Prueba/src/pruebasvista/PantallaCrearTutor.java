@@ -1,4 +1,4 @@
-/*VERSION DE WINDOWS*/
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,7 +35,9 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
      
      String Teléfonos[];
      File fotoTutor;
+     String NombreDeFoto;
      boolean error = false;
+     CamConRec camara;
      String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     public PantallaCrearTutor() {
         initComponents();
@@ -57,6 +59,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
         lblFoto.setIcon(null);
         lblFoto.setText("SIN FOTO");
         fotoTutor = null;
+        camara = new CamConRec();
         
         //SE EXTRAEN TODOS LOS TELÉFONOS DE LA BD PARA QUE AL MOMENTO DE AJUSTAR LA INFORMACIÓN NO SE REPITAN LOS TUTORES/AUTORIZADOS
         try {
@@ -110,6 +113,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
         lblFoto = new javax.swing.JLabel();
         bTomarFoto = new javax.swing.JButton();
         bGuardar = new javax.swing.JButton();
+        bActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -137,11 +141,22 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
             }
         });
 
+        bActualizar.setText("Actualizar foto");
+        bActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(255, 255, 255)
+                .addComponent(bGuardar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -161,16 +176,14 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(bTomarFoto)
+                        .addGap(55, 55, 55)
+                        .addComponent(bActualizar)))
                 .addGap(63, 63, 63))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bTomarFoto)
-                .addGap(151, 151, 151))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(255, 255, 255)
-                .addComponent(bGuardar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +208,9 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                             .addComponent(lblTeléfono)
                             .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bTomarFoto)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bTomarFoto)
+                    .addComponent(bActualizar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(bGuardar)
                 .addGap(148, 148, 148))
@@ -227,7 +242,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                     con = DriverManager.getConnection(linkbd, "root", "");
                     stmt = con.createStatement();
                     stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+tfTeléfono.getText()+"','"+tfNombres.getText()+"','"+tfApellidoPaterno.getText()+"','"+
-                            tfApellidoMaterno.getText()+"','" +(fotoTutor == null ? "No" : fotoTutor.getAbsolutePath().replace("\\", "/"))+"','null', 'Tutor')");
+                            tfApellidoMaterno.getText()+"','" +(fotoTutor == null ? "No" : "Fotos Tutores/"+fotoTutor.getName())+"','null', 'Tutor')");
                 } 
                 catch (SQLException ex) {
                     Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -242,18 +257,26 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
     }//GEN-LAST:event_bGuardarActionPerformed
 
     private void bTomarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoActionPerformed
-        JFileChooser ficAbrirArchivo = new JFileChooser();
-        ficAbrirArchivo.setFileFilter(new FileNameExtensionFilter("archivo de imagen", "jpg", "jpeg"));
-        int respuesta=ficAbrirArchivo.showOpenDialog(this);
         
-        if(respuesta==JFileChooser.APPROVE_OPTION ){
-            fotoTutor = ficAbrirArchivo.getSelectedFile();
-            Image foto = getToolkit().getImage(fotoTutor.getAbsolutePath());
-            foto = foto.getScaledInstance(260, 260, 260);
-            lblFoto.setIcon(new ImageIcon(foto));
+        if(tfNombres.getText().equals("") || tfApellidoPaterno.getText().equals("")|| tfApellidoMaterno.getText().equals("") ||
+              tfTeléfono.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Primero rellene el formulario del tutor", "ERROR", 1);
+        }
+        else{
+            NombreDeFoto = "Fotos Tutores/tutor"+tfTeléfono.getText();
+            JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                    + "Guarde la imagen con el mismo nombre y teléfono asignados al tutor", "ADVERTENCIA", 1);
+            camara.IniciaCamaraPro("tutor"+tfTeléfono.getText(), "Fotos Tutores");
         }
            
     }//GEN-LAST:event_bTomarFotoActionPerformed
+
+    private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
+        fotoTutor = new File("Fotos Tutores/tutor"+tfTeléfono.getText()+".jpg");
+        Image foto = getToolkit().getImage(fotoTutor.getAbsolutePath());
+        foto = foto.getScaledInstance(260, 260, 260);
+        lblFoto.setIcon(new ImageIcon(foto));
+    }//GEN-LAST:event_bActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,6 +314,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bActualizar;
     private javax.swing.JButton bGuardar;
     private javax.swing.JButton bTomarFoto;
     private javax.swing.JLabel lblApellidoMaterno;

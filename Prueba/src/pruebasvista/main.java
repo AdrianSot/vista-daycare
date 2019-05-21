@@ -1,4 +1,4 @@
-/*VERSION DE WINDOWS*/
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
 
 package pruebasvista;
 

@@ -1,4 +1,4 @@
-/*VERSION DE WINDOWS*/
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -116,6 +116,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         String texto = "";
         String aux = "";
         String bfRead;
+        File archFotoTutor;
         int vacio = 0;
         //Se lee el texto
         try{
@@ -142,6 +143,10 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                 File archivo = new File(direccion);
                 archivo.delete();
                 vacio = 1;
+                
+                //SE ELIMINA LA FOTO DEL AUTORIZADO PORQUE SE QUEDA SIN NIÑOS Y YA NO NECESITA ESTAR EN LA BASE DE DATOS
+                archFotoTutor = new File("Fotos Tutores/tutor"+direccion.replace("Tutores/NiñosDe", "").replace(".txt", ".jpg"));
+                archFotoTutor.delete();
                 
             }
             else{
@@ -253,7 +258,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         lblID.setText("ID:");
         getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 88, -1, 30));
 
-        bActualizar.setText("jButton1");
+        bActualizar.setText("Refrescar");
         bActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bActualizarActionPerformed(evt);
@@ -615,6 +620,8 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                     for(String a : telAutorizados){
                                         System.out.println(a);
                                     }
+                                    File archFoto = new File("Fotos ninos/nino"+IDNiño+".jpg");
+                                    archFoto.delete();
                                 }
 
                                 catch(IOException e){

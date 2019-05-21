@@ -128,7 +128,7 @@ public class MainCamara extends javax.swing.JFrame {
                                 if (programStateRemember == programState) {
                                     if (FSDK.FSDKE_OK == FSDK.LockID(tracker, IDs[i]))
                                     {
-                                        FSDK.SaveImageToFile(imageHandle,"fotos\\"+nombreFoto+".jpg");
+                                        System.out.println(FSDK.SaveImageToFile(imageHandle,"fotos\\"+nombreFoto+".jpg"));
                                         // get the user name
                                         userName = (String)JOptionPane.showInputDialog(mainFrame, "Nombre:", "Introduce el nombre", JOptionPane.QUESTION_MESSAGE, null, null, "Nombre");
                                         FSDK.SetName(tracker, IDs[i], userName);

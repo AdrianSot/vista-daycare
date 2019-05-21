@@ -1,4 +1,4 @@
-/*VERSION DE WINDOWS*/
+/*VERSION DE WINDOWS CRUDS COMPLETOS*/
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -207,6 +207,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         cbNumAutorizados = new javax.swing.JComboBox<>();
         lblNumAutorizados = new javax.swing.JLabel();
         cbSinTutor = new javax.swing.JCheckBox();
+        bActualizarFoto = new javax.swing.JButton();
 
         jLabel1.setText("Registrar niño");
 
@@ -264,6 +265,13 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             }
         });
 
+        bActualizarFoto.setText("Insertar foto");
+        bActualizarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bActualizarFotoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -273,12 +281,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(bAnterior)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bSiguiente)
-                                .addGap(21, 21, 21))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -315,7 +317,18 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(436, 436, 436)
                                         .addComponent(bTomarFoto)))
-                                .addGap(0, 12, Short.MAX_VALUE))))
+                                .addGap(0, 12, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(bActualizarFoto))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
+                                        .addComponent(bAnterior)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(bSiguiente)))
+                                .addGap(21, 21, 21))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(297, 297, 297)
                         .addComponent(jLabel1)
@@ -363,7 +376,9 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         .addComponent(cbSinTutor)
                         .addGap(0, 26, Short.MAX_VALUE)))
                 .addGap(12, 12, 12)
-                .addComponent(bTomarFoto)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bTomarFoto)
+                    .addComponent(bActualizarFoto))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bSiguiente)
@@ -376,7 +391,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
 
     private void bTomarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoActionPerformed
         
-        JFileChooser ficAbrirArchivo = new JFileChooser();
+        /*JFileChooser ficAbrirArchivo = new JFileChooser();
         ficAbrirArchivo.setFileFilter(new FileNameExtensionFilter("archivo de imagen", "jpg", "jpeg"));
         int respuesta=ficAbrirArchivo.showOpenDialog(this);
         
@@ -412,6 +427,67 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     Image foto = getToolkit().getImage(archivoAutorizado3.getAbsolutePath());
                     foto = foto.getScaledInstance(260, 260, 260);
                     imagen.setIcon(new ImageIcon(foto));
+                }
+            }
+        }*/
+        //FOTO DEL NIÑO
+        if(!tfTeléfono.isVisible()){
+            if(tfNombres.getText().equals("") || tfApellidoPaterno.getText().equals("")|| tfApellidoMaterno.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Primero rellene el formulario del niño", "ERROR", 1);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente (Intento único)\n"
+                        + "Guarde la foto con el mismo nombre del niño", "ADVERTENCIA", 1);
+                camara.IniciaCamaraPro("nino", "Fotos ninos");
+            }
+        }
+        
+        //FOTO DEL TUTOR
+        else if(tfTeléfono.isVisible() && !cbAutorizados.isVisible() && !cbSinTutor.isSelected()){
+           if(tfNombres.getText().equals("") || tfApellidoPaterno.getText().equals("")|| tfApellidoMaterno.getText().equals("") ||
+              tfTeléfono.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Primero rellene el formulario del tutor", "ERROR", 1);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                        + "Guarde la imagen con el mismo nombre y teléfono asignados al tutor", "ADVERTENCIA", 1);
+                camara.IniciaCamaraPro("tutor", "Fotos Tutores");
+            }
+        }
+        
+        //FOTOS DE LOS AUTORIZADOS
+        else if(cbAutorizados.isVisible() && cbAutorizados.getSelectedIndex() != 3 && cbAutorizados.getSelectedIndex() != 4){
+            if(autorizadoSeleccionado == 0){
+                if(tfNombres.getText().equals("") || tfApellidoPaterno.getText().equals("")|| tfApellidoMaterno.getText().equals("") ||
+                   tfTeléfono.getText().equals("")){
+                  JOptionPane.showMessageDialog(null, "Primero rellene el formulario del autorizado", "ERROR", 1);
+                }
+                else{
+                  JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                          + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado", "ADVERTENCIA", 1);
+                  camara.IniciaCamaraPro("aut1", "Fotos Tutores");
+                }
+            }
+            if(autorizadoSeleccionado == 1){
+                if(tfNombres.getText().equals("") || tfApellidoPaterno.getText().equals("")|| tfApellidoMaterno.getText().equals("") ||
+                   tfTeléfono.getText().equals("")){
+                  JOptionPane.showMessageDialog(null, "Primero rellene el formulario del autorizado", "ERROR", 1);
+                }
+                else{
+                  JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                          + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado", "ADVERTENCIA", 1);
+                  camara.IniciaCamaraPro("aut2", "Fotos Tutores");
+                }
+            }
+            if(autorizadoSeleccionado == 2){
+                if(tfNombres.getText().equals("") || tfApellidoPaterno.getText().equals("")|| tfApellidoMaterno.getText().equals("") ||
+                   tfTeléfono.getText().equals("")){
+                  JOptionPane.showMessageDialog(null, "Primero rellene el formulario del autorizado", "ERROR", 1);
+                }
+                else{
+                  JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
+                          + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado", "ADVERTENCIA", 1);
+                  camara.IniciaCamaraPro("aut3", "Fotos Tutores");
                 }
             }
         }
@@ -666,6 +742,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             
             //COMIENZA EL REGISTRO EN LA BASE DE DATOS
             if(confirmacion == 0 && confirmacion2 == 0 && !errorFinal){
+                File renombreNiño, renombreTutor, renombreAut1, renombreAut2, renombreAut3;
                 
                 //Se introduce al niño a la base de datos
                 try {
@@ -693,6 +770,23 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del niño.\nIntente de nuevo.");
                         errorBaseDatos = true;
                     }
+                   
+                    /*SE RENOMBRA LA FOTO TOMADA DEL NIÑO PARA QUE CONTENGA SU ID*/
+                    System.out.println("INTENTO RENOMBRAR EL ARCHIVO DEL NIÑO: ");
+                    System.out.println("NOMBRE ANTIGUO: "+archivoNiño.getName());
+                    renombreNiño = new File("Fotos ninos/nino"+idNiño+".jpg");
+                    archivoNiño.renameTo(renombreNiño);
+                    
+                    //Se actualiza la direccion de la foto del niño en la base de datos
+                    try {
+                        stmt = con.createStatement();
+                        stmt.executeUpdate("UPDATE Ninos SET Foto = 'Fotos ninos/"+renombreNiño.getName()+"' WHERE ID = "+idNiño);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error en el registro del niño.\nIntente de nuevo.");
+                        errorBaseDatos = true;
+                    }
+                    
                 }
                 
                 if(!errorBaseDatos){
@@ -768,11 +862,16 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 if(!errorBaseDatos){
                     
                     //Se agrega el tutor a la base de datos
+                    
+                    
                     if(!cbSinTutor.isSelected()){
+                        /*SE RENOMBRA LA FOTO TOMADA PARA EL TUTOR*/
+                        renombreTutor = new File("Fotos Tutores/tutor"+telefonoTutor+".jpg");
+                        archivoTutor.renameTo(renombreTutor);
                         try {
                             con = DriverManager.getConnection(linkbd, "root", "");
                             stmt = con.createStatement();
-                            stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+telefonoTutor+"','"+nombresTutor+"','"+apellidoPaternoTutor+"','"+apellidoMaternoTutor+"','"+"Fotos Tutores/"+archivoTutor.getName()+"','a','Tutor')");
+                            stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+telefonoTutor+"','"+nombresTutor+"','"+apellidoPaternoTutor+"','"+apellidoMaternoTutor+"','"+"Fotos Tutores/"+renombreTutor.getName()+"','a','Tutor')");
                         } 
                         catch (SQLException ex) {
                             Logger.getLogger(PantallaRegistrarNiño.class.getName()).log(Level.SEVERE, null, ex);
@@ -906,9 +1005,21 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                 try {
                                     con = DriverManager.getConnection(linkbd, "root", "");
                                     stmt = con.createStatement();
-                                    if(i == 0) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado1 == null ? "No" : "Fotos Tutores/"+archivoAutorizado1.getName())+"','"+ruta+"','Autorizado')");
-                                    if(i == 1) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado2 == null ? "No" : "Fotos Tutores/"+archivoAutorizado2.getName())+"','"+ruta+"','Autorizado')");
-                                    if(i == 2) stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado3 == null ? "No" : "Fotos Tutores/"+archivoAutorizado3.getName())+"','"+ruta+"','Autorizado')");
+                                    if(i == 0){
+                                        renombreAut1 = new File("Fotos Tutores/tutor"+teléfonosAutorizados[i]+".jpg");
+                                        archivoAutorizado1.renameTo(renombreAut1);
+                                        stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado1 == null ? "No" : "Fotos Tutores/"+renombreAut1.getName())+"','"+ruta+"','Autorizado')");
+                                    }
+                                    if(i == 1){
+                                        renombreAut2 = new File("Fotos Tutores/tutor"+teléfonosAutorizados[i]+".jpg");
+                                        archivoAutorizado2.renameTo(renombreAut2);
+                                        stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado2 == null ? "No" : "Fotos Tutores/"+renombreAut2.getName())+"','"+ruta+"','Autorizado')");
+                                    }
+                                    if(i == 2){
+                                        renombreAut3 = new File("Fotos Tutores/tutor"+teléfonosAutorizados[i]+".jpg");
+                                        archivoAutorizado3.renameTo(renombreAut3);
+                                        stmt.executeUpdate("INSERT INTO Tutores VALUES ('"+teléfonosAutorizados[i]+"','"+nombresAutorizados[i]+"','"+apellidosPaternosAutorizados[i]+"','"+apellidosMaternosAutorizados[i]+"','"+(archivoAutorizado3 == null ? "No" : "Fotos Tutores/"+renombreAut3.getName())+"','"+ruta+"','Autorizado')");
+                                    }
 
                                 } 
                                 catch (SQLException ex) {
@@ -1354,8 +1465,47 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbSinTutorActionPerformed
 
+    private void bActualizarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarFotoActionPerformed
+        if(!tfTeléfono.isVisible()){
+            archivoNiño = new File("Fotos ninos/nino.jpg");
+            Image foto = getToolkit().getImage(archivoNiño.getAbsolutePath());
+            foto = foto.getScaledInstance(260, 260, 260);
+            imagen.setIcon(new ImageIcon(foto));
+        }
+        else if(tfTeléfono.isVisible() && !cbAutorizados.isVisible()){
+            archivoTutor = new File("Fotos Tutores/tutor.jpg");
+            Image foto = getToolkit().getImage(archivoTutor.getAbsolutePath());
+            foto = foto.getScaledInstance(260, 260, 260);
+            imagen.setIcon(new ImageIcon(foto));
+        }
+        else if(cbAutorizados.isVisible()){
+            
+            if(autorizadoSeleccionado == 0){
+                archivoAutorizado1 = new File("Fotos Tutores/aut1.jpg");
+                Image foto = getToolkit().getImage(archivoAutorizado1.getAbsolutePath());
+                foto = foto.getScaledInstance(260, 260, 260);
+                imagen.setIcon(new ImageIcon(foto));
+            }
+            if(autorizadoSeleccionado == 1){
+                archivoAutorizado2 = new File("Fotos Tutores/aut2.jpg");
+                Image foto = getToolkit().getImage(archivoAutorizado2.getAbsolutePath());
+                foto = foto.getScaledInstance(260, 260, 260);
+                imagen.setIcon(new ImageIcon(foto));
+            }
+            if(autorizadoSeleccionado == 2){
+                archivoAutorizado3 = new File("Fotos Tutores/aut3.jpg");
+                Image foto = getToolkit().getImage(archivoAutorizado3.getAbsolutePath());
+                foto = foto.getScaledInstance(260, 260, 260);
+                imagen.setIcon(new ImageIcon(foto));
+                
+            }
+            
+        }
+    }//GEN-LAST:event_bActualizarFotoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bActualizarFoto;
     private javax.swing.JButton bAnterior;
     private javax.swing.JButton bSiguiente;
     private javax.swing.JButton bTomarFoto;
