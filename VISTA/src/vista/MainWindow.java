@@ -164,8 +164,8 @@ public class MainWindow extends javax.swing.JFrame {
     public void Salir(){
         Main.lw = new LoginWindow();
         Main.lw.setVisible(true);
-        this.dispose();
         userStatus = UserStat.AdminFailPass;
+        this.dispose();
     }
     /*************************************************************************/
     

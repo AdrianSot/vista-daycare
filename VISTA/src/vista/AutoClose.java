@@ -10,13 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class AutoClose {
-    long t = 0;
     public static void main(String[] args) {
         new AutoClose();
     }
@@ -26,16 +27,14 @@ public class AutoClose {
     
     AutoClose() {
         w.setVisible(true);
-        t = 0;
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                t++;
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 }
-
+                w.setDefaultCloseOperation(MainWindow.EXIT_ON_CLOSE);
                 Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
                     @Override
                     public void eventDispatched(AWTEvent event) {
@@ -50,58 +49,41 @@ public class AutoClose {
                             }
                             if (win == w) {
                                 timer.restart();
-                                try{
-                                    if(Main.lw.isDisplayable()){
-                                        if(t < timer.getDelay())
-                                           Main.lw.setVisible(false);
-                                        else{
-                                            w.Salir();
-                                        }
-                                     }
-                                }catch(NullPointerException n){
-                                    System.out.println("oh no");
-                                }
-                                //t = 0;
                             }
                         }
                     }
                 }, AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.MOUSE_WHEEL_EVENT_MASK);
 
-                timer = new Timer(5000, new ActionListener() {
+                timer = new Timer(1800000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        t = 0;
                         w.Salir();
+                        //w.dispose();
                     }
                 });
-                timer.start();
-                
+                if(Main.lw.isVisible() && w.isVisible()){
+                    Main.lw.setVisible(false);
+                }
                    WindowListener fw = new WindowListener() {
                     @Override
                     public void windowOpened(WindowEvent e) {
-                       /* if(e.getWindow() == w){
+                       if(e.getWindow() == w){
                             timer.start();
-                        }else{
-                            try {
-                                timer.wait();
-                            } catch (InterruptedException ex) {
-                            }
-                        }*/
+                        }else if(e.getWindow() == Main.lw){
+                            w.dispose();
+                            timer.stop();
+                        }
                         
                     }
 
                     @Override
                     public void windowClosing(WindowEvent e) {
-                        /*if(e.getWindow() == w){
-                            Main.lw.setVisible(true);
-                        }*/
+                     
                     }
 
                     @Override
                     public void windowClosed(WindowEvent e) {
-                        /*if(e.getWindow() == w){
-                             Main.lw.setVisible(true);
-                        }*/
+                        
                     }
 
                     @Override
@@ -116,22 +98,16 @@ public class AutoClose {
 
                     @Override
                     public void windowActivated(WindowEvent e) {
-                       /*if(e.getWindow() == w){
-                            timer.start();
+                       if(e.getWindow() == w){
+                            timer.restart();
                         }else{
-                            try {
-                                timer.wait();
-                            } catch (InterruptedException ex) {
-                            }
-                        }*/
+                           timer.stop();
+                        }
                     }
 
                     @Override
                     public void windowDeactivated(WindowEvent e) {
-                       /* if(e.getWindow() == w)
-                            Main.lw.setVisible(true);
-                        else
-                            timer.start();*/
+                     
                     }
                 };
             }

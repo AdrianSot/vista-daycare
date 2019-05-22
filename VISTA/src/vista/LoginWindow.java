@@ -49,38 +49,42 @@ public class LoginWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La contraseña que ingresaste es incorrecta."
                     + "\nVuelve a intentarlo", "ERROR", JOptionPane.PLAIN_MESSAGE);
             pfPassword.setText("");
-        }
-        
-        /* Consulta */
-       /*try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
-            Statement s = con.createStatement();
-         
-            ResultSet UserSet = s.executeQuery("SELECT Usuario FROM Recepcionistas WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");
-            if(!UserSet.isBeforeFirst()){
-                 userStatus = UserStat.RecepFailPass;
-                UserSet = s.executeQuery("SELECT Usuario FROM Administradores WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");
-                if(!UserSet.isBeforeFirst()){
-                    userStatus = UserStat.AdminFailPass;
-                    WarningWindow();
-                    return;
-                }else{
-                    userStatus = UserStat.AdminLogged;
-                    MainWindow.userStatus = MainWindow.UserStat.AdminLogged;
-                }
-            }else{
-                userStatus = UserStat.RecepLogged;
-                MainWindow.userStatus = MainWindow.UserStat.RecepLogged;
+        }else{
+            /* Consulta */
+            try{
+                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/VISTA", "root", "");
+                 Statement s = con.createStatement();
+
+                 ResultSet UserSet = s.executeQuery("SELECT Usuario FROM Recepcionistas WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");
+                 if(!UserSet.isBeforeFirst()){
+                      userStatus = UserStat.RecepFailPass;
+                     UserSet = s.executeQuery("SELECT Usuario FROM Administradores WHERE Usuario = '" + username + "' AND Contrasena = '"+ password + "';");
+                     if(!UserSet.isBeforeFirst()){
+                         userStatus = UserStat.AdminFailPass;
+                         WarningWindow();
+                         return;
+                     }else{
+                         //Loggeo el admin
+                         userStatus = UserStat.AdminLogged;
+                         MainWindow.userStatus = MainWindow.UserStat.AdminLogged;
+                         Main.w = new AutoClose();
+                         this.dispose();
+                     }
+                 }else{
+                     //Loggeo recepcionista
+                     userStatus = UserStat.RecepLogged;
+                     MainWindow.userStatus = MainWindow.UserStat.RecepLogged;
+                     Main.w = new AutoClose();
+                     this.dispose();
+                 }
+
+             }catch(SQLException e){
+                 Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE,null, e);
+                 JOptionPane.showMessageDialog(this, "Por favor intente de nuevo.", "ERROR", JOptionPane.PLAIN_MESSAGE);
             }
-           
-        }catch(SQLException e){
-            Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE,null, e);
-            JOptionPane.showMessageDialog(this, "Por favor intente de nuevo.", "ERROR", JOptionPane.PLAIN_MESSAGE);
-        }*/
-       userStatus = UserStat.RecepLogged; //Esto comenta porque es solo para pruebas jsjs
-       MainWindow.userStatus = MainWindow.UserStat.RecepLogged; //esto tambien
-       Main.w = new AutoClose();
-        this.dispose();
+        }
+       //userStatus = UserStat.RecepLogged; //Esto comenta porque es solo para pruebas jsjs
+       //MainWindow.userStatus = MainWindow.UserStat.RecepLogged; //esto tambien
         
     }
     
