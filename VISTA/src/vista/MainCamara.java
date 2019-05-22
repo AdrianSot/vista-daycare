@@ -164,7 +164,7 @@ public class MainCamara extends javax.swing.JFrame {
         Iframe = new javax.swing.JInternalFrame();
         mainFrame = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         Iframe.setBorder(null);
         Iframe.setClosable(true);

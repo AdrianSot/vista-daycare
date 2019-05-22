@@ -2,6 +2,9 @@
 
 package vista;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  *
  * @author Adrian
@@ -25,5 +28,21 @@ public class CamConRec {
         mainWindow.setLocation(150, 150);
         mainWindow.setVisible(true);
         mainWindow.drawingTimer.start();
+        
+        mainWindow.addWindowListener(new WindowAdapter(){
+            
+            @Override
+            public void windowClosing(WindowEvent e){
+                
+                mainWindow.drawingTimer.stop();
+                try{
+                    Thread.sleep(40);
+                }
+                catch (java.lang.InterruptedException exception){
+                }
+                mainWindow.saveTracker();
+                mainWindow.closeCamera();
+            }
+        });
     }
 }
