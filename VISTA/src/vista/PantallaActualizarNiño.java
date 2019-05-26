@@ -109,7 +109,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             rs.first();
             
             Teléfonos = new String[Integer.parseInt(rs.getObject(1).toString())];
-            System.out.println("TAMAÑO DEL ARREGLO: "+Teléfonos.length);
             
             rs2 = stmt.executeQuery("SELECT Telefono FROM Tutores");
             rs2.first();
@@ -117,10 +116,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
             for(int i = 0; i < Teléfonos.length ; i++){
                 Teléfonos[i] = rs2.getObject(1).toString();
                 rs2.next();
-            }
-            
-            for(int i = 0 ; i < Teléfonos.length ; i++){
-                System.out.println(Teléfonos[i]);
             }
             
             
@@ -538,11 +533,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 
             }
             bf.close();
-
-            for(String a : teléfonosAutorizados){
-                System.out.println(a);
-            }
-            System.out.println("\n");
+            
         }
 
         catch(IOException e){
@@ -1938,7 +1929,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         BufferedReader b = new BufferedReader(f);
                         while((cadena = b.readLine())!=null) {
                             numNiños++;
-                            System.out.println(cadena);
                         }
                         b.close();
                         f.close();
@@ -2252,7 +2242,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                 if(!bandera.exists()){
                     try {
                         bandera.createNewFile();
-                        System.out.println("Cree un nuevo archivo de tutores asignando al aut1");
                     } catch (IOException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
@@ -2341,7 +2330,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         bf.close();
                         bw.close();
                         File archivo = new File("Niños/TutoresDe"+ID+".txt");
-                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
                     }
                     else{
                         FileWriter fw = new FileWriter(archAutorizados);
@@ -2384,7 +2372,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         bf.close();
                         bw.close();
                         File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut1.getText()+".txt");
-                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
                         
                         /*EN ESTE CASO TAMBIÉN SE ELIMINA LA FOTO DEL AUTORIZADO*/
                         
@@ -2455,7 +2442,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                     
                     try {
                         bandera.createNewFile();
-                        System.out.println("Se creo un nuevo archivo de tutores para el niño");
                     } catch (IOException ex) {
                         Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(null, "Error al tratar de crear un file de autorizados para el niño","ERROR",1);
@@ -2539,7 +2525,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         bf.close();
                         bw.close();
                         File archivo = new File("Niños/TutoresDe"+ID+".txt");
-                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                     }
                     else{
@@ -2583,7 +2568,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         bf.close();
                         bw.close();
                         File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut2.getText()+".txt");
-                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
                         
                         /*EN ESTE CASO TAMBIÉN SE ELIMINA LA FOTO DEL AUTORIZADO*/
                         
@@ -2735,7 +2719,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         bf.close();
                         bw.close();
                         File archivo = new File("Niños/TutoresDe"+ID+".txt");
-                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
 
                     }
                     else{
@@ -2779,7 +2762,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         bf.close();
                         bw.close();
                         File archivo = new File("Tutores/NiñosDe"+tfTeléfonoAut3.getText()+".txt");
-                        System.out.println(archivo.delete()); //Se elimina el archivo vacío
                         
                         /*EN ESTE CASO TAMBIÉN SE ELIMINA LA FOTO DEL AUTORIZADO*/
                         
@@ -2856,7 +2838,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         BufferedReader b = new BufferedReader(f);
                         while((cadena = b.readLine())!=null) {
                             numNiños++;
-                            System.out.println(cadena);
                         }
                         b.close();
                         f.close();
@@ -3017,7 +2998,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         BufferedReader b = new BufferedReader(f);
                         while((cadena = b.readLine())!=null) {
                             numNiños++;
-                            System.out.println(cadena);
                         }
                         b.close();
                         f.close();
@@ -3176,7 +3156,6 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
                         BufferedReader b = new BufferedReader(f);
                         while((cadena = b.readLine())!=null) {
                             numNiños++;
-                            System.out.println(cadena);
                         }
                         b.close();
                         f.close();

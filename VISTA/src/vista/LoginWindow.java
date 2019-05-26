@@ -93,7 +93,7 @@ public class LoginWindow extends javax.swing.JFrame {
     {
         if(userStatus == UserStat.AdminFailPass || userStatus == UserStat.RecepFailPass){
             JOptionPane.showMessageDialog(this, "La contraseña que ingresaste es incorrecta."
-                    + "\nVuelve a intentarlo000o", "ERROR", JOptionPane.PLAIN_MESSAGE);
+                    + "\nVuelve a intentarlo", "ERROR", JOptionPane.PLAIN_MESSAGE);
             pfPassword.setText("");
         }
     }

@@ -68,7 +68,6 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
             rs.first();
             
             Teléfonos = new String[Integer.parseInt(rs.getObject(1).toString())];
-            System.out.println("TAMAÑO DEL ARREGLO: "+Teléfonos.length);
             
             rs2 = stmt.executeQuery("SELECT Telefono FROM Tutores");
             rs2.first();
@@ -76,10 +75,6 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
             for(int i = 0; i < Teléfonos.length ; i++){
                 Teléfonos[i] = rs2.getObject(1).toString();
                 rs2.next();
-            }
-            
-            for(int i = 0 ; i < Teléfonos.length ; i++){
-                System.out.println(Teléfonos[i]);
             }
             
             

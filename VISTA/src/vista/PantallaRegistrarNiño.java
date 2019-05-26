@@ -108,7 +108,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             rs.first();
             
             Teléfonos = new String[Integer.parseInt(rs.getObject(1).toString())];
-            System.out.println("TAMAÑO DEL ARREGLO: "+Teléfonos.length);
             
             rs2 = stmt.executeQuery("SELECT Telefono FROM Tutores");
             rs2.first();
@@ -769,8 +768,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                     }
                    
                     /*SE RENOMBRA LA FOTO TOMADA DEL NIÑO PARA QUE CONTENGA SU ID*/
-                    System.out.println("INTENTO RENOMBRAR EL ARCHIVO DEL NIÑO: ");
-                    System.out.println("NOMBRE ANTIGUO: "+archivoNiño.getName());
                     renombreNiño = new File("Fotos ninos/nino"+idNiño+".jpg");
                     archivoNiño.renameTo(renombreNiño);
                     
@@ -902,7 +899,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         //Se mete al tutor al archivo de autorizados del niño
                          try {
                             ruta = "Niños/TutoresDe"+idNiño+".txt";
-                            System.out.println(ruta);
                             contenido = telefonoTutor+"\r\n";
                             file2 = new File(ruta);
                             // Si el archivo no existe es creado
@@ -933,7 +929,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         //Se mete al archivo del tutor al niño.
                         try {
                             ruta = "Tutores/NiñosDe"+telefonoTutor+".txt";
-                            System.out.println(ruta);
                             contenido = idNiño+"\r\n";
                             file2 = new File(ruta);
                             // Si el archivo no existe es creado

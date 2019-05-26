@@ -538,7 +538,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                     
                 }
                 else if (lbl.getName().equals("eliminar")){
-                    System.out.println(pantallaActualizar.isActive());
                     if(JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar al niño?") == 0){
                         
                     
@@ -658,10 +657,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                      r8.first();
                                      archivosAutorizados[4] = r8.getObject(1).toString();
                                    }
-                                }
-
-                                for(String a : archivosAutorizados){
-                                    System.out.println(a);
                                 }
 
                                 //Por cada archivo se revisa si el tutor puede ser eliminado o no.
