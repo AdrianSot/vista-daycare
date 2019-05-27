@@ -532,6 +532,7 @@ public class MainWindow extends javax.swing.JFrame {
             setTitle("VISTA para Administrador");
             jMenu2.setText("Recepcionistas");
         }else{
+            jMenu2.setText("Niños");
             miEliminar.setVisible(false);
             miActualizar.setVisible(false);
         }

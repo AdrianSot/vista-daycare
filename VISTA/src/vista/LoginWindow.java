@@ -66,8 +66,8 @@ public class LoginWindow extends javax.swing.JFrame {
                      }else{
                          //Loggeo el admin
                          userStatus = UserStat.AdminLogged;
-                         MainWindow.userStatus = MainWindow.UserStat.AdminLogged;
                          Main.w = new MainWindow();
+                         Main.w.userStatus = MainWindow.UserStat.AdminLogged;
                          Main.w.drawingTimer.start();
                          Main.w.setVisible(true);
                          this.dispose();
@@ -75,8 +75,8 @@ public class LoginWindow extends javax.swing.JFrame {
                  }else{
                      //Loggeo recepcionista
                      userStatus = UserStat.RecepLogged;
-                     MainWindow.userStatus = MainWindow.UserStat.RecepLogged;
                      Main.w = new MainWindow();
+                     Main.w.userStatus = MainWindow.UserStat.RecepLogged;
                      Main.w.drawingTimer.start();
                      Main.w.setVisible(true);
                      this.dispose();
