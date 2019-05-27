@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2019 a las 21:27:33
+-- Tiempo de generación: 28-05-2019 a las 01:22:15
 -- Versión del servidor: 10.1.40-MariaDB
 -- Versión de PHP: 7.3.5
 
@@ -64,7 +64,8 @@ CREATE TABLE `Ninos` (
 --
 
 INSERT INTO `Ninos` (`ID`, `Nombres`, `Apellido_paterno`, `Apellido_materno`, `Foto`, `Tutor`, `Autorizados`) VALUES
-(4, 'Pedro Francisco', 'Hernández', 'Ramón', 'Fotos ninos/nino4.jpg', '6620000000', 'Niños/TutoresDe4.txt');
+(5, 'Raulcito', 'murcia', 'abc', 'Fotos ninos/nino5.jpg', '662666666', 'Niños/TutoresDe5.txt'),
+(6, 'Juan', 'Lopez', 'Perez', 'Fotos ninos/nino6.jpg', '6622995796', 'Niños/TutoresDe6.txt');
 
 -- --------------------------------------------------------
 
@@ -111,7 +112,9 @@ CREATE TABLE `Tutores` (
 --
 
 INSERT INTO `Tutores` (`Telefono`, `Nombres`, `Apellido_paterno`, `Apellido_materno`, `Foto`, `Ninos`, `Estatus`) VALUES
-('6620000000', 'Adrián ', 'Soto', 'Tequida', 'Fotos Tutores/tutor6620000000.jpg', 'Tutores/NiñosDe6620000000.txt', 'Autorizado');
+('6621111111', 'Iv+an', 'Moreno', 'Soto', 'Fotos Tutores/tutor6621111111.jpg', 'Tutores/NiñosDe6621111111.txt', 'Autorizado'),
+('6622995796', 'Adrian Leonardo', 'Soto', 'Tequida', 'Fotos Tutores/tutor6622995796.jpg', 'Tutores/NiñosDe6622995796.txt', 'Tutor'),
+('662666666', 'Fernanda', 'Domínguez', 'Acosta', 'Fotos Tutores/tutor662666666.jpg', 'Tutores/NiñosDe662666666.txt', 'Tutor');
 
 --
 -- Índices para tablas volcadas
@@ -149,7 +152,7 @@ ALTER TABLE `Tutores`
 -- AUTO_INCREMENT de la tabla `Ninos`
 --
 ALTER TABLE `Ninos`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
