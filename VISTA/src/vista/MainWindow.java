@@ -66,6 +66,7 @@ public class MainWindow extends javax.swing.JFrame {
     PantallaConsultarNiño pantallaconsultarniño;
     FSDK.HImage imageHandle;
     
+    String linkbd = "jdbc:mysql://localhost:3306/VISTA?useTimezone=true&serverTimezone=UTC";
     String DatosCara;
     
     public MainWindow() {
@@ -200,7 +201,7 @@ public class MainWindow extends javax.swing.JFrame {
                                     {
                                         // get the user name
                                         userName = (String)JOptionPane.showInputDialog(mainFrame, "Sospechoso:", "Ingresa un identificador para el sospechoso", JOptionPane.QUESTION_MESSAGE, null, null, "Identificador");
-                                        userName = "Sospechoso: " + userName + "-100";
+                                        userName = "Sospechoso: " + userName + "-Suspect";
                                         FSDK.SetName(tracker, IDs[i], userName);
                                         if (userName == null || userName.length() <= 0) {
                                             FSDK.PurgeID(tracker, IDs[i]);
@@ -619,9 +620,8 @@ public class MainWindow extends javax.swing.JFrame {
             System.out.println(ex);
         }
         
-        int num = Integer.parseInt(tel);
         
-        if(num != 100){
+        if(!tel.equals("Suspect")){
             try {
                 try{
                     
@@ -630,7 +630,7 @@ public class MainWindow extends javax.swing.JFrame {
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vista", "root", "");
+                con = DriverManager.getConnection(linkbd, "root", "");
                 Statement stmt = con.createStatement();
                 ResultSet rs;
                 rs = stmt.executeQuery("SELECT * FROM Tutores WHERE Telefono = '"+tel+"'"); //Se extrae la info de cada autorizado
@@ -714,7 +714,7 @@ public class MainWindow extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Persona no registrada en la base de datos.");
             }
         }
-        if(num == 100){
+        if(tel.equals("Suspect")){
             tfTutorTel.setText("");
             imageHandle = new FSDK.HImage();
             FSDKCam.GrabFrame(cameraHandle, imageHandle);

@@ -223,7 +223,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         });
 
         imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagen.setText("SIN FOTO");
         imagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         bSiguiente.setText("Siguiente");
@@ -374,7 +373,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(cbSinTutor)
-                        .addGap(0, 43, Short.MAX_VALUE)))
+                        .addGap(0, 87, Short.MAX_VALUE)))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bTomarFoto)
@@ -452,6 +451,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             else{
                 JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                         + "Guarde la imagen con el mismo nombre y teléfono asignados al tutor", "ADVERTENCIA", 1);
+                camara.soloFoto = 0;
                 camara.IniciaCamaraPro("tutor", "Fotos Tutores");
             }
         }
@@ -466,6 +466,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 else{
                   JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                           + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado", "ADVERTENCIA", 1);
+                  camara.soloFoto = 0;
                   camara.IniciaCamaraPro("aut1", "Fotos Tutores");
                 }
             }
@@ -477,6 +478,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 else{
                   JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                           + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado", "ADVERTENCIA", 1);
+                  camara.soloFoto = 0;
                   camara.IniciaCamaraPro("aut2", "Fotos Tutores");
                 }
             }
@@ -488,6 +490,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 else{
                   JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                           + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado", "ADVERTENCIA", 1);
+                  camara.soloFoto = 0;
                   camara.IniciaCamaraPro("aut3", "Fotos Tutores");
                 }
             }
@@ -545,7 +548,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             tfApellidoPaterno.setText(apellidoPaternoTutor);
             tfApellidoMaterno.setText(apellidoMaternoTutor);
             imagen.setIcon(fotoTutor2);
-            imagen.setText("SIN FOTO");
             lblTeléfono.setVisible(true);
             tfTeléfono.setVisible(true);
             tfTeléfono.setText(telefonoTutor);
@@ -595,7 +597,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 bSiguiente.setEnabled(true);
             }
             else{
-                imagen.setText("SIN FOTO");
                 lblInformacion.setText("Información de las personas autorizadas");
                 bSiguiente.setText("Finalizar registro");
                 bAnterior.setVisible(true);

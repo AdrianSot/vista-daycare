@@ -3430,6 +3430,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void bTomarFotoNiñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoNiñoActionPerformed
         JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                 + "Guarde la imagen con el mismo nombre al niño", "ADVERTENCIA", 1);
+        camara.soloFoto = 0;
         camara.IniciaCamaraPro("nino"+ID, "Fotos ninos");
         
         
@@ -3438,6 +3439,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void bTomarFotoTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoTutorActionPerformed
         JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                 + "Guarde la imagen con el mismo nombre y teléfono asignados al tutor", "ADVERTENCIA", 1);
+        camara.soloFoto = 0;
         camara.IniciaCamaraPro("tutor"+tfTeléfonoTutor.getText(), "Fotos Tutores");
     }//GEN-LAST:event_bTomarFotoTutorActionPerformed
 
@@ -3489,12 +3491,14 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void bTomarFotoAut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut1ActionPerformed
         JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                 + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado 1", "ADVERTENCIA", 1);
+        camara.soloFoto = 0;
         camara.IniciaCamaraPro("tutor"+tfTeléfonoAut1.getText(), "Fotos Tutores");
     }//GEN-LAST:event_bTomarFotoAut1ActionPerformed
 
     private void bTomarFotoAut2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut2ActionPerformed
         JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                 + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado 2", "ADVERTENCIA", 1);
+        camara.soloFoto = 0;
         camara.IniciaCamaraPro("tutor"+tfTeléfonoAut2.getText(), "Fotos Tutores");
     }//GEN-LAST:event_bTomarFotoAut2ActionPerformed
 
@@ -3541,6 +3545,7 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
     private void bTomarFotoAut3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarFotoAut3ActionPerformed
         JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                 + "Guarde la imagen con el mismo nombre y teléfono asignados al autorizado 3", "ADVERTENCIA", 1);
+        camara.soloFoto = 0;
         camara.IniciaCamaraPro("tutor"+tfTeléfonoAut3.getText(), "Fotos Tutores");
     }//GEN-LAST:event_bTomarFotoAut3ActionPerformed
 

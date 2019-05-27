@@ -259,6 +259,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
             NombreDeFoto = "Fotos Tutores/tutor"+tfTeléfono.getText();
             JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente(Intento único)\n"
                     + "Guarde la imagen con el mismo nombre y teléfono asignados al tutor", "ADVERTENCIA", 1);
+            camara.soloFoto = 0;
             camara.IniciaCamaraPro("tutor"+tfTeléfono.getText(), "Fotos Tutores");
         }
            
