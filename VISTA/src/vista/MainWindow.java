@@ -53,6 +53,8 @@ public class MainWindow extends javax.swing.JFrame {
     public enum UserStat {AdminFailPass, RecepFailPass, RecepLogged, AdminLogged};
     public static UserStat userStatus;
     public Timer timer;
+    long tiempoSesion = 10;
+    public static long startTime;
     
     /* Administrador */
     PantallaRegistrarRecepcionista pantallaregistro;
@@ -75,7 +77,7 @@ public class MainWindow extends javax.swing.JFrame {
         setTitle("VISTA");
         setSize(1050,750);    
         setLocation(200,100);    
-        
+        startTime = System.currentTimeMillis();
         /* Administrador */
         pantallaregistro = new PantallaRegistrarRecepcionista();
         consultarecepcionista = new PantallaConsultarRecepcionista();
@@ -220,6 +222,17 @@ public class MainWindow extends javax.swing.JFrame {
                         
                     }
                     FSDK.FreeImage(imageHandle); // delete the FaceSDK image handle
+                    
+                    long elapsedTime = System.currentTimeMillis() - startTime;
+                    long elapsedSeconds = elapsedTime / 1000;
+                    long secondsDisplay = elapsedSeconds % 60;
+                    long elapsedMinutes = elapsedSeconds / 60;
+                    if(elapsedSeconds >= tiempoSesion){
+                        drawingTimer.stop();
+                        dispose();
+                        Main.lw = new LoginWindow();
+                        Main.lw.setVisible(true);
+                    }
                 }
             }
         });
@@ -259,6 +272,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -270,6 +288,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         IframeMain.setBorder(null);
         IframeMain.setVisible(true);
+        IframeMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                IframeMainMouseMoved(evt);
+            }
+        });
 
         Iframe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102), 3));
         Iframe.setVisible(true);
@@ -327,6 +350,10 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1.setText("Nombre");
 
         jLabel2.setText("Teléfono");
+
+        tfTutorNombre.setEditable(false);
+
+        tfTutorTel.setEditable(false);
 
         jTable1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -401,6 +428,11 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         jMenuBar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
+        jMenuBar1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jMenuBar1MouseMoved(evt);
+            }
+        });
         jMenuBar1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jMenuBar1MouseExited(evt);
@@ -775,6 +807,18 @@ public class MainWindow extends javax.swing.JFrame {
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
         jMenuBar1.repaint();
     }//GEN-LAST:event_formMouseEntered
+
+    private void jMenuBar1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuBar1MouseMoved
+        startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_jMenuBar1MouseMoved
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_formMouseMoved
+
+    private void IframeMainMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IframeMainMouseMoved
+        startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_IframeMainMouseMoved
  
     /*************************************************************************/
     

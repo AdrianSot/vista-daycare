@@ -196,6 +196,11 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         setPreferredSize(new java.awt.Dimension(800, 500));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tbTabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -700,6 +705,10 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
         Actualizar();
     }//GEN-LAST:event_bActualizarActionPerformed
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        MainWindow.startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_formMouseMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

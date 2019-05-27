@@ -69,6 +69,11 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         CbBuscar = new javax.swing.JCheckBox();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
 
         jLabel1.setText("Consulta de recepcionistas");
 
@@ -250,6 +255,10 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         tfApellido.setVisible(true);
         BConsultar.setVisible(true);
     }//GEN-LAST:event_CbBuscarActionPerformed
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        MainWindow.startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_formMouseMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

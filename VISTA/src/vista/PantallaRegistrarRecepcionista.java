@@ -63,6 +63,11 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
 
         jLabel1.setText("Registro de recepcionistas");
 
@@ -187,6 +192,10 @@ public class PantallaRegistrarRecepcionista extends javax.swing.JInternalFrame {
             
               
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        MainWindow.startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_formMouseMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

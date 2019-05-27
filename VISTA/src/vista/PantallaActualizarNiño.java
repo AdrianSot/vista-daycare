@@ -734,6 +734,11 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         bInsertarFotoAut3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
 
         lblFotoNiño.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -3548,6 +3553,10 @@ public class PantallaActualizarNiño extends javax.swing.JFrame {
         camara.soloFoto = 0;
         camara.IniciaCamaraPro("tutor"+tfTeléfonoAut3.getText(), "Fotos Tutores");
     }//GEN-LAST:event_bTomarFotoAut3ActionPerformed
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        MainWindow.startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_formMouseMoved
 
     /**
      * @param args the command line arguments

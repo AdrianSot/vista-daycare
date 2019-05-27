@@ -109,6 +109,11 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
         bActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
 
         lblNombres.setText("Nombres:");
 
@@ -166,7 +171,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                             .addComponent(lblTeléfono))
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfApellidoMaterno)
+                            .addComponent(tfApellidoMaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                             .addComponent(tfTeléfono))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,6 +276,10 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
         foto = foto.getScaledInstance(260, 260, 260);
         lblFoto.setIcon(new ImageIcon(foto));
     }//GEN-LAST:event_bActualizarActionPerformed
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        MainWindow.startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_formMouseMoved
 
     /**
      * @param args the command line arguments

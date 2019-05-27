@@ -67,14 +67,18 @@ public class LoginWindow extends javax.swing.JFrame {
                          //Loggeo el admin
                          userStatus = UserStat.AdminLogged;
                          MainWindow.userStatus = MainWindow.UserStat.AdminLogged;
-                         Main.w = new AutoClose();
+                         Main.w = new MainWindow();
+                         Main.w.drawingTimer.start();
+                         Main.w.setVisible(true);
                          this.dispose();
                      }
                  }else{
                      //Loggeo recepcionista
                      userStatus = UserStat.RecepLogged;
                      MainWindow.userStatus = MainWindow.UserStat.RecepLogged;
-                     Main.w = new AutoClose();
+                     Main.w = new MainWindow();
+                     Main.w.drawingTimer.start();
+                     Main.w.setVisible(true);
                      this.dispose();
                  }
 

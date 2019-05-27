@@ -206,6 +206,11 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         bActualizarFoto = new javax.swing.JButton();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
 
         jLabel1.setText("Registrar niño");
 
@@ -1504,6 +1509,10 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
     private void tfApellidoMaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoMaternoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfApellidoMaternoActionPerformed
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        MainWindow.startTime = System.currentTimeMillis();
+    }//GEN-LAST:event_formMouseMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

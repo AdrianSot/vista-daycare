@@ -2,7 +2,7 @@ package vista;
 
 public class Main {
 
-    public static AutoClose w;
+    public static MainWindow w;
     public static LoginWindow lw;
     /**
      * @param args the command line arguments
