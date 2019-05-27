@@ -44,7 +44,7 @@ Esta tarea es importante cuando se quiere agregar a algún adulto autorizado par
 
 _[ss de pantalla de editar niño]_
 
-##### Eliminar un Niño
+##### Eliminar un Niño
 
 _[ss de pantalla de eliminar niño]_
 
