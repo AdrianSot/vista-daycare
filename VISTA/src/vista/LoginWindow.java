@@ -72,8 +72,10 @@ public class LoginWindow extends javax.swing.JFrame {
                              
                          }
                          
+                         
                          userStatus = UserStat.AdminLogged;
                          Main.w = new MainWindow();
+                         Main.w.CambiarAdmin();
                          Main.w.userStatus = MainWindow.UserStat.AdminLogged;
                          Main.w.drawingTimer.start();
                          Main.w.setVisible(true);
@@ -90,6 +92,7 @@ public class LoginWindow extends javax.swing.JFrame {
                      
                      userStatus = UserStat.RecepLogged;
                      Main.w = new MainWindow();
+                     Main.w.CambiarRecep();
                      Main.w.userStatus = MainWindow.UserStat.RecepLogged;
                      Main.w.drawingTimer.start();
                      Main.w.setVisible(true);

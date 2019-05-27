@@ -519,6 +519,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void CambiarAdmin(){
+        setTitle("VISTA para Administrador");
         userStatus = UserStat.AdminLogged;
         jMenu2.setText("Recepcionistas");
         miEliminar.setVisible(true);
@@ -526,6 +527,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     public void CambiarRecep(){
+        
         userStatus = UserStat.RecepLogged;
         jMenu2.setText("Niños");
         miEliminar.setVisible(false);
@@ -543,14 +545,9 @@ public class MainWindow extends javax.swing.JFrame {
     public void userWindow(){
         
         if(userStatus == UserStat.AdminLogged){
-            setTitle("VISTA para Administrador");
-            jMenu2.setText("Recepcionistas");
-            miEliminar.setVisible(true);
-            miActualizar.setVisible(true);
-        }else{
-            jMenu2.setText("Niños");
-            miEliminar.setVisible(false);
-            miActualizar.setVisible(false);
+            CambiarAdmin();
+        }else if(userStatus == UserStat.RecepLogged){
+            CambiarRecep();
         }
         jMenuBar1.setVisible(true);
     }

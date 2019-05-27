@@ -78,10 +78,10 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Consulta de recepcionistas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(141, 0, -1, -1));
-        getContentPane().add(tfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 48, 199, -1));
+        getContentPane().add(tfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 199, -1));
 
         LblNombre.setText("Nombre:");
-        getContentPane().add(LblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 51, -1, -1));
+        getContentPane().add(LblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         TbRecepcionistas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,7 +93,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(TbRecepcionistas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 172, 380, 123));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 380, 123));
 
         BConsultar.setText("Consultar");
         BConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -101,11 +101,11 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
                 BConsultarActionPerformed(evt);
             }
         });
-        getContentPane().add(BConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 124, -1, -1));
+        getContentPane().add(BConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, -1, -1));
 
         LblApellido.setText("Apellido:");
-        getContentPane().add(LblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 84, -1, 34));
-        getContentPane().add(tfApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 92, 198, -1));
+        getContentPane().add(LblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, 34));
+        getContentPane().add(tfApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 198, -1));
 
         CbTodo.setText("Mostrar todo");
         CbTodo.addActionListener(new java.awt.event.ActionListener() {
