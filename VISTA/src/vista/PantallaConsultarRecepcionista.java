@@ -74,10 +74,14 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
                 formMouseMoved(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Consulta de recepcionistas");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(141, 0, -1, -1));
+        getContentPane().add(tfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 48, 199, -1));
 
         LblNombre.setText("Nombre:");
+        getContentPane().add(LblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 51, -1, -1));
 
         TbRecepcionistas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -89,14 +93,19 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(TbRecepcionistas);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 172, 380, 123));
+
         BConsultar.setText("Consultar");
         BConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BConsultarActionPerformed(evt);
             }
         });
+        getContentPane().add(BConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 124, -1, -1));
 
         LblApellido.setText("Apellido:");
+        getContentPane().add(LblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 84, -1, 34));
+        getContentPane().add(tfApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 92, 198, -1));
 
         CbTodo.setText("Mostrar todo");
         CbTodo.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +113,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
                 CbTodoActionPerformed(evt);
             }
         });
+        getContentPane().add(CbTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 25, -1, -1));
 
         CbBuscar.setText("Buscar");
         CbBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -111,64 +121,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
                 CbBuscarActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(109, 109, 109))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(BConsultar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LblNombre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addComponent(CbTodo)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CbBuscar))
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(LblApellido)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CbTodo)
-                    .addComponent(CbBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LblNombre)
-                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LblApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BConsultar)
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
-        );
+        getContentPane().add(CbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(333, 25, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

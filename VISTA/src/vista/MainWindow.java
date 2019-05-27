@@ -53,7 +53,7 @@ public class MainWindow extends javax.swing.JFrame {
     public enum UserStat {AdminFailPass, RecepFailPass, RecepLogged, AdminLogged};
     public static UserStat userStatus;
     public Timer timer;
-    long tiempoSesion = 10;
+    long tiempoSesion = 30;
     public static long startTime;
     
     /* Administrador */
@@ -227,7 +227,7 @@ public class MainWindow extends javax.swing.JFrame {
                     long elapsedSeconds = elapsedTime / 1000;
                     long secondsDisplay = elapsedSeconds % 60;
                     long elapsedMinutes = elapsedSeconds / 60;
-                    if(elapsedSeconds >= tiempoSesion){
+                    if(elapsedMinutes >= tiempoSesion){
                         drawingTimer.stop();
                         dispose();
                         Main.lw = new LoginWindow();
@@ -335,7 +335,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(IframeLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(mainFrame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         btCapturar.setText("Capturar");
@@ -403,8 +403,8 @@ public class MainWindow extends javax.swing.JFrame {
         );
         IframeMainLayout.setVerticalGroup(
             IframeMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(IframeMainLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IframeMainLayout.createSequentialGroup()
+                .addContainerGap(87, Short.MAX_VALUE)
                 .addGroup(IframeMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(IframeMainLayout.createSequentialGroup()
                         .addComponent(lbFotoTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,7 +424,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(IframeMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btCapturar)
                             .addComponent(jButton1))))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
         );
 
         jMenuBar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -518,6 +518,20 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void CambiarAdmin(){
+        userStatus = UserStat.AdminLogged;
+        jMenu2.setText("Recepcionistas");
+        miEliminar.setVisible(true);
+        miActualizar.setVisible(true);
+    }
+    
+    public void CambiarRecep(){
+        userStatus = UserStat.RecepLogged;
+        jMenu2.setText("Niños");
+        miEliminar.setVisible(false);
+        miActualizar.setVisible(false);
+    }
+    
     public void Salir(){
         Main.lw = new LoginWindow();
         Main.lw.setVisible(true);
@@ -531,6 +545,8 @@ public class MainWindow extends javax.swing.JFrame {
         if(userStatus == UserStat.AdminLogged){
             setTitle("VISTA para Administrador");
             jMenu2.setText("Recepcionistas");
+            miEliminar.setVisible(true);
+            miActualizar.setVisible(true);
         }else{
             jMenu2.setText("Niños");
             miEliminar.setVisible(false);
@@ -650,7 +666,7 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             archivo.createNewFile();
         } catch (IOException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, ex);
         }
         
         
@@ -714,7 +730,6 @@ public class MainWindow extends javax.swing.JFrame {
 
                         ResultSet rs1 = stmt.executeQuery("SELECT * FROM Ninos WHERE ID = '"+st+"'"); //Se extrae la info de cada autorizado
                         rs1.first();
-                        System.out.println(rs1.getObject(2).toString());
 
 
                         foto = getToolkit().getImage(rs1.getObject(5).toString());

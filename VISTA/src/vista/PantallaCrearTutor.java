@@ -107,6 +107,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
         bTomarFoto = new javax.swing.JButton();
         bGuardar = new javax.swing.JButton();
         bActualizar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -114,16 +115,26 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                 formMouseMoved(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblNombres.setText("Nombres:");
+        getContentPane().add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         lblApellidoPaterno.setText("Apellido paterno:");
+        getContentPane().add(lblApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 107, -1, -1));
 
         lblApellidoMaterno.setText("Apellido materno:");
+        getContentPane().add(lblApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 144, -1, -1));
 
         lblTeléfono.setText("Teléfono:");
+        getContentPane().add(lblTeléfono, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 181, -1, -1));
+        getContentPane().add(tfNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 67, 145, -1));
+        getContentPane().add(tfApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 104, 145, -1));
+        getContentPane().add(tfApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 141, 142, -1));
+        getContentPane().add(tfTeléfono, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 178, 142, -1));
 
         lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 67, 260, 260));
 
         bTomarFoto.setText("Tomar foto");
         bTomarFoto.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +142,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                 bTomarFotoActionPerformed(evt);
             }
         });
+        getContentPane().add(bTomarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(297, 333, -1, -1));
 
         bGuardar.setText("Guardar cambios");
         bGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +150,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                 bGuardarActionPerformed(evt);
             }
         });
+        getContentPane().add(bGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 389, -1, -1));
 
         bActualizar.setText("Actualizar foto");
         bActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -145,74 +158,10 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
                 bActualizarActionPerformed(evt);
             }
         });
+        getContentPane().add(bActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 333, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(255, 255, 255)
-                .addComponent(bGuardar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblApellidoPaterno)
-                            .addComponent(lblNombres))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfNombres)
-                            .addComponent(tfApellidoPaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblApellidoMaterno)
-                            .addComponent(lblTeléfono))
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfApellidoMaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                            .addComponent(tfTeléfono))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(bTomarFoto)
-                        .addGap(55, 55, 55)
-                        .addComponent(bActualizar)))
-                .addGap(63, 63, 63))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNombres)
-                            .addComponent(tfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblApellidoPaterno)
-                            .addComponent(tfApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblApellidoMaterno)
-                            .addComponent(tfApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTeléfono)
-                            .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bTomarFoto)
-                    .addComponent(bActualizar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(bGuardar)
-                .addGap(148, 148, 148))
-        );
+        jLabel1.setText("Crear Tutor");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(274, 10, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -320,6 +269,7 @@ public class PantallaCrearTutor extends javax.swing.JFrame {
     private javax.swing.JButton bActualizar;
     private javax.swing.JButton bGuardar;
     private javax.swing.JButton bTomarFoto;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblApellidoMaterno;
     private javax.swing.JLabel lblApellidoPaterno;
     private javax.swing.JLabel lblFoto;

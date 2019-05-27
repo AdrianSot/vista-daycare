@@ -116,10 +116,6 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 rs2.next();
             }
             
-            for(int i = 0 ; i < Teléfonos.length ; i++){
-                System.out.println(Teléfonos[i]);
-            }
-            
             
         } catch (SQLException ex) {
             Logger.getLogger(PantallaActualizarNiño.class.getName()).log(Level.SEVERE, null, ex);

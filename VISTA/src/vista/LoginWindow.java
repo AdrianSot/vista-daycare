@@ -65,6 +65,13 @@ public class LoginWindow extends javax.swing.JFrame {
                          return;
                      }else{
                          //Loggeo el admin
+                         try{
+                            Main.w.CambiarAdmin();
+                         }
+                         catch(Exception e){
+                             
+                         }
+                         
                          userStatus = UserStat.AdminLogged;
                          Main.w = new MainWindow();
                          Main.w.userStatus = MainWindow.UserStat.AdminLogged;
@@ -74,6 +81,13 @@ public class LoginWindow extends javax.swing.JFrame {
                      }
                  }else{
                      //Loggeo recepcionista
+                     try{
+                        Main.w.CambiarRecep();
+                     }
+                     catch(Exception e){
+                         
+                     }
+                     
                      userStatus = UserStat.RecepLogged;
                      Main.w = new MainWindow();
                      Main.w.userStatus = MainWindow.UserStat.RecepLogged;

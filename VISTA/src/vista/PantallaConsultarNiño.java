@@ -113,7 +113,6 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
     }
     
     public int BuscarIDNiño(String direccion, String ID){
-        System.out.println("METODO LLAMADO");
         String texto = "";
         String aux = "";
         String bfRead;
@@ -622,10 +621,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
                                     bf.close();
                                     File arch = new File(infoNiño[2]);
                                     arch.delete();
-
-                                    for(String a : telAutorizados){
-                                        System.out.println(a);
-                                    }
+                                    
                                     File archFoto = new File("Fotos ninos/nino"+IDNiño+".jpg");
                                     archFoto.delete();
                                 }
