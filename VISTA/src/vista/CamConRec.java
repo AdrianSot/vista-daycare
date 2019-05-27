@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
  */
 public class CamConRec {
     String nombre, direccion;
+    public int soloFoto = 0;
     public void main(String[] args) {
         
         IniciaCamaraPro(nombre, direccion);
@@ -21,6 +22,7 @@ public class CamConRec {
         
         MainCamara mainWindow;
         mainWindow = new MainCamara();
+        mainWindow.soloFoto = soloFoto;
         mainWindow.nombreFoto = NombreFoto;
         mainWindow.direccion = dir;
         mainWindow.setTitle("Vista 5.0");

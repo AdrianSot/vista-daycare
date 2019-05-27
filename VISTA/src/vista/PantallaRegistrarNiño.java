@@ -286,7 +286,11 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(436, 436, 436)
+                                .addComponent(bTomarFoto)
+                                .addGap(0, 175, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(layout.createSequentialGroup()
@@ -315,13 +319,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                                                     .addComponent(tfApellidoPaterno)
                                                     .addComponent(tfApellidoMaterno))))
                                         .addGap(159, 159, 159)
-                                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(436, 436, 436)
-                                        .addComponent(bTomarFoto)))
-                                .addGap(0, 10, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(bActualizarFoto))
@@ -440,6 +438,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             else{
                 JOptionPane.showMessageDialog(null, "Asegúrese de tomar la foto correctamente (Intento único)\n"
                         + "Guarde la foto con el mismo nombre del niño", "ADVERTENCIA", 1);
+                camara.soloFoto = 1;
                 camara.IniciaCamaraPro("nino", "Fotos ninos");
             }
         }

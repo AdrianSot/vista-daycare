@@ -64,6 +64,7 @@ public class MainWindow extends javax.swing.JFrame {
     
     PantallaRegistrarNiño pantallaregistrarniño; 
     PantallaConsultarNiño pantallaconsultarniño;
+    FSDK.HImage imageHandle;
     
     String DatosCara;
     
@@ -71,7 +72,7 @@ public class MainWindow extends javax.swing.JFrame {
         
         initComponents();
         setTitle("VISTA");
-        setSize(1050,800);    
+        setSize(1050,750);    
         setLocation(200,100);    
         
         /* Administrador */
@@ -102,7 +103,7 @@ public class MainWindow extends javax.swing.JFrame {
         camara.setNorthPane(null);
 
         try {
-            int r = FSDK.ActivateLibrary("i2L9huu8yTGls4kwRaOxv/38OxJXXmBBVUDbRCul+nZJH3DO9JnnxzlD59sZ+mOV6H9OyRczxjg4Ev+Ft80mte93DBbYbCtuvh0WkBeIovIo9uAjgYNxCD6T+NBsWLadnUvOQ2jalhXUXgclCqYV//jWsRWDYAfBtF3CxwzJhGs=");
+            int r = FSDK.ActivateLibrary("GSOWthOsogKKFgcVDekO9p29nbfWVzw/fgEmU4aZiK/Qm2N2z8205ZLhs4Lya/csOpEB3HWOgPqGVZdyTR4/zNJe72/TEcYI2HZUEDIDv/WD2BymCTWFe72v9RNzRM7D2HF3+3azVzCIIG7BJ2NST57XychEgxm93T6RSO4BQi4=");
             
             if (r != FSDK.FSDKE_OK){
                 JOptionPane.showMessageDialog(mainFrame, "Error con la libreria", "Error", JOptionPane.ERROR_MESSAGE); 
@@ -155,7 +156,7 @@ public class MainWindow extends javax.swing.JFrame {
         // Timer to draw and process image from camera
         drawingTimer = new Timer(40, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FSDK.HImage imageHandle = new FSDK.HImage();
+                imageHandle = new FSDK.HImage();
                 if (FSDKCam.GrabFrame(cameraHandle, imageHandle) == FSDK.FSDKE_OK){
                     Image awtImage[] = new Image[1];
                     if (FSDK.SaveImageToAWTImage(imageHandle, awtImage, FSDK.FSDK_IMAGEMODE.FSDK_IMAGE_COLOR_24BIT) == FSDK.FSDKE_OK){
@@ -199,7 +200,7 @@ public class MainWindow extends javax.swing.JFrame {
                                     {
                                         // get the user name
                                         userName = (String)JOptionPane.showInputDialog(mainFrame, "Sospechoso:", "Ingresa un identificador para el sospechoso", JOptionPane.QUESTION_MESSAGE, null, null, "Identificador");
-                                        userName = "Sospechoso: " + userName + "-Suspect";
+                                        userName = "Sospechoso: " + userName + "-100";
                                         FSDK.SetName(tracker, IDs[i], userName);
                                         if (userName == null || userName.length() <= 0) {
                                             FSDK.PurgeID(tracker, IDs[i]);
@@ -446,7 +447,6 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu1.setText("Inicio");
-        jMenu1.setEnabled(false);
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenu1MouseClicked(evt);
@@ -455,7 +455,6 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMSalir.setText("Salir");
-        jMSalir.setEnabled(false);
         jMSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMSalirMouseClicked(evt);
@@ -611,7 +610,8 @@ public class MainWindow extends javax.swing.JFrame {
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
         LocalTime time = LocalTime.now();
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("HH:mm:ss");  
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("HH:mm:ss"); 
+        DateTimeFormatter formato1 = DateTimeFormatter.ofPattern("HH-mm-ss"); 
         File archivo = new File("Bitacora\\" + date.format(formatter)+".txt");
         try {
             archivo.createNewFile();
@@ -619,7 +619,9 @@ public class MainWindow extends javax.swing.JFrame {
             System.out.println(ex);
         }
         
-        if(words[1] != "Suspect"){
+        int num = Integer.parseInt(tel);
+        
+        if(num != 100){
             try {
                 try{
                     
@@ -712,7 +714,13 @@ public class MainWindow extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Persona no registrada en la base de datos.");
             }
         }
-        
+        if(num == 100){
+            tfTutorTel.setText("");
+            imageHandle = new FSDK.HImage();
+            FSDKCam.GrabFrame(cameraHandle, imageHandle);
+            FSDK.SaveImageToFile(imageHandle, "FotosSospechosos\\"+date.format(formatter)+"-"+time.format(formato1)+".jpg");
+            JOptionPane.showMessageDialog(null, "Sospechoso capturado.");
+        }
 
         try(PrintWriter output = new PrintWriter(new FileWriter("Bitacora\\" + date.format(formatter)+".txt",true))) 
         {

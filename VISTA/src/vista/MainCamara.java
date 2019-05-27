@@ -29,6 +29,7 @@ public class MainCamara extends javax.swing.JFrame {
      */
     String nombreFoto;
     String direccion;
+    public int soloFoto = 0;
     
     public MainCamara() {
         initComponents();
@@ -36,7 +37,7 @@ public class MainCamara extends javax.swing.JFrame {
         camara.setNorthPane(null);
 
         try {
-            int r = FSDK.ActivateLibrary("i2L9huu8yTGls4kwRaOxv/38OxJXXmBBVUDbRCul+nZJH3DO9JnnxzlD59sZ+mOV6H9OyRczxjg4Ev+Ft80mte93DBbYbCtuvh0WkBeIovIo9uAjgYNxCD6T+NBsWLadnUvOQ2jalhXUXgclCqYV//jWsRWDYAfBtF3CxwzJhGs=");
+            int r = FSDK.ActivateLibrary("GSOWthOsogKKFgcVDekO9p29nbfWVzw/fgEmU4aZiK/Qm2N2z8205ZLhs4Lya/csOpEB3HWOgPqGVZdyTR4/zNJe72/TEcYI2HZUEDIDv/WD2BymCTWFe72v9RNzRM7D2HF3+3azVzCIIG7BJ2NST57XychEgxm93T6RSO4BQi4=");
             if (r != FSDK.FSDKE_OK){
                 JOptionPane.showMessageDialog(mainFrame, "Please run the License Key Wizard (Start - Luxand - FaceSDK - License Key Wizard)", "Error activating FaceSDK", JOptionPane.ERROR_MESSAGE); 
                 System.exit(r);
@@ -113,11 +114,11 @@ public class MainCamara extends javax.swing.JFrame {
 			    int res = FSDK.GetAllNames(tracker, IDs[i], name, 65536); // maximum of 65536 characters
     
 			    if (FSDK.FSDKE_OK == res && name[0].length() > 0) { // draw name
-                                
+                                String[] words=name[0].split("-");
                                 gr.setFont(new Font("Arial", Font.BOLD, 16));
                                 FontMetrics fm = gr.getFontMetrics();
-                                java.awt.geom.Rectangle2D textRect = fm.getStringBounds(name[0], gr);
-                                gr.drawString(name[0], (int)(facePosition.xc - textRect.getWidth()/2), (int)(top + w + textRect.getHeight()));
+                                java.awt.geom.Rectangle2D textRect = fm.getStringBounds(words[0], gr);
+                                gr.drawString(words[0], (int)(facePosition.xc - textRect.getWidth()/2), (int)(top + w + textRect.getHeight()));
                             }
 
                             if (mouseX >= left && mouseX <= left + w && mouseY >= top && mouseY <= top + w){
@@ -127,12 +128,19 @@ public class MainCamara extends javax.swing.JFrame {
                                     if (FSDK.FSDKE_OK == FSDK.LockID(tracker, IDs[i]))
                                     {
                                         // get the user name
-                                        userName = (String)JOptionPane.showInputDialog(mainFrame, "Nombre:", "Introduce el nombre y teléfono", JOptionPane.QUESTION_MESSAGE, null, null, "Ej. Juan Lopez - 6621345678");
-                                        FSDK.SetName(tracker, IDs[i], userName);
-                                        if (userName == null || userName.length() <= 0) {
-                                            FSDK.PurgeID(tracker, IDs[i]);
+                                        if(soloFoto == 0){
+                                            userName = (String)JOptionPane.showInputDialog(mainFrame, "Nombre:", "Introduce el nombre y teléfono", JOptionPane.QUESTION_MESSAGE, null, null, "Ej. Juan Lopez - 6621345678");
+                                            FSDK.SetName(tracker, IDs[i], userName);
+                                            if (userName == null || userName.length() <= 0) {
+                                                FSDK.PurgeID(tracker, IDs[i]);
+                                            }
+                                            FSDK.UnlockID(tracker, IDs[i]);
+                                        }else   {
+                                            JOptionPane.showMessageDialog(null, "Foto tomada");
                                         }
-                                        FSDK.UnlockID(tracker, IDs[i]);
+                                        
+                                        FSDK.SaveImageToFile(imageHandle, direccion + "\\" + nombreFoto + ".jpg");
+                                        soloFoto = 0;
                                     }
                                 }
                             }

@@ -34,8 +34,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="436" max="-2" attributes="0"/>
+                              <Component id="bTomarFoto" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="175" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lblTeléfono" min="-2" max="-2" attributes="0"/>
@@ -72,17 +77,8 @@
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
-                                      <Component id="imagen" min="-2" pref="260" max="-2" attributes="0"/>
+                                      <Component id="imagen" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="436" max="-2" attributes="0"/>
-                                      <Component id="bTomarFoto" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="bActualizarFoto" min="-2" max="-2" attributes="0"/>
