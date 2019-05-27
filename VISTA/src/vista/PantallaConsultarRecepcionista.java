@@ -68,6 +68,8 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
         CbTodo = new javax.swing.JCheckBox();
         CbBuscar = new javax.swing.JCheckBox();
 
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+
         jLabel1.setText("Consulta de recepcionistas");
 
         LblNombre.setText("Nombre:");
@@ -137,7 +139,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
                                     .addComponent(LblApellido)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(tfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +162,7 @@ public class PantallaConsultarRecepcionista extends javax.swing.JInternalFrame {
                 .addComponent(BConsultar)
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();

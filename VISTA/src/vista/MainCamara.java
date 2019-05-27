@@ -64,7 +64,7 @@ public class MainCamara extends javax.swing.JFrame {
         int count[] = new int[1];
         FSDKCam.GetCameraList(cameraList, count);
         if (count[0] == 0){
-            JOptionPane.showMessageDialog(mainFrame, "Please attach a camera"); 
+            JOptionPane.showMessageDialog(mainFrame, "Noy hay cámara conectada."); 
             System.exit(1);
         }
         
@@ -127,7 +127,7 @@ public class MainCamara extends javax.swing.JFrame {
                                     if (FSDK.FSDKE_OK == FSDK.LockID(tracker, IDs[i]))
                                     {
                                         // get the user name
-                                        userName = (String)JOptionPane.showInputDialog(mainFrame, "Nombre:", "Introduce el nombre", JOptionPane.QUESTION_MESSAGE, null, null, "Nombre");
+                                        userName = (String)JOptionPane.showInputDialog(mainFrame, "Nombre:", "Introduce el nombre y teléfono", JOptionPane.QUESTION_MESSAGE, null, null, "Ej. Juan Lopez - 6621345678");
                                         FSDK.SetName(tracker, IDs[i], userName);
                                         if (userName == null || userName.length() <= 0) {
                                             FSDK.PurgeID(tracker, IDs[i]);

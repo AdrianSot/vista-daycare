@@ -59,6 +59,8 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
         tfUsuario = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+
         jLabel1.setText("Eliminar Recepcionista");
 
         jLabel2.setText("Nombre:");
@@ -95,7 +97,7 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
                         .addComponent(tfNombre)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(123, Short.MAX_VALUE)
+                .addContainerGap(121, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -122,7 +124,7 @@ public class PantallaEliminarRecepcionista extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(0, 109, Short.MAX_VALUE))
+                .addGap(0, 107, Short.MAX_VALUE))
         );
 
         pack();

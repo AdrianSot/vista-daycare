@@ -69,6 +69,8 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
         tfContraseña = new javax.swing.JTextField();
         BActualizar = new javax.swing.JButton();
 
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+
         LblTitulo.setText("Actualizar información de recepcionistas");
 
         LblRecep.setText("Recepcionista a actualizar");
@@ -164,7 +166,7 @@ public class PantallaActualizarRecepcionista extends javax.swing.JInternalFrame 
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(BActualizar)
                 .addGap(25, 25, 25))
         );

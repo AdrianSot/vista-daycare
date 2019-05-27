@@ -205,6 +205,8 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         cbSinTutor = new javax.swing.JCheckBox();
         bActualizarFoto = new javax.swing.JButton();
 
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+
         jLabel1.setText("Registrar niño");
 
         lblInformacion.setText("Información del niño");
@@ -232,6 +234,12 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
         });
 
         lblApellidoMaterno.setText("Apellido materno:");
+
+        tfApellidoMaterno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfApellidoMaternoActionPerformed(evt);
+            }
+        });
 
         bAnterior.setText("Anterior");
         bAnterior.addActionListener(new java.awt.event.ActionListener() {
@@ -280,40 +288,38 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblApellidoMaterno)
-                                                .addGap(12, 12, 12)
-                                                .addComponent(tfApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(lblTeléfono)
                                                 .addGap(70, 70, 70)
                                                 .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblApellidoPaterno)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(tfApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(lblNombres)
+                                                    .addGap(68, 68, 68)
+                                                    .addComponent(tfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(cbAutorizados, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addComponent(lblNumAutorizados)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addComponent(cbNumAutorizados, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGap(32, 32, 32)
-                                                        .addComponent(lblInformacion)))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(lblNombres)
-                                                    .addGap(68, 68, 68)
-                                                    .addComponent(tfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addComponent(cbSinTutor))
+                                                    .addComponent(lblInformacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(cbSinTutor)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblApellidoPaterno)
+                                                    .addComponent(lblApellidoMaterno))
+                                                .addGap(23, 23, 23)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(tfApellidoPaterno)
+                                                    .addComponent(tfApellidoMaterno))))
                                         .addGap(159, 159, 159)
                                         .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(436, 436, 436)
                                         .addComponent(bTomarFoto)))
-                                .addGap(0, 12, Short.MAX_VALUE))
+                                .addGap(0, 10, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
@@ -337,7 +343,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                         .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(70, 70, 70)
@@ -370,7 +376,7 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
                             .addComponent(tfTeléfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(cbSinTutor)
-                        .addGap(0, 26, Short.MAX_VALUE)))
+                        .addGap(0, 43, Short.MAX_VALUE)))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bTomarFoto)
@@ -1494,6 +1500,10 @@ public class PantallaRegistrarNiño extends javax.swing.JInternalFrame {
             
         }
     }//GEN-LAST:event_bActualizarFotoActionPerformed
+
+    private void tfApellidoMaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoMaternoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfApellidoMaternoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

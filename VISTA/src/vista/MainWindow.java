@@ -16,17 +16,24 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+
 
 public class MainWindow extends javax.swing.JFrame {
     
@@ -60,6 +68,7 @@ public class MainWindow extends javax.swing.JFrame {
     String DatosCara;
     
     public MainWindow() {
+        
         initComponents();
         setTitle("VISTA");
         setSize(1050,800);    
@@ -94,8 +103,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         try {
             int r = FSDK.ActivateLibrary("i2L9huu8yTGls4kwRaOxv/38OxJXXmBBVUDbRCul+nZJH3DO9JnnxzlD59sZ+mOV6H9OyRczxjg4Ev+Ft80mte93DBbYbCtuvh0WkBeIovIo9uAjgYNxCD6T+NBsWLadnUvOQ2jalhXUXgclCqYV//jWsRWDYAfBtF3CxwzJhGs=");
+            
             if (r != FSDK.FSDKE_OK){
-                JOptionPane.showMessageDialog(mainFrame, "Please run the License Key Wizard (Start - Luxand - FaceSDK - License Key Wizard)", "Error activating FaceSDK", JOptionPane.ERROR_MESSAGE); 
+                JOptionPane.showMessageDialog(mainFrame, "Error con la libreria", "Error", JOptionPane.ERROR_MESSAGE); 
                 System.exit(r);
             }
         } 
@@ -121,7 +131,7 @@ public class MainWindow extends javax.swing.JFrame {
         int count[] = new int[1];
         FSDKCam.GetCameraList(cameraList, count);
         if (count[0] == 0){
-            JOptionPane.showMessageDialog(mainFrame, "Please attach a camera"); 
+            JOptionPane.showMessageDialog(mainFrame, "No hay cámara conectada"); 
             System.exit(1);
         }
         
@@ -137,7 +147,7 @@ public class MainWindow extends javax.swing.JFrame {
         cameraHandle = new FSDKCam.HCamera();
         int r = FSDKCam.OpenVideoCamera(cameraName, cameraHandle);
         if (r != FSDK.FSDKE_OK){
-            JOptionPane.showMessageDialog(mainFrame, "Error opening camera"); 
+            JOptionPane.showMessageDialog(mainFrame, "Error al abrir la cámara"); 
             System.exit(r);
         }
         
@@ -188,7 +198,8 @@ public class MainWindow extends javax.swing.JFrame {
                                     if (FSDK.FSDKE_OK == FSDK.LockID(tracker, IDs[i]))
                                     {
                                         // get the user name
-                                        userName = (String)JOptionPane.showInputDialog(mainFrame, "Nombre:", "Ingresa el nombre y telefono", JOptionPane.QUESTION_MESSAGE, null, null, "Ej. Juan Lopez - 6621345678");
+                                        userName = (String)JOptionPane.showInputDialog(mainFrame, "Sospechoso:", "Ingresa un identificador para el sospechoso", JOptionPane.QUESTION_MESSAGE, null, null, "Identificador");
+                                        userName = "Sospechoso: " + userName + "-Suspect";
                                         FSDK.SetName(tracker, IDs[i], userName);
                                         if (userName == null || userName.length() <= 0) {
                                             FSDK.PurgeID(tracker, IDs[i]);
@@ -211,23 +222,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         
-        jMenuBar1.updateUI();
-        //------------------
-        
-        
-        
-        
-        
-        
-        
-        
-        /*
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-        }catch(ClassNotFoundException e){
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE,null, e);
-        }
-        */
         userWindow();
     }
 
@@ -251,13 +245,14 @@ public class MainWindow extends javax.swing.JFrame {
         tfTutorTel = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         miRegistrar = new javax.swing.JMenuItem();
         miConsultar = new javax.swing.JMenuItem();
         miActualizar = new javax.swing.JMenuItem();
         miEliminar = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
         jMSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -266,11 +261,15 @@ public class MainWindow extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                formMouseEntered(evt);
+            }
         });
 
         IframeMain.setBorder(null);
         IframeMain.setVisible(true);
 
+        Iframe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102), 3));
         Iframe.setVisible(true);
         Iframe.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -321,12 +320,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        lbFotoTutor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lbFotoTutor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         jLabel1.setText("Nombre");
 
         jLabel2.setText("Teléfono");
 
+        jTable1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -336,6 +336,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("Limpiar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout IframeMainLayout = new javax.swing.GroupLayout(IframeMain.getContentPane());
         IframeMain.getContentPane().setLayout(IframeMainLayout);
@@ -347,8 +354,10 @@ public class MainWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(Iframe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(IframeMainLayout.createSequentialGroup()
-                        .addGap(263, 263, 263)
-                        .addComponent(btCapturar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(214, 214, 214)
+                        .addComponent(btCapturar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
                 .addGroup(IframeMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -383,19 +392,18 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(IframeMainLayout.createSequentialGroup()
                         .addComponent(Iframe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btCapturar)))
+                        .addGroup(IframeMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btCapturar)
+                            .addComponent(jButton1))))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
 
-        jMenuBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jMenu1.setText("Inicio");
-        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu1MouseClicked(evt);
+        jMenuBar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
+        jMenuBar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jMenuBar1MouseExited(evt);
             }
         });
-        jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Niños");
 
@@ -437,7 +445,17 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu1.setText("Inicio");
+        jMenu1.setEnabled(false);
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
         jMSalir.setText("Salir");
+        jMSalir.setEnabled(false);
         jMSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMSalirMouseClicked(evt);
@@ -561,6 +579,8 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMSalirActionPerformed
 
     private void jMSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMSalirMouseClicked
+        drawingTimer.stop();
+        
         Salir();
     }//GEN-LAST:event_jMSalirMouseClicked
 
@@ -587,94 +607,123 @@ public class MainWindow extends javax.swing.JFrame {
         Connection con;
         String tel = words[1];
         tel = tel.replaceAll("\\s","");
+        
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
+        LocalTime time = LocalTime.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("HH:mm:ss");  
+        File archivo = new File("Bitacora\\" + date.format(formatter)+".txt");
         try {
-            try{
-                Class.forName("com.mysql.cj.jdbc.Driver");             
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vista", "root", "");
-            Statement stmt = con.createStatement();
-            ResultSet rs;
-            rs = stmt.executeQuery("SELECT * FROM Tutores WHERE Telefono = '"+tel+"'"); //Se extrae la info de cada autorizado
-            rs.first();
-            nombre = rs.getObject(2).toString() +" "+rs.getObject(3).toString() +" "+ rs.getObject(4).toString() ;
-            
-            
-            Image foto = getToolkit().getImage(rs.getObject(5).toString());
-            foto = foto.getScaledInstance(210, 210, 210);
-            lbFotoTutor.setIcon(new ImageIcon(foto));
-            tfTutorNombre.setText(nombre);
-            
-            
-            File file = new File(rs.getObject(6).toString()); 
-  
-            BufferedReader br = null; 
-            try {
-                br = new BufferedReader(new FileReader(file));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-            
-            
-            DefaultTableModel tabla = new DefaultTableModel(){
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                   //all cells false
-                   return false;
-                }
-                public Class getColumnClass(int column)
-                {
-                return getValueAt(0, column).getClass();
-                }
-            };
-            String st;
-            tabla.addColumn("Foto");
-            tabla.addColumn("Nombres");
-            
-            try {
-                while ((st = br.readLine()) != null){
-                    
-                    Object[] fila = new Object[2];
-                
-                    //Se crea la foto para mostrarla en la tabla
-                    
-                    ResultSet rs1 = stmt.executeQuery("SELECT * FROM Ninos WHERE ID = '"+st+"'"); //Se extrae la info de cada autorizado
-                    rs1.first();
-                    System.out.println(rs1.getObject(2).toString());
-                    
-                    
-                    foto = getToolkit().getImage(rs1.getObject(5).toString());
-                    foto = foto.getScaledInstance(260, 260, 260);
-                    ImageIcon icono = new ImageIcon(foto);
-                    Image conversion = icono.getImage();
-                    Image tamaño = conversion.getScaledInstance(90, 90, Image.SCALE_SMOOTH);
-                    Icon fin = new ImageIcon(tamaño);
-
-
-                    fila[0] = fin;
-                    fila[1] = rs1.getObject(2);
-
-
-
-                    //Se introduce una fila auxiliar para separar los datos
-                    tabla.addRow(fila);
-                }
-                jTable1.setModel(tabla);
-                jTable1.setRowHeight(90);
-                jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-                jTable1.getColumnModel().getColumn(1).setPreferredWidth(90);
-                
-            } catch (IOException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } 
-        catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error.");
+            archivo.createNewFile();
+        } catch (IOException ex) {
+            System.out.println(ex);
         }
+        
+        if(words[1] != "Suspect"){
+            try {
+                try{
+                    
+                    Class.forName("com.mysql.cj.jdbc.Driver");             
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vista", "root", "");
+                Statement stmt = con.createStatement();
+                ResultSet rs;
+                rs = stmt.executeQuery("SELECT * FROM Tutores WHERE Telefono = '"+tel+"'"); //Se extrae la info de cada autorizado
+                rs.first();
+                nombre = rs.getObject(2).toString() +" "+rs.getObject(3).toString() +" "+ rs.getObject(4).toString() ;
+
+
+                Image foto = getToolkit().getImage(rs.getObject(5).toString());
+                foto = foto.getScaledInstance(228, 175, 210);
+
+                lbFotoTutor.setIcon(new ImageIcon(foto));
+                tfTutorNombre.setText(nombre);
+
+
+                File file = new File(rs.getObject(6).toString()); 
+
+                BufferedReader br = null; 
+                try {
+                    br = new BufferedReader(new FileReader(file));
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+
+
+                DefaultTableModel tabla = new DefaultTableModel(){
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                       //all cells false
+                       return false;
+                    }
+                    public Class getColumnClass(int column)
+                    {
+                    return getValueAt(0, column).getClass();
+                    }
+                };
+                String st;
+                tabla.addColumn("Foto");
+                tabla.addColumn("Nombres");
+
+                try {
+                    while ((st = br.readLine()) != null){
+
+                        Object[] fila = new Object[2];
+
+                        //Se crea la foto para mostrarla en la tabla
+
+                        ResultSet rs1 = stmt.executeQuery("SELECT * FROM Ninos WHERE ID = '"+st+"'"); //Se extrae la info de cada autorizado
+                        rs1.first();
+                        System.out.println(rs1.getObject(2).toString());
+
+
+                        foto = getToolkit().getImage(rs1.getObject(5).toString());
+                        foto = foto.getScaledInstance(260, 260, 260);
+                        ImageIcon icono = new ImageIcon(foto);
+                        Image conversion = icono.getImage();
+                        Image tamaño = conversion.getScaledInstance(90, 90, Image.SCALE_SMOOTH);
+                        Icon fin = new ImageIcon(tamaño);
+
+
+                        fila[0] = fin;
+                        fila[1] = rs1.getObject(2);
+
+
+
+                        //Se introduce una fila auxiliar para separar los datos
+                        tabla.addRow(fila);
+                    }
+                    jTable1.setModel(tabla);
+                    jTable1.setRowHeight(90);
+                    jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
+                    jTable1.getColumnModel().getColumn(1).setPreferredWidth(90);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+            catch (SQLException ex) {
+                tfTutorTel.setText("");
+                JOptionPane.showMessageDialog(null, "Persona no registrada en la base de datos.");
+            }
+        }
+        
+
+        try(PrintWriter output = new PrintWriter(new FileWriter("Bitacora\\" + date.format(formatter)+".txt",true))) 
+        {
+            output.printf("%s\r\n", s1 + " " + date.format(formatter) + " " + time.format(formato));
+            output.close();
+        } 
+        catch (Exception e) {}
+
+        
+        
+        
     }//GEN-LAST:event_btCapturarActionPerformed
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
@@ -696,6 +745,28 @@ public class MainWindow extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void jMenuBar1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuBar1MouseExited
+        
+        jMenuBar1.repaint();
+        
+    }//GEN-LAST:event_jMenuBar1MouseExited
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        tfTutorNombre.setText("");
+        tfTutorTel.setText("");
+        
+        Icon fin = new ImageIcon();
+        lbFotoTutor.setIcon(fin);
+        
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        dtm.setRowCount(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
+        jMenuBar1.repaint();
+    }//GEN-LAST:event_formMouseEntered
  
     /*************************************************************************/
     
@@ -749,6 +820,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JInternalFrame Iframe;
     private javax.swing.JInternalFrame IframeMain;
     private javax.swing.JButton btCapturar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMSalir;

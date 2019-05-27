@@ -24,28 +24,13 @@ public class AutoClose {
     }
 
     private Timer timer;
-    private MainWindow w = new MainWindow();
+    public static MainWindow w = new MainWindow();
     
     AutoClose() {
         w.setVisible(true);
         w.drawingTimer.start();
         
-        w.addWindowListener(new WindowAdapter() {
- 
-            @Override
-            public void windowClosing(WindowEvent e) {
-
-                
-                w.drawingTimer.stop();
-                try{
-                    Thread.sleep(40);
-                }
-                catch (java.lang.InterruptedException exception){
-                }
-                w.saveTracker();
-                w.closeCamera();
-            }
-        });
+        
         
         
         

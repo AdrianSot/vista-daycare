@@ -194,6 +194,7 @@ public class PantallaConsultarNiño extends javax.swing.JInternalFrame {
         lblID = new javax.swing.JLabel();
         bActualizar = new javax.swing.JButton();
 
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         setPreferredSize(new java.awt.Dimension(800, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

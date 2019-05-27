@@ -20,7 +20,7 @@ public class LoginWindow extends javax.swing.JFrame {
     
     public LoginWindow() {
         initComponents();
-        setSize(720, 500);
+        setSize(650, 500);
         setLocation(350,150); 
         setTitle("VISTA");    
         userStatus = UserStat.AdminFailPass;
@@ -169,16 +169,16 @@ public class LoginWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(296, 296, 296)
+                        .addGap(276, 276, 276)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
+                        .addGap(81, 81, 81)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 88, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
+                        .addGap(181, 181, 181)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(LPass)
                             .addComponent(jLabel3))
@@ -187,7 +187,7 @@ public class LoginWindow extends javax.swing.JFrame {
                             .addComponent(tfUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                             .addComponent(pfPassword)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(283, 283, 283)
+                        .addGap(266, 266, 266)
                         .addComponent(jbLog)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
