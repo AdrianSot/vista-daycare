@@ -81,7 +81,7 @@ Para registrar a algún niño en la base de datos:
 
 2. Rellene todos los campos de información del infante y tomele la foto al niño o agréguela desde sus archivos de computadora.
 
-![](/Manuales/ss/InsertarFotoNiño.png)
+![](/Manuales/ss/InsertarFotoNiño.png)
 
 (Ejemplo de la pantalla cuando selecciona tomar foto al niño)
 
@@ -113,7 +113,7 @@ En el siguiente ejemplo se seleccionan dos autorizados:
 
 6. Una vez agregada la información de los autorizados seleccione `Finalizar registro` y confirme la información proporcionada para el registro.
 
-![](/Manuales/ss/ConfirmacionDatosRegistroNiño.png)
+![](/Manuales/ss/ConfirmacionDatosRegistroNiño.png)
 
 7. Por último obtendrá el siguiente mensaje si ha realizado correctamente el proceso.
 
