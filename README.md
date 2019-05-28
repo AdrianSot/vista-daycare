@@ -1,6 +1,6 @@
 # VISTA
 
-Proyecto en realización para la materia de Ingeniería de Software I (2019-1).
+Proyecto realizado en cumplimiento para la materia de Ingeniería de Software I (2019-1) de la licenciatura en Ciencias de la Computación de la Universidad de Sonora.
 
 Programa que ayuda en la logística de una guardería al momento de llevarse niños, identificando y verificando con reconocimiento facial que la persona que se lo lleve es el tutor o está autorizado.
 
