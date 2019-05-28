@@ -3,7 +3,6 @@
 Los requerimentos básicos para el uso de este sistema son:
 
 + JDK 11+
-+ IDE NetBeans 11.0
 + Sistema operativo de Windows.
 
 Para instalar y correr el software por favor siga los siguientes pasos:
@@ -18,6 +17,6 @@ Para instalar y correr el software por favor siga los siguientes pasos:
 
 Para correr el programa es necesario que haga lo siguiente:
 
-1. Abra el IDE de NetBeans y abra el proyecto _VISTA_ de este repositorio.
+1. Corra el servidor de la base de datos a través de XAMPP.
 
-2. Haga clic en el botón de `Run project`.
+2. Corra el ejecutable `VISTA.jar` que se encuentra dentro de la carpeta _dist_.
