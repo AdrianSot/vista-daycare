@@ -76,7 +76,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         setTitle("VISTA");
         setSize(1050,750);    
-        setLocation(200,100);    
+        setLocation(100,50);    
         startTime = System.currentTimeMillis();
         /* Administrador */
         pantallaregistro = new PantallaRegistrarRecepcionista();
