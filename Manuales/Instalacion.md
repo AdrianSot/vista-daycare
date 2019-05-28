@@ -2,7 +2,7 @@
 
 Los requerimentos básicos para el uso de este sistema son:
 
-+ Java 11+
++ JDK 11+
 + IDE NetBeans 11.0
 + Sistema operativo de Windows.
 
