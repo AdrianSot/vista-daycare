@@ -152,7 +152,7 @@ Para eliminar al autorizado de un niño, en la tabla de resultados de la consult
 
 Para editar la información de un niño previamente registrado en el sistema, éste se deberá haber consultado previamente.
 
-![](./Manuales/ss/NinoEliminado.png)
+![](./ss/NinoEliminado.png)
 
 En la tabla de resultados de la consulta, seleccione el ícono del lápiz.
 
